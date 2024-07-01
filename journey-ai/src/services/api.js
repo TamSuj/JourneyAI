@@ -13,7 +13,6 @@ export const fetchTestingLocalApiData = async () => {
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = await response.text();
-        console.log(text);
         return text;
     } catch (error) {
         console.error('Error fetching data from Generative AI:', error);
