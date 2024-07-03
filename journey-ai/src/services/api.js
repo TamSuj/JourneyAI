@@ -7,7 +7,10 @@ if (!API_KEY) {
 
 // Initialize Google Generative AI client
 const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ 
+    model: "gemini-1.5-flash",
+    generationConfig: {responseMimeType: "application/json"}
+});
 
 export const fetchTestingLocalApiData = async (command) => {
     try {
@@ -16,6 +19,7 @@ export const fetchTestingLocalApiData = async (command) => {
         const result = await model.generateContent(prompt);
         const response = result.response;
         const text = response.text();
+        console.log(text);
         return text;
     } catch (error) {
         console.error('Error fetching data from Generative AI:', error);
