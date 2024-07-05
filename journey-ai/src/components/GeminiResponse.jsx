@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchTestingLocalApiData } from "../services/api.js";
+// import { fetchTestingLocalApiData } from "../services/api.js";
 
 
 function GeminiResponse(props){
@@ -7,24 +7,31 @@ function GeminiResponse(props){
     const [data, setData] = useState('')
 
     useEffect(() => {
-        const fetchedData = async () => {
+        const fetchGeminiData = async() => {
             try {
-                const response = await fetchTestingLocalApiData(props.command);
-                setData(response);
+                const response  = await fetch("/gemini_response",{
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },                    
+                    body: JSON.stringify({prompt: props.command})
+                })
+                if(!response.ok){
+                    throw new Error(`HTTP error! status: ${response.status}`)
+                }
+                const data = await response.json();
+                setData(data.message);
             } catch (error) {
-                console.error("Error fetching data from from Gemini: ", error)
+                console.error("Error fetching /gemini_reponse: ", error);
             }
         };
-        fetchedData();
-    }, [props.command]);
+
+        fetchGeminiData();
+    },[props.command]);
 
     return (
         <div className="GeminiResponse">
-            { data ? (
-                <h2>{JSON.stringify(data)}</h2>
-            ) : (
-                <p>Loading...</p> // Display a loading message if data is not yet available
-            )}
+            <p>{!data ? "Loading..." : data}</p>
         </div>
     )
 };
