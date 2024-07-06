@@ -37,7 +37,7 @@ Journey AI lives online, so there's no need for downloads. Just fire up your fav
 
 ## Contributing
 
-Love to make things better? We'd love your input! Whether it's a bright idea or a pesky bug, drop by our [GitHub repository](https://github.com/your-username/journey-ai) to share your thoughts.
+Love to make things better? We'd love your input! Whether it's a bright idea or a pesky bug, drop by our [GitHub repository](https://github.com/TamSuj/journey-ai) to share your thoughts.
 
 ## Feedback
 
