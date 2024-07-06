@@ -3,6 +3,7 @@ import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
+import Button from "react-bootstrap/Button";
 
 function Command() {
     const [location, setLocation] = useState('');
@@ -50,7 +51,10 @@ function Command() {
             <PeopleCount setNumOfPeople={setNumOfPeople} />
             <DayCount setNumberOfDay={setDay}/>
 
-            <button onClick={handleSubmit}>Generate Plan</button>
+            {/*<button onClick={handleSubmit}>Generate Plan</button>*/}
+            <Button variant="primary" type="submit" onClick={handleSubmit}>
+                Generate plan
+            </Button>
 
             <GeminiResponse command={command} />
         </div>

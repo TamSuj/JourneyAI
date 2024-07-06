@@ -1,6 +1,7 @@
 import './App.css';
 import React from 'react';
 import { useState, useEffect} from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
@@ -13,9 +14,10 @@ function App() {
   }, []);
   
   return (
-    <div className="App">
-      <h1>{!data ? "Loading..." : data}</h1>
-    </div>
+      <div className="App">
+        <h1>JourneyAI</h1>
+        <h1>{!data ? "Loading..." : data}</h1>
+      </div>
   );
 }
 
