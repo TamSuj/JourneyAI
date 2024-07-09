@@ -19,7 +19,7 @@ function Command() {
     };
 
     const handleSubmit = () => {
-
+        
         //Handler chosen travel theme
         const selectedThemes = findSelectedTheme();
         //Specify the prompt
