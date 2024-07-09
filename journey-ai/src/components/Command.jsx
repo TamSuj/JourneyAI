@@ -3,12 +3,14 @@ import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
+import GenerateMap from "./GenerateMap.jsx"
 
 function Command() {
     const [location, setLocation] = useState('');
     const [numOfPeople, setNumOfPeople] = useState('');
     const [command, setCommand] = useState('');
     const [day, setDay] = useState('')
+    
 
     const handleSubmit = () => {
         const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} for ${day} and must use this JSON format look like this
@@ -53,6 +55,7 @@ function Command() {
             <button onClick={handleSubmit}>Generate Plan</button>
 
             <GeminiResponse command={command} />
+            <GenerateMap setMap = {setLocation}/> 
         </div>
     );
 }
