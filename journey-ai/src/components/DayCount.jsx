@@ -1,7 +1,7 @@
 
-function DayCount({setNumberOfDay}){
+function DayCount({setNumOfDay}){
     const handleChange = (event) =>{
-        setNumberOfDay(event.target.value)
+        setNumOfDay(event.target.value)
     }
 
     return(
