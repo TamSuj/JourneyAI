@@ -23,7 +23,7 @@ const model = genAI.getGenerativeModel({
 
 app.get("/api", (req, res) => {
     console.log("Received request for /api");
-    res.json({ message: "Hello from server" });
+    res.json({ message: "Connected" });
 });
 
 

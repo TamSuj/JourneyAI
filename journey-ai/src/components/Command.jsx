@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
@@ -47,16 +47,24 @@ function Command() {
 
     return (
         <div>
-            <LocationInput setLocation={setLocation} />
-            <PeopleCount setNumOfPeople={setNumOfPeople} />
-            <DayCount setNumberOfDay={setDay}/>
+            {/*Logo*/}
+            <img className={"logo-orange"} src={"logo-orange.png"}/>
 
-            {/*<button onClick={handleSubmit}>Generate Plan</button>*/}
-            <Button variant="primary" type="submit" onClick={handleSubmit}>
-                Generate plan
-            </Button>
-
-            <GeminiResponse command={command} />
+            <LocationInput setLocation={setLocation}/>
+            <div className={"trip-options"}>
+                <PeopleCount setNumOfPeople={setNumOfPeople}/>
+                <DayCount setNumberOfDay={setDay}/>
+            </div>
+            {/*Button to generate plan from input value*/}
+            <div className={"flex justify-content-center"}>
+                <button
+                    className={"bg-gray-800 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded flex flex-col mb-4"}
+                    onClick={handleSubmit}>Generate Plan
+                </button>
+            </div>
+            <div className={"mx-20 flex justify-center"}>
+                <GeminiResponse command={command}/>
+            </div>
         </div>
     );
 }
