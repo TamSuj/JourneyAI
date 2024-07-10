@@ -30,7 +30,7 @@ function GeminiResponse(props){
 
     return (
         <div className="GeminiResponse">
-            <p>{!data ? "Loading..." : data}</p>
+            <p>{!data ? "" : data}</p>
         </div>
     )
 };
