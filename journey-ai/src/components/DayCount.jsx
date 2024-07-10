@@ -92,8 +92,6 @@ function DayCount({setNumberOfDay}){
                 </button>
             </div>
         </div>
-
-
     )
 }
 
