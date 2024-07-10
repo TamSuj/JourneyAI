@@ -1,19 +1,30 @@
+import { useState } from "react";
 
 function PeopleCount({ setNumOfPeople }) {
+    const [inputCount, setCount] = useState(2);
+
     const handleChange = (event) => {
-        const value = parseInt(event.target.value);
+        const value = event.target.value;
         if (!isNaN(value) && value >= 0) {
+            setCount(value);
             setNumOfPeople(value);
         }
     };
 
     const handleDecrement = () => {
-        setNumOfPeople(prevState => prevState - 1);
+        setCount((prevState) => {
+            const newCount = parseInt(prevState) - 1;
+            setNumOfPeople(newCount);
+            return newCount
+        })
     };
 
     const handleIncrement = () => {
-        setNumOfPeople(prevState => prevState + 1);
-    };
+        setCount((prevState) => {
+            const newCount = parseInt(prevState) + 1;
+            setNumOfPeople(newCount);
+            return newCount
+        })    };
 
     return (
         <div className="flex items-center justify-between md:order-3 md:justify-end my-6">
@@ -43,14 +54,14 @@ function PeopleCount({ setNumOfPeople }) {
                     </svg>
                 </button>
                 <input
-                    type="text"
+                    type="number"
                     id="counter-input"
                     data-input-counter
-                    className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-black focus:outline-none focus:ring-0 dark:text-white"
+                    className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-black focus:outline-none focus:ring-0 dark:text-black"
                     placeholder=""
-                    value="2" // You can bind the value to a state variable
+                    value={inputCount} // You can bind the value to a state variable
                     required
-                    onClick={handleChange}
+                    onChange={handleChange}
                 />
                 <button
                     type="button"

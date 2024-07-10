@@ -1,18 +1,30 @@
+import { useState } from "react";
 
 function DayCount({setNumberOfDay}){
+    const [inputDay, setDay] = useState(3);
+
     const handleChange = (event) => {
-        const value = parseInt(event.target.value);
+        const value = event.target.value;
         if (!isNaN(value) && value >= 0) {
+            setDay(value);
             setNumberOfDay(value);
         }
     };
 
     const handleDecrement = () => {
-        setNumberOfDay(prevState => prevState - 1);
+        setDay((prevState) => {
+            const newDay = parseInt(prevState) - 1;
+            setNumberOfDay(newDay);
+            return newDay;
+        })
     };
 
     const handleIncrement = () => {
-        setNumberOfDay(prevState => prevState + 1);
+        setDay((prevState) => {
+            const newDay = parseInt(prevState) + 1;
+            setNumberOfDay(newDay);
+            return newDay;
+        })    
     };
 
     return (
@@ -46,14 +58,14 @@ function DayCount({setNumberOfDay}){
                     </svg>
                 </button>
                 <input
-                    type="text"
+                    type="number"
                     id="counter-input"
                     data-input-counter
-                    className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-black focus:outline-none focus:ring-0 dark:text-white"
+                    className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-black focus:outline-none focus:ring-0 dark:text-black"
                     placeholder=""
-                    value="3"
+                    value={inputDay}
                     required
-                    onClick={handleChange}
+                    onChange={handleChange}
                 />
                 <button
                     type="button"

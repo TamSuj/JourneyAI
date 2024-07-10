@@ -1,18 +1,10 @@
 import './App.css';
 import React from 'react';
-import { useState, useEffect} from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
-  const [data, setData] = useState('');
-  
-  useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
-  }, []);
-  
+
   return (
       <div className="App">
           <div className="text-center landing-margin">
@@ -20,7 +12,7 @@ function App() {
                   click</h1>
               <p className="mx-4 mt-6 text-xs leading-4 text-gray-600 sm:text-base">Let us help you generate the perfect plan for the trip
                   by simply entering your destination, number of travelers, and days.</p>
-              <img className="landing-icon" src={"notion-icon.png"}/>
+              <img className="landing-icon" src={"notion-icon.png"} alt='journeyAI Icon'/>
 
           </div>
 

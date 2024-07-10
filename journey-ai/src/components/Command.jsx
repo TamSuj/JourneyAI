@@ -3,7 +3,7 @@ import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 
 function Command() {
     const [location, setLocation] = useState('');
@@ -48,7 +48,7 @@ function Command() {
     return (
         <div>
             {/*Logo*/}
-            <img className={"logo-orange"} src={"logo-orange.png"}/>
+            <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon'/>
 
             <LocationInput setLocation={setLocation}/>
             <div className={"trip-options"}>
