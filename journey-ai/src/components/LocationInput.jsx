@@ -1,7 +1,6 @@
 
 function LocationInput({ setLocation }) {
     const handleChange = (event) => {
-        console.log('New Location:', setLocation); // Log the new location
 
         setLocation(event.target.value);
     };
