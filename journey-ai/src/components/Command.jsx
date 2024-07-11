@@ -60,18 +60,20 @@ function Command() {
         <div>
             {/*Logo*/}
             <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon'/>
-
-            <div className={"flex justify-center"}>
-                <LocationInput setLocation={setLocation}/>
+            <div className={"absolute slide"}>
                 <ThemeOption/>
+            </div>
+            <LocationInput setLocation={setLocation}/>
+
+
+            <div className="flex">
+
             </div>
 
             <div className={"trip-options"}>
                 <PeopleCount setNumOfPeople={setNumOfPeople}/>
                 <DayCount setNumberOfDay={setDay}/>
             </div>
-
-
 
             {/*Button to generate plan from input value*/}
             <div className={"flex justify-center"}>
@@ -80,10 +82,12 @@ function Command() {
                     onClick={handleSubmit}>Generate Plan
                 </button>
             </div>
+
             <div className={"mx-20 flex justify-center"}>
                 <GeminiResponse command={command}/>
             </div>
         </div>
     );
 }
+
 export default Command;
