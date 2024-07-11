@@ -1,4 +1,3 @@
-// import Form from 'react-bootstrap/Form';
 function LocationInput({ setLocation }) {
     const handleChange = (event) => {
         setLocation(event.target.value);

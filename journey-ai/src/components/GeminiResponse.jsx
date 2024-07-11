@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import { fetchTestingLocalApiData } from "../services/api.js";
 
 
 function GeminiResponse(props){

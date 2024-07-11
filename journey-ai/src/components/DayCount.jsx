@@ -13,9 +13,14 @@ function DayCount({setNumberOfDay}){
 
     const handleDecrement = () => {
         setDay((prevState) => {
-            const newDay = parseInt(prevState) - 1;
-            setNumberOfDay(newDay);
-            return newDay;
+            if(prevState >= 1){
+                const newDay = parseInt(prevState) - 1;
+                setNumberOfDay(newDay);
+                return newDay; 
+            }
+            else{
+                return 0;
+            }
         })
     };
 
@@ -92,8 +97,6 @@ function DayCount({setNumberOfDay}){
                 </button>
             </div>
         </div>
-
-
     )
 }
 
