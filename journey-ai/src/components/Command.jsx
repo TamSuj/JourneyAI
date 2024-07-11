@@ -3,10 +3,7 @@ import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
-<<<<<<< HEAD
 import ThemeOption from "./ThemeOptions.jsx";
-=======
->>>>>>> 2b7f78cd1bea2b3b25b82dba0bfcc91c5df055ea
 
 function Command() {
     const [location, setLocation] = useState('');
@@ -14,12 +11,6 @@ function Command() {
     const [command, setCommand] = useState('');
     const [day, setDay] = useState('')
     // const [theme, setTheme] = useState('')
-
-    const findSelectedTheme = () => {
-        const checkboxes = document.querySelectorAll('#theme-options input[type="checkbox"]:checked');
-        const chosenThemes = Array.from(checkboxes).map(checkbox => checkbox.value);
-        return chosenThemes.join(', ');
-    };
 
     const findSelectedTheme = () => {
         const checkboxes = document.querySelectorAll('#theme-options input[type="checkbox"]:checked');
@@ -70,13 +61,17 @@ function Command() {
             {/*Logo*/}
             <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon'/>
 
-            <LocationInput setLocation={setLocation}/>
+            <div className={"flex justify-center"}>
+                <LocationInput setLocation={setLocation}/>
+                <ThemeOption/>
+            </div>
+
             <div className={"trip-options"}>
                 <PeopleCount setNumOfPeople={setNumOfPeople}/>
                 <DayCount setNumberOfDay={setDay}/>
             </div>
 
-            <ThemeOption/>
+
 
             {/*Button to generate plan from input value*/}
             <div className={"flex justify-center"}>
@@ -91,10 +86,4 @@ function Command() {
         </div>
     );
 }
-
-
-<<<<<<< HEAD
 export default Command;
-=======
-export default Command;
->>>>>>> 2b7f78cd1bea2b3b25b82dba0bfcc91c5df055ea
