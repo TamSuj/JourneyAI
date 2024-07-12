@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function DayCount({setNumberOfDay}){
     const [inputDay, setDay] = useState(3);
+    setNumberOfDay(inputDay);
 
     const handleChange = (event) => {
         const value = event.target.value;

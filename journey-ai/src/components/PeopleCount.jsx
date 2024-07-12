@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function PeopleCount({ setNumOfPeople }) {
     const [inputCount, setCount] = useState(2);
+    setNumOfPeople(inputCount);
 
     const handleChange = (event) => {
         const value = event.target.value;
