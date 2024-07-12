@@ -61,7 +61,7 @@ function Command() {
             {/*Logo*/}
             <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon'/>
             <div className={"search-parent"}>
-                <div className={"w-full max-w-3xl"}>
+                <div className={"w-full min-w-2/3 lg:max-w-6xl"}>
                     <LocationInput setLocation={setLocation}/>
                 </div>
                 <div>
@@ -72,10 +72,10 @@ function Command() {
             </div>
 
             <div className={"trip-options"}>
-                <div className={"mr-10"}>
+                <div className={"mx-10"}>
                     <PeopleCount setNumOfPeople={setNumOfPeople}/>
                 </div>
-                <div className={"ml-10"}>
+                <div className={"mx-10"}>
                     <DayCount setNumberOfDay={setDay}/>
                 </div>
             </div>

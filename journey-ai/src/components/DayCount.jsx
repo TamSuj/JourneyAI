@@ -34,7 +34,7 @@ function DayCount({setNumberOfDay}){
     };
 
     return (
-        <div className="flex items-center justify-between md:order-3 md:justify-end my-3 sm:my-6">
+        <div className="flex items-center justify-between md:order-3 md:justify-end my-5">
             <label htmlFor="counter-input" className="sr-only">
                 Choose quantity:
             </label>

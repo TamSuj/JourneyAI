@@ -34,7 +34,7 @@ function PeopleCount({ setNumOfPeople }) {
     };
 
     return (
-        <div className="flex items-center justify-between md:order-3 md:justify-end my-6">
+        <div className="flex items-center justify-between md:order-3 md:justify-end my-5">
             <label >Number of people</label>
             <div className="flex items-center sm:ml-4">
                 <button
