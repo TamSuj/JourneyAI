@@ -23,7 +23,7 @@ const model = genAI.getGenerativeModel({
 
 app.get("/api", (req, res) => {
     console.log("Received request for /api");
-    res.json({ message: "Hello from server" });
+    res.json({ message: "Connected" });
 });
 
 
@@ -35,6 +35,7 @@ app.post("/gemini_response", async (req, res) => {
         const response = result.response;
         const text = response.text();
         console.log("Received request for /gemini_reponse");
+        console.log(prompt);
         console.log(text);
 
         res.json({ message: text });

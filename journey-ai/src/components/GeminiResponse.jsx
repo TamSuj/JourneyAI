@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import { fetchTestingLocalApiData } from "../services/api.js";
 
 
 function GeminiResponse(props){
@@ -31,7 +30,7 @@ function GeminiResponse(props){
 
     return (
         <div className="GeminiResponse">
-            <p>{!data ? "Loading..." : data}</p>
+            <p>{!data ? "" : data}</p>
         </div>
     )
 };
