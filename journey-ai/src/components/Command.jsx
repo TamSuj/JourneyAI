@@ -3,6 +3,7 @@ import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
+import ThemeOption from "./ThemeOptions.jsx";
 
 function Command() {
     const [location, setLocation] = useState('');
@@ -59,25 +60,34 @@ function Command() {
         <div>
             {/*Logo*/}
             <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon'/>
-
+            <div className={"absolute slide"}>
+                <ThemeOption/>
+            </div>
             <LocationInput setLocation={setLocation}/>
+
+
+            <div className="flex">
+
+            </div>
+
             <div className={"trip-options"}>
                 <PeopleCount setNumOfPeople={setNumOfPeople}/>
                 <DayCount setNumberOfDay={setDay}/>
             </div>
+
             {/*Button to generate plan from input value*/}
-            <div className={"flex justify-content-center"}>
+            <div className={"flex justify-center"}>
                 <button
                     className={"bg-gray-800 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded flex flex-col mb-4"}
                     onClick={handleSubmit}>Generate Plan
                 </button>
             </div>
+
             <div className={"mx-20 flex justify-center"}>
                 <GeminiResponse command={command}/>
             </div>
         </div>
     );
 }
-
 
 export default Command;

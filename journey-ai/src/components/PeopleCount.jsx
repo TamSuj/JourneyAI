@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function PeopleCount({ setNumOfPeople }) {
     const [inputCount, setCount] = useState(2);
+    setNumOfPeople(inputCount);
 
     const handleChange = (event) => {
         const value = event.target.value;
@@ -13,9 +14,14 @@ function PeopleCount({ setNumOfPeople }) {
 
     const handleDecrement = () => {
         setCount((prevState) => {
-            const newCount = parseInt(prevState) - 1;
-            setNumOfPeople(newCount);
-            return newCount
+            if(prevState >= 1){
+                const newCount = parseInt(prevState) - 1;
+                setNumOfPeople(newCount);
+                return newCount  
+            }
+            else{
+                return 0;
+            }
         })
     };
 
@@ -24,7 +30,8 @@ function PeopleCount({ setNumOfPeople }) {
             const newCount = parseInt(prevState) + 1;
             setNumOfPeople(newCount);
             return newCount
-        })    };
+        })    
+    };
 
     return (
         <div className="flex items-center justify-between md:order-3 md:justify-end my-6">

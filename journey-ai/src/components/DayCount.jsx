@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function DayCount({setNumberOfDay}){
     const [inputDay, setDay] = useState(3);
+    setNumberOfDay(inputDay);
 
     const handleChange = (event) => {
         const value = event.target.value;
@@ -13,9 +14,14 @@ function DayCount({setNumberOfDay}){
 
     const handleDecrement = () => {
         setDay((prevState) => {
-            const newDay = parseInt(prevState) - 1;
-            setNumberOfDay(newDay);
-            return newDay;
+            if(prevState >= 1){
+                const newDay = parseInt(prevState) - 1;
+                setNumberOfDay(newDay);
+                return newDay; 
+            }
+            else{
+                return 0;
+            }
         })
     };
 
