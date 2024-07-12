@@ -45,10 +45,16 @@
   top: 0;
 }
 
+.search-parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .slide {
   width: 100%;
   height: 100%;
-  transform: translateX(71%);
+  transform: translateX(-180%);
 }
 
 .landing-icon {
@@ -73,13 +79,16 @@
 
 .trip-options {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 @media (max-width: 768px) {
   .trip-options {
     flex-direction: column;
     margin: 0 3.5rem 0 3.5rem;
+  }
+  .search-parent {
+    justify-content: space-between;
   }
 }
 

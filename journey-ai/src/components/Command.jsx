@@ -60,24 +60,29 @@ function Command() {
         <div>
             {/*Logo*/}
             <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon'/>
-            <div className={"absolute slide"}>
-                <ThemeOption/>
-            </div>
-            <LocationInput setLocation={setLocation}/>
-
-
-            <div className="flex">
-
+            <div className={"search-parent"}>
+                <div className={"w-full max-w-3xl"}>
+                    <LocationInput setLocation={setLocation}/>
+                </div>
+                <div>
+                    <div className={"slide"}>
+                    <ThemeOption/>
+                    </div>
+                </div>
             </div>
 
             <div className={"trip-options"}>
-                <PeopleCount setNumOfPeople={setNumOfPeople}/>
-                <DayCount setNumberOfDay={setDay}/>
+                <div className={"mr-10"}>
+                    <PeopleCount setNumOfPeople={setNumOfPeople}/>
+                </div>
+                <div className={"ml-10"}>
+                    <DayCount setNumberOfDay={setDay}/>
+                </div>
             </div>
 
             {/*Button to generate plan from input value*/}
             <div className={"flex justify-center"}>
-                <button
+            <button
                     className={"bg-gray-800 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded flex flex-col mb-4"}
                     onClick={handleSubmit}>Generate Plan
                 </button>
