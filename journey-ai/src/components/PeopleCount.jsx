@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function PeopleCount({ setNumOfPeople }) {
     const [inputCount, setCount] = useState(2);
-    setNumOfPeople(inputCount);
+    useEffect(() => {
+        setNumOfPeople(inputCount);
+    },[inputCount, setNumOfPeople])
 
     const handleChange = (event) => {
         const value = event.target.value;
@@ -14,15 +16,16 @@ function PeopleCount({ setNumOfPeople }) {
 
     const handleDecrement = () => {
         setCount((prevState) => {
-            if(prevState >= 1){
+            if((prevState - 1) > 1){
                 const newCount = parseInt(prevState) - 1;
                 setNumOfPeople(newCount);
                 return newCount  
             }
             else{
-                return 0;
+                setNumOfPeople(1);
+                return 1;
             }
-        })
+        });
     };
 
     const handleIncrement = () => {
@@ -34,7 +37,7 @@ function PeopleCount({ setNumOfPeople }) {
     };
 
     return (
-        <div className="flex items-center justify-between md:order-3 md:justify-end my-6">
+        <div className="flex items-center justify-between md:order-3 md:justify-end my-5">
             <label >Number of people</label>
             <div className="flex items-center sm:ml-4">
                 <button

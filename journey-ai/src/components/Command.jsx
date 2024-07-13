@@ -14,7 +14,7 @@ function Command() {
     
 
     const handleSubmit = async() => {
-        const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} for ${day} and must use this JSON format look like this
+        const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days and must use this JSON format look like this
         example (Please keep the same key name, do not change them):
         {
             "tripName": "Pasadena Getaway", 

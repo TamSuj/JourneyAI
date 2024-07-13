@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function DayCount({setNumberOfDay}){
     const [inputDay, setDay] = useState(3);
-    setNumberOfDay(inputDay);
+    useEffect(() => {
+        setNumberOfDay(inputDay);
+    },[inputDay, setNumberOfDay])
 
     const handleChange = (event) => {
         const value = event.target.value;
@@ -14,16 +16,18 @@ function DayCount({setNumberOfDay}){
 
     const handleDecrement = () => {
         setDay((prevState) => {
-            if(prevState >= 1){
+            if ((prevState - 1) >= 1) {
                 const newDay = parseInt(prevState) - 1;
                 setNumberOfDay(newDay);
-                return newDay; 
+                return newDay;
+            } 
+            else {
+                setNumberOfDay(1); // Ensure numberOfDay doesn't go below 1
+                return 1;
             }
-            else{
-                return 0;
-            }
-        })
+        });
     };
+    
 
     const handleIncrement = () => {
         setDay((prevState) => {
@@ -34,7 +38,7 @@ function DayCount({setNumberOfDay}){
     };
 
     return (
-        <div className="flex items-center justify-between md:order-3 md:justify-end my-3 sm:my-6">
+        <div className="flex items-center justify-between md:order-3 md:justify-end my-5">
             <label htmlFor="counter-input" className="sr-only">
                 Choose quantity:
             </label>
