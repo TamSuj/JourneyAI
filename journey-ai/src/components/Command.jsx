@@ -3,7 +3,8 @@ import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
-import GenerateMap from "./GenerateMap.jsx"
+import GenerateMap from "./GenerateMap.jsx";
+import ThemeOptions from "./ThemeOptions.jsx";
 
 function Command() {
     const [location, setLocation] = useState('');
@@ -89,14 +90,39 @@ function Command() {
 
     return (
         <div>
-            <LocationInput setLocation={setLocation} />
-            <PeopleCount setNumOfPeople={setNumOfPeople} />
-            <DayCount setNumberOfDay={setDay}/>
+            {/*Logo*/}
+            <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon'/>
+            <div className={"search-parent"}>
+                <div className={"w-full min-w-2/3 lg:max-w-6xl"}>
+                    <LocationInput setLocation={setLocation}/>
+                </div>
+                <div>
+                    <div className={"slide"}>
+                    <ThemeOptions/>
+                    </div>
+                </div>
+            </div>
 
-            <button onClick={handleSubmit}>Generate Plan</button>
+            <div className={"trip-options"}>
+                <div className={"mx-10"}>
+                    <PeopleCount setNumOfPeople={setNumOfPeople}/>
+                </div>
+                <div className={"mx-10"}>
+                    <DayCount setNumberOfDay={setDay}/>
+                </div>
+            </div>
 
-            <GeminiResponse command={command} />
-            {/* <GenerateMap setMap = {location}/>  */}
+            {/*Button to generate plan from input value*/}
+            <div className={"flex justify-center"}>
+            <button
+                    className={"bg-gray-800 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded flex flex-col mb-4"}
+                    onClick={handleSubmit}>Generate Plan
+                </button>
+            </div>
+
+            <div className={"mx-20 flex justify-center"}>
+                <GeminiResponse command={command}/>
+            </div>
             {location && <GenerateMap center={location.center} zoom={location.zoom} />}
 
         </div>
