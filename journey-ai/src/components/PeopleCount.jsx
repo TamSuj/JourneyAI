@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function PeopleCount({ setNumOfPeople }) {
     const [inputCount, setCount] = useState(2);
-    setNumOfPeople(inputCount);
+    useEffect(() => {
+        setNumOfPeople(inputCount);
+    },[inputCount, setNumOfPeople])
 
     const handleChange = (event) => {
         const value = event.target.value;

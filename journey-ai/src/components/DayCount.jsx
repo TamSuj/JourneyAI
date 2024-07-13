@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function DayCount({setNumberOfDay}){
     const [inputDay, setDay] = useState(3);
-    setNumberOfDay(inputDay);
+    useEffect(() => {
+        setNumberOfDay(inputDay);
+    },[inputDay, setNumberOfDay])
 
     const handleChange = (event) => {
         const value = event.target.value;
