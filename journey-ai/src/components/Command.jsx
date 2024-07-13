@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
+import GenerateMap from "./GenerateMap.jsx"
 
 function Command() {
     const [location, setLocation] = useState('');
     const [numOfPeople, setNumOfPeople] = useState('');
     const [command, setCommand] = useState('');
     const [day, setDay] = useState('')
+    
 
-    const handleSubmit = () => {
+    const handleSubmit = async() => {
         const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} for ${day} and must use this JSON format look like this
         example (Please keep the same key name, do not change them):
         {
@@ -40,10 +42,11 @@ function Command() {
                 }, 
             ]
         }`;
+
         setCommand(journeyCmd)
         
         try {
-            const coordinates = await fetchCoordinates(location); // Implement this function
+            const coordinates = await fetchCoordinates(location); 
             if (coordinates) {
                 setLocation(coordinates);
                 setCommand('Generated Plan Command'); // Example command
@@ -60,11 +63,14 @@ function Command() {
         const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(location)}.json?access_token=${apiKey}`;
 
         try {
-            const response = await fetch(url);
+            const response = await fetch(url); //get url
+
             if (!response.ok) {
                 throw new Error('Failed to fetch coordinates');
             }
-            const data = await response.json();
+
+            const data = await response.json(); //parse
+
             if (data.features.length > 0) {
                 const coordinates = data.features[0].center;
                 return {
@@ -90,8 +96,12 @@ function Command() {
             <button onClick={handleSubmit}>Generate Plan</button>
 
             <GeminiResponse command={command} />
+            {/* <GenerateMap setMap = {location}/>  */}
+            {location && <GenerateMap center={location.center} zoom={location.zoom} />}
+
         </div>
     );
 }
 
 export default Command;
+
