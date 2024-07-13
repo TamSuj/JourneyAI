@@ -1,41 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function PeopleCount({ setNumOfPeople }) {
-    const [inputCount, setCount] = useState(2);
-    setNumOfPeople(inputCount);
+    const [inputPeople, setCount] = useState(2);
+
+    useEffect(() => {
+        setNumOfPeople(Math.max(1, inputPeople));
+    }, [inputPeople, setNumOfPeople]);
 
     const handleChange = (event) => {
-        const value = event.target.value;
-        if (!isNaN(value) && value >= 0) {
-            setCount(value);
-            setNumOfPeople(value);
-        }
+        const value = Math.max(1, parseInt(event.target.value) || 1);
+        setCount(value);
     };
 
     const handleDecrement = () => {
-        setCount((prevState) => {
-            if(prevState >= 1){
-                const newCount = parseInt(prevState) - 1;
-                setNumOfPeople(newCount);
-                return newCount  
-            }
-            else{
-                return 0;
-            }
-        })
+        setCount((prevState) => Math.max(1, prevState - 1));
     };
 
     const handleIncrement = () => {
-        setCount((prevState) => {
-            const newCount = parseInt(prevState) + 1;
-            setNumOfPeople(newCount);
-            return newCount
-        })    
+        setCount((prevState) => prevState + 1);
     };
 
     return (
         <div className="flex items-center justify-between md:order-3 md:justify-end my-5">
-            <label >Number of people</label>
+            <label htmlFor="counter-input" className="sr-only">
+                Choose quantity:
+            </label>
+            <label>Number of people</label>
             <div className="flex items-center sm:ml-4">
                 <button
                     type="button"
@@ -66,7 +56,7 @@ function PeopleCount({ setNumOfPeople }) {
                     data-input-counter
                     className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-black focus:outline-none focus:ring-0 dark:text-black"
                     placeholder=""
-                    value={inputCount} // You can bind the value to a state variable
+                    value={inputPeople}
                     required
                     onChange={handleChange}
                 />
@@ -95,7 +85,7 @@ function PeopleCount({ setNumOfPeople }) {
                 </button>
             </div>
         </div>
-    );
+    )
 }
 
 export default PeopleCount

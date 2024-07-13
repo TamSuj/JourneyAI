@@ -1,36 +1,23 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 
 function DayCount({setNumberOfDay}){
     const [inputDay, setDay] = useState(3);
-    setNumberOfDay(inputDay);
+
+    useEffect(() => {
+        setNumberOfDay(Math.max(1, inputDay));
+    }, [inputDay, setNumberOfDay]);
 
     const handleChange = (event) => {
-        const value = event.target.value;
-        if (!isNaN(value) && value >= 0) {
-            setDay(value);
-            setNumberOfDay(value);
-        }
+        const value = Math.max(1, parseInt(event.target.value) || 1);
+        setDay(value);
     };
 
     const handleDecrement = () => {
-        setDay((prevState) => {
-            if(prevState >= 1){
-                const newDay = parseInt(prevState) - 1;
-                setNumberOfDay(newDay);
-                return newDay; 
-            }
-            else{
-                return 0;
-            }
-        })
+        setDay((prevState) => Math.max(1, prevState - 1));
     };
 
     const handleIncrement = () => {
-        setDay((prevState) => {
-            const newDay = parseInt(prevState) + 1;
-            setNumberOfDay(newDay);
-            return newDay;
-        })    
+        setDay((prevState) => prevState + 1);
     };
 
     return (
