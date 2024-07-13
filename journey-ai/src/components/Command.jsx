@@ -23,7 +23,7 @@ function Command() {
         //Handler chosen travel theme
         const selectedThemes = findSelectedTheme();
         //Specify the prompt
-        const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} for ${day} with this themes ${selectedThemes} and must use this JSON format look like this
+        const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days with this themes ${selectedThemes} and must use this JSON format look like this
         example (Please keep the same key name, do not change them):
         {
             "tripName": "Pasadena Getaway", 

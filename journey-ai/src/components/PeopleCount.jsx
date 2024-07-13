@@ -16,15 +16,16 @@ function PeopleCount({ setNumOfPeople }) {
 
     const handleDecrement = () => {
         setCount((prevState) => {
-            if(prevState >= 1){
+            if((prevState - 1) > 1){
                 const newCount = parseInt(prevState) - 1;
                 setNumOfPeople(newCount);
                 return newCount  
             }
             else{
-                return 0;
+                setNumOfPeople(1);
+                return 1;
             }
-        })
+        });
     };
 
     const handleIncrement = () => {

@@ -16,16 +16,18 @@ function DayCount({setNumberOfDay}){
 
     const handleDecrement = () => {
         setDay((prevState) => {
-            if(prevState >= 1){
+            if ((prevState - 1) >= 1) {
                 const newDay = parseInt(prevState) - 1;
                 setNumberOfDay(newDay);
-                return newDay; 
+                return newDay;
+            } 
+            else {
+                setNumberOfDay(1); // Ensure numberOfDay doesn't go below 1
+                return 1;
             }
-            else{
-                return 0;
-            }
-        })
+        });
     };
+    
 
     const handleIncrement = () => {
         setDay((prevState) => {
