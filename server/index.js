@@ -46,6 +46,37 @@ app.post("/gemini_response", async (req, res) => {
     }
 });
 
+
+app.post("/map", async (req, res) => {
+    try {
+        const { location } = req.body;
+        const apiKey = 'pk.eyJ1Ijoia255aWhsYWkiLCJhIjoiY2x5YThiM2hpMHpzdzJqcHhhZGhqNmFsdyJ9.RpZAifKmlWn9kQRkakLRYg';
+        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(location)}.json?access_token=${apiKey}`;
+
+        const response = await fetch(url); //get url
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch coordinates');
+        }
+
+        const data = await response.json(); //parse
+
+        if (data.features.length > 0) {
+            const coordinates = data.features[0].center;
+            res.json({
+                center: coordinates,
+                zoom: 10 // Example zoom level
+            });
+        } else {
+            res.status(400).json({error: "No coordinates found"});
+        }
+    } catch (error) {
+        console.error('Error fetching coordinates:', error);
+        throw error;
+    }
+});
+
+
 app.listen(PORT, () => {
     console.log(`Server listening on Port: ${PORT}`);
 })
