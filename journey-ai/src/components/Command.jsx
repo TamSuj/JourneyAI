@@ -1,4 +1,6 @@
 import { useState } from "react";
+import {useHistory} from 'react-router-dom';
+
 import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
@@ -123,6 +125,7 @@ function Command() {
             <div className={"mx-20 flex justify-center"}>
                 <GeminiResponse command={command}/>
             </div>
+            
             {location && <GenerateMap center={location.center} zoom={location.zoom} />}
 
         </div>

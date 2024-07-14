@@ -5,12 +5,12 @@ import mapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 //public token
 mapboxgl.accessToken = 'pk.eyJ1Ijoia255aWhsYWkiLCJhIjoiY2x5YThiM2hpMHpzdzJqcHhhZGhqNmFsdyJ9.RpZAifKmlWn9kQRkakLRYg';
 
-//mapboxGeocoder CTOR
-const geocoder = new mapboxGeocoder
-({
-    accessToken : mapboxgl.accessToken,
-    mapboxgl : mapboxgl,
-});
+// //mapboxGeocoder CTOR
+// const geocoder = new mapboxGeocoder
+// ({
+//     accessToken : mapboxgl.accessToken,
+//     mapboxgl : mapboxgl,
+// });
 
 //initialize map obj with CTOR
 const init_map = (map_ref) => {
@@ -22,56 +22,22 @@ const init_map = (map_ref) => {
     });
 };
 
-//use Geocoder to get location and coords
-const update_location = (map_obj, location) => {
-
-    //put the matching locations to features array and the first element is the best fit
-    geocoder.query(location, (err, result ) => {
-        if(err){
-            console.error('Geocoding error: ', err);
-            return;
-        }
-
-        if (result && result.features && result.features.length > 0) {
-            const coords = result.features[0].center;
-            
-            console.log('coords : ', coords);
-        //flyto is to move the canvas map and center the location
-            map_obj.current.flyTo({
-                center: coords,
-                zoom: 10,
-                essential: true 
-            });
-        } else {
-            console.warn('No results found', location);
-        }
-    });
-};
-
-
 const GenerateMap = ( {center, zoom} ) => {
     
     const map_ref = useRef(null);
     const map_obj = useRef(null);
 
     useEffect(() => {
+    //if doesnt exist, create one
 
-        //if doesnt exist, create one
-        if(!map_obj.current) {
-            map_obj.current = init_map(map_ref);
-        }
+    if(!map_obj.current) {
+        map_obj.current = init_map(map_ref);
+    }
 
-        // map_obj.current.on('load', () => {
-        //     console.log('Geocoding location:', location);
-
-        //     if(location){
-        //         //update current map
-        //         update_location(map_obj.current, location);
-        //     }
-        }, []);
+    //     }, []);
 
 
-    useEffect(() => {
+    // useEffect(() => {
         if(map_obj.current && center){
             map_obj.current.flyTo({
                 center : center,
@@ -79,6 +45,7 @@ const GenerateMap = ( {center, zoom} ) => {
                 essential : true
             });
         }
+    
     }, [center, zoom]);
  
     return <div ref={map_ref} style={ { width: '100%', height: '400px' } } />;
