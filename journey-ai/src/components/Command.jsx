@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
-import GenerateMap from "./GenerateMap.jsx";
+// import GenerateMap from "./GenerateMap.jsx";
 import ThemeOptions from "./ThemeOptions.jsx";
 
 function Command() {
@@ -12,6 +14,7 @@ function Command() {
     const [command, setCommand] = useState('');
     const [day, setDay] = useState('')
     
+    const _nav = useNavigate();
 
     const handleSubmit = async() => {
         const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days and must use this JSON format look like this
@@ -46,7 +49,7 @@ function Command() {
 
         setCommand(journeyCmd)
         
-
+        _nav("/destination");
     };
 
 
@@ -79,15 +82,12 @@ function Command() {
             <div className={"flex justify-center"}>
             <button
                     className={"bg-gray-800 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded flex flex-col mb-4"}
-                    onClick={handleSubmit}>Generate Plan
-                </button>
+                    onClick={handleSubmit} >Generate Plan
+            </button>
             </div>
 
             <div className={"mx-20 flex justify-center"}>
                 <GeminiResponse command={command}/>
-            </div>
-            <div>
-                <GenerateMap  location={location}/>
             </div>
 
         </div>
