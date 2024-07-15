@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
-// import GenerateMap from "./GenerateMap.jsx";
 import ThemeOptions from "./ThemeOptions.jsx";
 
 function Command() {
@@ -14,8 +12,6 @@ function Command() {
     const [command, setCommand] = useState('');
     const [day, setDay] = useState('')
     
-    const _nav = useNavigate();
-
     const handleSubmit = async() => {
         const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days and must use this JSON format look like this
         example (Please keep the same key name, do not change them):
@@ -49,7 +45,6 @@ function Command() {
 
         setCommand(journeyCmd)
         
-        _nav("/destination");
     };
 
 
