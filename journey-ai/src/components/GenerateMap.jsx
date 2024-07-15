@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from 'mapbox-gl';
+import { useLocation } from "react-router-dom";
 // import mapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 //public token
@@ -16,7 +17,8 @@ const init_map = (map_ref) => {
 };
 
 
-function GenerateMap(props) {
+function GenerateMap() {
+    const location = useLocation();
 
     const [center, setCenter] = useState(null);
     const [zoom, setZoom] = useState(null);
@@ -30,7 +32,7 @@ function GenerateMap(props) {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ location: props.location })
+                    body: JSON.stringify({ location: location.state.location })
                 });
 
                 if (!response.ok) {
@@ -47,10 +49,10 @@ function GenerateMap(props) {
             }
         };
 
-        if (props.location) {
+        if (location.state?.location) {
             fetchMapData();
         }
-    }, [props.location]);
+    }, [location.state?.location ]);
 
     const map_ref = useRef(null);
     const map_obj = useRef(null);

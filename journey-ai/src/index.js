@@ -6,7 +6,6 @@ import App from './App.jsx';
 import reportWebVitals from './reportWebVitals.js';
 import GenerateMap from "./components/GenerateMap.jsx";
 
-const location = 'Pasadena';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,7 +13,7 @@ root.render(
     <Routes>
       <Route path='/'>
         <Route index element={<App/>}/> 
-        <Route path='destination' element={<GenerateMap location={location}/>}/> 
+        <Route path='destination' element={<GenerateMap/>}/> 
       </Route>
     </Routes>
   </BrowserRouter>
