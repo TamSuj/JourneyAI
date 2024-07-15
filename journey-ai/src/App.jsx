@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import Command from './components/Command';
 
 
 function App() {
@@ -15,7 +15,9 @@ function App() {
               <img className="landing-icon" src={"notion-icon.png"} alt='journeyAI Icon'/>
           </div>
 
-          {/*<p className={"text-xs sm:text-base text-gray-900"}>Server status: {!data ? "Connecting..." : data}</p>*/}
+           <div>
+            <Command/>
+           </div>
       </div>
   );
 }
