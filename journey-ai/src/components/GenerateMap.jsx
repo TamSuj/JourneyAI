@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from 'mapbox-gl';
 import { useLocation } from "react-router-dom";
-// import mapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import "./GenerateMap.css"
+import hollywood_pic from "../pictures/hollywood.jpg"
 
 //public token
 mapboxgl.accessToken = 'pk.eyJ1Ijoia255aWhsYWkiLCJhIjoiY2x5YThiM2hpMHpzdzJqcHhhZGhqNmFsdyJ9.RpZAifKmlWn9kQRkakLRYg';
@@ -76,7 +77,20 @@ function GenerateMap() {
         }
     }, [center, zoom]);
 
-    return <div ref={map_ref} style={{ width: '100%', height: '400px' }} />;
+    //We need to redesign this
+    return (
+        <div className="mapPage">
+            <div className="map">
+                <div ref={map_ref} style={{ width: '100%', height: '100vh' }}></div>
+            </div>
+
+            <div className="details">
+                <img src={hollywood_pic} alt="hollywood"/>
+                <p>hahaaha</p>
+            </div>
+        </div>
+        
+    )
 }
 
 export default GenerateMap;

@@ -1,0 +1,12 @@
+.mapPage{
+    display: flex;
+    flex-direction: row;
+}
+
+.map{
+    flex: 1;
+}
+
+.details{
+    flex: 1;
+}
