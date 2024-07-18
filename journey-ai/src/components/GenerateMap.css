@@ -7,6 +7,49 @@
     flex: 1;
 }
 
-.details{
+.detail_container{
     flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.image_container{
+    position: relative;
+    text-align: center;
+}
+
+.title{
+    position: absolute;
+    top: 80%;  
+    left: 50px; 
+    color: white;
+    font-size: 32px;
+}
+
+
+.post_info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 50px
+}
+
+
+.user_info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.user_name_date{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.like_info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
