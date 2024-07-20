@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import LocationInput from "./LocationInput";
@@ -11,9 +11,17 @@ function Command() {
     const [location, setLocation] = useState('');
     const [numOfPeople, setNumOfPeople] = useState('');
     const [command, setCommand] = useState('');
-    const [day, setDay] = useState('')
+    const [day, setDay] = useState('');
+    const [shouldNavigate, setShouldNavigate] = useState(false);
     
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (shouldNavigate) {
+            navigate('/destination', { state: { location } });
+            setShouldNavigate(false);
+        }
+    }, [shouldNavigate, navigate, location]);
 
     const handleSubmit = async() => {
         const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days and must use this JSON format look like this
@@ -45,12 +53,9 @@ function Command() {
                 }, 
             ]
         }`;
-
-        setCommand(journeyCmd)
-        navigate('/destination', {state: {location}});
+        setCommand(journeyCmd);
+        setShouldNavigate(true);
     };
-
-
 
     return (
         <div>
@@ -62,7 +67,7 @@ function Command() {
                 </div>
                 <div>
                     <div className={"slide"}>
-                    <ThemeOptions/>
+                        <ThemeOptions/>
                     </div>
                 </div>
             </div>
@@ -78,10 +83,10 @@ function Command() {
 
             {/*Button to generate plan from input value*/}
             <div className={"flex justify-center"}>
-            <button
+                <button
                     className={"bg-gray-800 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded flex flex-col mb-4"}
-                    onClick={handleSubmit} >Generate Plan
-            </button>
+                    onClick={handleSubmit}>Generate Plan
+                </button>
             </div>
 
             <div className={"mx-20 flex justify-center"}>
