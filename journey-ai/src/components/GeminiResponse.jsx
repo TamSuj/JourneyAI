@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 function GeminiResponse(props){
     //Initialize State variable
     const [data, setData] = useState('')
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchGeminiData = async() => {
@@ -20,8 +22,11 @@ function GeminiResponse(props){
                 }
                 const data = await response.json();
                 setData(data.message);
+                props.onDataReceived(data.message);
             } catch (error) {
-                console.error("Error fetching /gemini_reponse: ", error);
+                setError(error.message);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -30,7 +35,7 @@ function GeminiResponse(props){
 
     return (
         <div className="GeminiResponse">
-            <p>{!data ? "" : data}</p>
+            {!data ? "" : data}
         </div>
     )
 };

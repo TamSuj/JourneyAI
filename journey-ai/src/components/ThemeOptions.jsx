@@ -1,22 +1,24 @@
-function ThemeOption() {
-    return (
+import {useEffect, useState} from "react";
 
-        // <div id="theme-options">
-        //     <input type="checkbox" name="Adventure" value="adventure"/>
-        //     <label htmlFor="Adventure">Adventure</label><br/>
-        //
-        //     <input type="checkbox" name="Cultural" value="cultural"/>
-        //     <label htmlFor="Cultural">Cultural</label><br/>
-        //
-        //     <input type="checkbox" name="Beach" value="beach"/>
-        //     <label htmlFor="Beach">Beach</label><br/>
-        //
-        //     <input type="checkbox" name="City" value="city"/>
-        //     <label htmlFor="City">City</label><br/>
-        //
-        //     <input type="checkbox" name="Nature" value="nature"/>
-        //     <label htmlFor="Nature">Nature</label><br/>
-        // </div>
+function ThemeOption({setTheme}) {
+    const [selectedThemes, setSelectedThemes] = useState([]);
+
+    useEffect(() => {
+        setTheme(selectedThemes);
+    }, [selectedThemes, setTheme]);
+    const handleChange = (event) => {
+        const { value, checked } = event.target;
+        setSelectedThemes((prev) => {
+            if (checked) {
+                // Append the value if the checkbox is checked
+                return [...prev, value];
+            } else {
+                // Remove the value if the checkbox is unchecked
+                return prev.filter((theme) => theme !== value);
+            }
+        });
+    };
+    return (
         <div>
             <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
                     className={"text-white bg-orange-500 p-3 ring-orange-500 focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-3 text-center inline-flex items-center dark:bg-orange-500 dark:hover:bg-orange-700 dark:focus:ring-white"}
@@ -30,15 +32,16 @@ function ThemeOption() {
             </button>
 
             <div id="dropdown"
-                 class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
-                <ul class="py-2 text-sm text-black dark:text-black" aria-labelledby="dropdownDefaultButton">
+                 className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                <ul className="py-2 text-sm text-black dark:text-black" aria-labelledby="dropdownDefaultButton">
                     <li>
                         <div className="inline-flex items-center pl-1">
                             <label className="relative flex items-center p-3 rounded-full cursor-pointer"
                                    htmlFor="beach">
                                 <input type="checkbox" name="Beach" value="beach"
                                        className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-10"
-                                       id="beach"/>
+                                       id="beach"
+                                       onChange={handleChange}/>
                                 <span
                                     className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
                                   <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20"
@@ -51,8 +54,7 @@ function ThemeOption() {
                                 </span>
                             </label>
                             <label className="mt-px cursor-pointer select-none"
-                                   htmlFor="City">
-                                Beach
+                                   htmlFor="City">Beach
                             </label>
                         </div>
                     </li>
@@ -62,7 +64,8 @@ function ThemeOption() {
                                    htmlFor="culture">
                                 <input type="checkbox" name="Culture" value="culture"
                                        className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-10"
-                                       id="culture"/>
+                                       id="culture"
+                                       onChange={handleChange}/>
                                 <span
                                     className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
                                   <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20"
@@ -86,7 +89,8 @@ function ThemeOption() {
                                    htmlFor="city">
                                 <input type="checkbox" name="City" value="city"
                                        className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-10"
-                                       id="city"/>
+                                       id="city"
+                                       onChange={handleChange}/>
                                 <span
                                     className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
                                   <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20"
@@ -107,7 +111,8 @@ function ThemeOption() {
                                    htmlFor="nature">
                                 <input type="checkbox" name="Nature" value="nature"
                                        className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-10"
-                                       id="nature"/>
+                                       id="nature"
+                                       onChange={handleChange}/>
                                 <span
                                     className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
                                   <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20"

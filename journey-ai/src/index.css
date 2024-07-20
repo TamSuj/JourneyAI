@@ -15,4 +15,6 @@ code {
     monospace;
 }
 
-
+::selection {
+  background: #cbcbcb;
+}

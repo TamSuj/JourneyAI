@@ -11,15 +11,18 @@ function Command() {
     const [numOfPeople, setNumOfPeople] = useState('');
     const [command, setCommand] = useState('');
     const [day, setDay] = useState('')
-    
+    const [theme, setTheme] = useState('');
+    const [responseData, setResponseData] = useState(null);
+
 
     const handleSubmit = async() => {
-        const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days and must use this JSON format look like this
+        const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days in the ${theme} theme and must use this JSON format look like this
         example (Please keep the same key name, do not change them):
         {
             "tripName": "Pasadena Getaway", 
             "travelers": 3, 
             "duration": 2, 
+            "theme: "Culture",
             "itinerary": 
             [
                 {
@@ -88,6 +91,11 @@ function Command() {
 
     };
 
+    const handleResponse = (data) => {
+        setResponseData(data);
+    };
+
+
     return (
         <div>
             {/*Logo*/}
@@ -98,7 +106,7 @@ function Command() {
                 </div>
                 <div>
                     <div className={"slide"}>
-                    <ThemeOptions/>
+                    <ThemeOptions setTheme={setTheme}/>
                     </div>
                 </div>
             </div>
@@ -121,8 +129,16 @@ function Command() {
             </div>
 
             <div className={"mx-20 flex justify-center"}>
-                <GeminiResponse command={command}/>
+                <GeminiResponse command={command} onDataReceived={handleResponse}/>
             </div>
+
+            {/*{responseData && (*/}
+            {/*    <div className="card">*/}
+            {/*        <h2>Response Data</h2>*/}
+            {/*        <pre>{JSON.stringify(responseData, null, 2)}</pre>*/}
+            {/*    </div>*/}
+            {/*)}*/}
+
             {location && <GenerateMap center={location.center} zoom={location.zoom} />}
 
         </div>
@@ -130,4 +146,3 @@ function Command() {
 }
 
 export default Command;
-
