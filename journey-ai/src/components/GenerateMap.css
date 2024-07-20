@@ -1,6 +1,8 @@
 .mapPage{
     display: flex;
     flex-direction: row;
+    overflow: hidden;
+
 }
 
 .map{
@@ -11,6 +13,8 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    overflow: auto;
+    
 }
 
 .image_container{
@@ -31,7 +35,9 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 50px
+    padding-top: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
 
@@ -52,4 +58,35 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.detail_plan{
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.day_plan{
+    padding-top: 40px;
+}
+
+.day_plan h1{
+    font-size: 30px;
+}
+
+.card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.location_description{
+    display: flex;
+    flex-direction: column;
+}
+
+.description{
+    font-size: 30px;
 }
