@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-
-
 function GeminiResponse(props){
     //Initialize State variable
     const [data, setData] = useState('')

@@ -6,6 +6,7 @@ import DayCount from "./DayCount.jsx";
 import GenerateMap from "./GenerateMap.jsx";
 import ThemeOptions from "./ThemeOptions.jsx";
 import DisplayResponse from "./DisplayResponse.jsx";
+import FetchImage from "./FetchImage.jsx";
 
 function Command() {
     const [location, setLocation] = useState('');
@@ -130,7 +131,8 @@ function Command() {
 
             <GeminiResponse command={command} onDataReceived={handleResponse}/>
             {responseData && <DisplayResponse response={responseData} />}
-            {location && <GenerateMap center={location.center} zoom={location.zoom}/>}
+            <FetchImage/>
+            {/*{location && <GenerateMap center={location.center} zoom={location.zoom}/>}*/}
         </div>
     );
 }
