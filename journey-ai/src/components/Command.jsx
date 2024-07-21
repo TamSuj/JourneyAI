@@ -13,7 +13,9 @@ function Command() {
     const [command, setCommand] = useState('');
     const [day, setDay] = useState('');
     const [shouldNavigate, setShouldNavigate] = useState(false);
-    
+    const [theme, setTheme] = useState('');
+    const [responseData, setResponseData] = useState(null);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,12 +26,13 @@ function Command() {
     }, [shouldNavigate, navigate, location]);
 
     const handleSubmit = async() => {
-        const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days and must use this JSON format look like this
+        const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days in the ${theme} theme and must use this JSON format look like this
         example (Please keep the same key name, do not change them):
         {
-            "tripName": "Pasadena Getaway", 
+            "tripName": "Pasadena Trip", 
             "travelers": 3, 
             "duration": 2, 
+            "theme: "Culture",
             "itinerary": 
             [
                 {
@@ -53,8 +56,13 @@ function Command() {
                 }, 
             ]
         }`;
+
         setCommand(journeyCmd);
         setShouldNavigate(true);
+    };
+
+    const handleResponse = (data) => {
+        setResponseData(data);
     };
 
     return (
@@ -67,7 +75,7 @@ function Command() {
                 </div>
                 <div>
                     <div className={"slide"}>
-                        <ThemeOptions/>
+                        <ThemeOptions setTheme={setTheme}/>
                     </div>
                 </div>
             </div>
@@ -90,7 +98,7 @@ function Command() {
             </div>
 
             <div className={"mx-20 flex justify-center"}>
-                <GeminiResponse command={command}/>
+                <GeminiResponse command={command} onDataReceived={handleResponse}/>
             </div>
 
         </div>
