@@ -18,18 +18,18 @@ function DisplayResponse({ response }) {
             {parsedResponse && parsedResponse.itinerary ? (
                 parsedResponse.itinerary.map((day, index) => (
                     <div key={index} className="day-card">
-                        <h2 className={"ml-7 text-xl mt-10"}>Day {index + 1}</h2>
+                        <h2 className={"ml-7 text-xl"}>Day {index + 1}</h2>
                         {day.activities && day.activities.map((activity, activityIndex) => (
                             <div key={activityIndex} className="card">
                                 <div className="card-content">
-                                    <div className="">
+                                    <div>
                                         <h2>{activity.name}</h2>
                                         <div className="card-type">{activity.type}</div>
                                         <div className="card-duration"><i className="fa-regular fa-clock mx-2"></i>{activity.duration}
                                         </div>
                                         <div className="card-description">{activity.description}</div>
                                     </div>
-                                    <div className="">
+                                    <div>
                                         <FetchImage query={activity.name}/>
                                     </div>
                                 </div>

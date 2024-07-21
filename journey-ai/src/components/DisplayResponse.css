@@ -12,3 +12,17 @@
     font-size: smaller;
     border-radius: 20px;
 }
+
+.card-type, .card-duration {
+    font-size: 0.875rem;
+    color: #666;
+    margin-top: 5px;
+}
+
+.card-duration {
+    background: #e0e0e0;
+    color: #333;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    display: inline-block;
+}
