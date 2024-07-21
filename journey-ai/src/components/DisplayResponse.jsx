@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import FetchImage from './FetchImage';
+import './DisplayResponse.css';
 function DisplayResponse({ response }) {
     const [parsedResponse, setParsedResponse] = useState(null);
 
@@ -17,15 +18,20 @@ function DisplayResponse({ response }) {
             {parsedResponse && parsedResponse.itinerary ? (
                 parsedResponse.itinerary.map((day, index) => (
                     <div key={index} className="day-card">
-                        <h2>Day {index + 1}</h2>
+                        <h2 className={"ml-7 text-xl mt-10"}>Day {index + 1}</h2>
                         {day.activities && day.activities.map((activity, activityIndex) => (
                             <div key={activityIndex} className="card">
                                 <div className="card-content">
-                                    <h2>{activity.name}</h2>
-                                    <div className="card-type">{activity.type}</div>
-                                    <div className="card-duration">{activity.duration}</div>
-                                    <div className="card-description">{activity.description}</div>
-                                    <FetchImage query={activity.name} />
+                                    <div className="">
+                                        <h2>{activity.name}</h2>
+                                        <div className="card-type">{activity.type}</div>
+                                        <div className="card-duration"><i className="fa-regular fa-clock mx-2"></i>{activity.duration}
+                                        </div>
+                                        <div className="card-description">{activity.description}</div>
+                                    </div>
+                                    <div className="">
+                                        <FetchImage query={activity.name}/>
+                                    </div>
                                 </div>
                             </div>
                         ))}

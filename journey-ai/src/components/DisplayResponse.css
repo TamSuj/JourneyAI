@@ -1,0 +1,14 @@
+.card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.card-duration {
+    background: #A9A9A9;
+    color: white;
+    max-width: 9rem;
+    padding: 0.3rem;
+    font-size: smaller;
+    border-radius: 20px;
+}

@@ -4,7 +4,8 @@ import "./FetchImage.css";
 function FetchImage({query}){
     const [data, setPhotosResponse] = useState(null);
     const api = createApi({
-        accessKey: "pCKjY638XRrEvYTwlpIXdlC2c7ZjLhvkjrJ2qxzl7i0"
+        // accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
+        accessKey: 'pCKjY638XRrEvYTwlpIXdlC2c7ZjLhvkjrJ2qxzl7i0'
     });
 
     const PhotoComp = ({ photo }) => {
