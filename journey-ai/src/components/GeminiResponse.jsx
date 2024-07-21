@@ -33,11 +33,7 @@ function GeminiResponse(props){
         fetchGeminiData();
     },[props.command]);
 
-    return (
-        <div className="GeminiResponse">
-            {!data ? "" : data}
-        </div>
-    )
-};
+    return null;
+}
 
 export default GeminiResponse;

@@ -5,6 +5,7 @@ import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
 import GenerateMap from "./GenerateMap.jsx";
 import ThemeOptions from "./ThemeOptions.jsx";
+import DisplayResponse from "./DisplayResponse.jsx";
 
 function Command() {
     const [location, setLocation] = useState('');
@@ -19,7 +20,7 @@ function Command() {
         const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days in the ${theme} theme and must use this JSON format look like this
         example (Please keep the same key name, do not change them):
         {
-            "tripName": "Pasadena Getaway", 
+            "tripName": "Pasadena Trip", 
             "travelers": 3, 
             "duration": 2, 
             "theme: "Culture",
@@ -106,7 +107,7 @@ function Command() {
                 </div>
                 <div>
                     <div className={"slide"}>
-                    <ThemeOptions setTheme={setTheme}/>
+                        <ThemeOptions setTheme={setTheme}/>
                     </div>
                 </div>
             </div>
@@ -122,25 +123,15 @@ function Command() {
 
             {/*Button to generate plan from input value*/}
             <div className={"flex justify-center"}>
-            <button
+                <button
                     className={"bg-gray-800 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded flex flex-col mb-4"}
                     onClick={handleSubmit}>Generate Plan
                 </button>
             </div>
 
-            <div className={"mx-20 flex justify-center"}>
-                <GeminiResponse command={command} onDataReceived={handleResponse}/>
-            </div>
-
-            {/*{responseData && (*/}
-            {/*    <div className="card">*/}
-            {/*        <h2>Response Data</h2>*/}
-            {/*        <pre>{JSON.stringify(responseData, null, 2)}</pre>*/}
-            {/*    </div>*/}
-            {/*)}*/}
-
-            {location && <GenerateMap center={location.center} zoom={location.zoom} />}
-
+            <GeminiResponse command={command} onDataReceived={handleResponse}/>
+            {responseData && <DisplayResponse response={responseData} />}
+            {location && <GenerateMap center={location.center} zoom={location.zoom}/>}
         </div>
     );
 }
