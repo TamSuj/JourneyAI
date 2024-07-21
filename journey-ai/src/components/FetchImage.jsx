@@ -1,7 +1,7 @@
 import {Fragment, useEffect, useState} from "react";
-import ReactDOM from "react-dom";
 import { createApi } from "unsplash-js";
-function FetchImage(){
+import "./FetchImage.css";
+function FetchImage({query}){
     const [data, setPhotosResponse] = useState(null);
     const api = createApi({
         accessKey: "pCKjY638XRrEvYTwlpIXdlC2c7ZjLhvkjrJ2qxzl7i0"
@@ -9,31 +9,29 @@ function FetchImage(){
 
     const PhotoComp = ({ photo }) => {
         const { user, urls } = photo;
-
         return (
             <Fragment>
-                <img className="img" src={urls.regular} />
-                <a
-                    className="credit"
+                <a className="credit"
                     target="_blank"
                     href={`https://unsplash.com/@${user.username}`}
-                >
-                    {user.name}
+                ><img className="img" src={urls.regular} alt={"Image by ${user.name}"}/>
                 </a>
             </Fragment>
         );
     };
 
     useEffect(() => {
-        api.search
-            .getPhotos({ query: "Bangkok, Thailand", orientation: "landscape" })
-            .then(result => {
-                setPhotosResponse(result);
-            })
-            .catch(() => {
-                console.log("something went wrong!");
-            });
-    }, []);
+        if(query){
+            api.search
+                .getPhotos({query: query, orientation: "landscape"})
+                .then(result => {
+                    setPhotosResponse(result);
+                })
+                .catch(() => {
+                    console.log("something went wrong!");
+                });
+        }
+    }, [query]);
 
     if (data === null) {
         return <div>Loading...</div>;
@@ -41,19 +39,13 @@ function FetchImage(){
         return (
             <div>
                 <div>{data.errors[0]}</div>
-                <div>PS: Make sure to set your access token!</div>
             </div>
         );
     } else {
+        const photo = data.response.results[0]; // Only display the first photo
         return (
             <div className="feed">
-                <ul className="columnUl">
-                    {data.response.results.map(photo => (
-                        <li key={photo.id} className="li">
-                            <PhotoComp photo={photo} />
-                        </li>
-                    ))}
-                </ul>
+                <PhotoComp photo={photo} />
             </div>
         );
     }

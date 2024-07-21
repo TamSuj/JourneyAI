@@ -3,11 +3,8 @@ import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
-import GenerateMap from "./GenerateMap.jsx";
 import ThemeOptions from "./ThemeOptions.jsx";
 import DisplayResponse from "./DisplayResponse.jsx";
-import FetchImage from "./FetchImage.jsx";
-
 function Command() {
     const [location, setLocation] = useState('');
     const [numOfPeople, setNumOfPeople] = useState('');
@@ -131,8 +128,6 @@ function Command() {
 
             <GeminiResponse command={command} onDataReceived={handleResponse}/>
             {responseData && <DisplayResponse response={responseData} />}
-            <FetchImage/>
-            {/*{location && <GenerateMap center={location.center} zoom={location.zoom}/>}*/}
         </div>
     );
 }

@@ -1,68 +1,42 @@
-import React, { useEffect } from 'react';
-
+import { useEffect, useState } from 'react';
+import FetchImage from './FetchImage';
 function DisplayResponse({ response }) {
+    const [parsedResponse, setParsedResponse] = useState(null);
+
     useEffect(() => {
-        function showCards() {
-            let parsedResponse;
-
-            try {
-                parsedResponse = typeof response === 'string' ? JSON.parse(response) : response;
-            } catch (error) {
-                console.error('Error parsing response:', error);
-                return;
-            }
-
-            const cardContainer = document.getElementById('card-container');
-            cardContainer.innerHTML = '';
-
-            if (parsedResponse && parsedResponse.itinerary) {
-                parsedResponse.itinerary.forEach((day, index) => {
-                    const dayCard = createDayCard(day, index + 1);
-                    cardContainer.appendChild(dayCard);
-                });
-            }
-        }
-
-        function createDayCard(day, dayNumber) {
-            const dayCardTemplate = document.createElement('div');
-            dayCardTemplate.className = 'day-card';
-
-            dayCardTemplate.innerHTML = `
-                <h2>Day ${dayNumber}</h2>
-            `;
-
-            if (day.activities) {
-                day.activities.forEach(activity => {
-                    const activityCard = createActivityCard(activity);
-                    dayCardTemplate.appendChild(activityCard);
-                });
-            }
-
-            return dayCardTemplate;
-        }
-
-        function createActivityCard(activity) {
-            const activityCardTemplate = document.createElement('div');
-            activityCardTemplate.className = 'card';
-
-            activityCardTemplate.innerHTML = `
-                <div class="card-content">
-                    <h2>${activity.name}</h2>
-                    <div class="card-type">${activity.type}</div>
-                    <div class="card-duration">${activity.duration}</div>
-                    <div class="card-description">${activity.description}</div>
-                </div>
-            `;
-
-            return activityCardTemplate;
-        }
-
-        if (response) {
-            showCards();
+        try {
+            const parsed = typeof response === 'string' ? JSON.parse(response) : response;
+            setParsedResponse(parsed);
+        } catch (error) {
+            console.error('Error parsing response:', error);
         }
     }, [response]);
 
-    return <div id="card-container"></div>;
+    return (
+        <div id="card-container">
+            {parsedResponse && parsedResponse.itinerary ? (
+                parsedResponse.itinerary.map((day, index) => (
+                    <div key={index} className="day-card">
+                        <h2>Day {index + 1}</h2>
+                        {day.activities && day.activities.map((activity, activityIndex) => (
+                            <div key={activityIndex} className="card">
+                                <div className="card-content">
+                                    <h2>{activity.name}</h2>
+                                    <div className="card-type">{activity.type}</div>
+                                    <div className="card-duration">{activity.duration}</div>
+                                    <div className="card-description">{activity.description}</div>
+                                    <FetchImage query={activity.name} />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ))
+            ) : (
+                <div>No itinerary found</div>
+            )}
+        </div>
+    );
 }
 
 export default DisplayResponse;
+
