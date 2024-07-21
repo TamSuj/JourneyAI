@@ -1,0 +1,15 @@
+.card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.location_description{
+    display: flex;
+    flex-direction: column;
+}
+
+.description{
+    font-size: 30px;
+}

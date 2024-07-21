@@ -20,10 +20,10 @@ function Command() {
 
     useEffect(() => {
         if (shouldNavigate) {
-            navigate('/destination', { state: { location } });
+            navigate('/destination', { state: { location, responseData } });
             setShouldNavigate(false);
         }
-    }, [shouldNavigate, navigate, location]);
+    }, [shouldNavigate, navigate, location, responseData]);
 
     const handleSubmit = async() => {
         const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days in the ${theme} theme and must use this JSON format look like this

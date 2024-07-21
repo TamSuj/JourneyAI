@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 
-function GeminiResponse(props){
+function GeminiResponse({props}){
     //Initialize State variable
     const [data, setData] = useState('')
 
@@ -20,13 +20,15 @@ function GeminiResponse(props){
                 }
                 const data = await response.json();
                 setData(data.message);
+                props.setResponseData(data.message);
+
             } catch (error) {
                 console.error("Error fetching /gemini_reponse: ", error);
             }
         };
 
         fetchGeminiData();
-    },[props.command]);
+    },[props]);
 
     return (
         <div className="GeminiResponse">
