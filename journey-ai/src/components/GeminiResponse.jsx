@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 
 
-function GeminiResponse({props}){
+function GeminiResponse(props){
     //Initialize State variable
     const [data, setData] = useState('')
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchGeminiData = async() => {
@@ -19,22 +21,19 @@ function GeminiResponse({props}){
                     throw new Error(`HTTP error! status: ${response.status}`)
                 }
                 const data = await response.json();
+                props.onDataReceived(data.message);
                 setData(data.message);
-                props.setResponseData(data.message);
-
             } catch (error) {
-                console.error("Error fetching /gemini_reponse: ", error);
+                setError(error.message);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchGeminiData();
-    },[props]);
+    },[props.command]);
 
-    return (
-        <div className="GeminiResponse">
-            <p>{!data ? "" : data}</p>
-        </div>
-    )
-};
+    return null;
+}
 
 export default GeminiResponse;

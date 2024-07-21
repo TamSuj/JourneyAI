@@ -23,21 +23,21 @@ const init_map = (map_ref) => {
 function GenerateMap() {
     const location = useLocation();
 
-    if(!location.state.responseData){
-        console.log("No response in response Data");
-    }
 
-    if(location.state.responseData){
-        console.log("response in response Data");
+
+    if(location.state.location){
+        console.log(location.state);
     }
 
     const [center, setCenter] = useState(null);
     const [zoom, setZoom] = useState(null);
 
     useEffect(() => {
-
         const fetchMapData = async () => {
-            try {
+
+            if(location.state.responseData){
+                try {
+                    console.log(location.state);
                 const response = await fetch("/map", {
                     method: "POST",
                     headers: {
@@ -58,6 +58,9 @@ function GenerateMap() {
             } catch (error) {
                 console.error('Error fetching map data:', error);
             }
+            }
+
+            
         };
 
         if (location.state?.location) {

@@ -20,7 +20,7 @@ function Command() {
 
     useEffect(() => {
         if (shouldNavigate) {
-            navigate('/destination', { state: { location, responseData } });
+            navigate('/destination', { state: { location : location, responseData : responseData} });
             setShouldNavigate(false);
         }
     }, [shouldNavigate, navigate, location, responseData]);
@@ -98,7 +98,7 @@ function Command() {
             </div>
 
             <div className={"mx-20 flex justify-center"}>
-                <GeminiResponse command={command} onDataReceived={handleResponse}/>
+                <GeminiResponse command={command} onDataReceived={setResponseData}/>
             </div>
 
         </div>
