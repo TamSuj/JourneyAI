@@ -121,7 +121,6 @@ function Command() {
                 </div>
             </div>
 
-            {/*Button to generate plan from input value*/}
             <div className={"flex justify-center"}>
                 <button
                     className={"bg-gray-800 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded flex flex-col mb-4"}
