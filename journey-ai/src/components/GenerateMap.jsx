@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import "./GenerateMap.css"
 import hollywood_pic from "../pictures/hollywood.jpg"
 import man_walking_pic from "../pictures/man_walking.jpg"
+import 'mapbox-gl/dist/mapbox-gl.css';
 //public token
 mapboxgl.accessToken = 'pk.eyJ1Ijoia255aWhsYWkiLCJhIjoiY2x5YThiM2hpMHpzdzJqcHhhZGhqNmFsdyJ9.RpZAifKmlWn9kQRkakLRYg';
 
@@ -57,6 +58,7 @@ function GenerateMap() {
 
     const map_ref = useRef(null);
     const map_obj = useRef(null);
+    const marker_ref = useRef(null);
 
     //if doesn't exist, create one
     useEffect(() => {
@@ -64,6 +66,7 @@ function GenerateMap() {
         if (!map_obj.current) {
             map_obj.current = init_map(map_ref);
         }
+
     }, []);
 
     //flyTo
@@ -74,8 +77,22 @@ function GenerateMap() {
                 zoom: zoom,
                 essential: true
             });
+
+        //if doesn't exist, initialize marker
+        if(!marker_ref.current){
+            marker_ref.current = new mapboxgl.Marker({ color : 'red'})
+                .setLngLat(center)
+                .addTo(map_obj.current)
+        } else {
+            marker_ref.current.setLngLat(center) //update
         }
+        
+    }
+
     }, [center, zoom]);
+
+
+
 
     //We need to redesign this 
     return (
