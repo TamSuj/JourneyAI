@@ -1,35 +1,29 @@
 // import { useState, useEffect } from "react";
-import man_walking_pic from "../pictures/man_walking.jpg"
 import "../css/Card.css"
+import FetchImage from "./FetchImage.jsx";
 
-
-function Card( {response} ){
-    if(response){
-        console.log(response);
-    }
+function Card( props ){
 
     return (
-        <div className="detail pt-6">
-            {/* Card 1 */}
+        <div key={props.activityIndex} className="detail pt-6">
             <div className="card w-full rounded-lg bg-gray-50 p-3">
                 <div className="location_description">
-                    
                     {/* Description */}
                     <div className="description">
-                        <p>{response.description}</p>
+                        <p>{props.activity.name}</p>
+                        <p className="card-type">{props.activity.type}</p>
+                        <p className="card-description">{props.activity.description}</p>
                     </div>
 
-                    <div class="relative w-fit cursor-default items-center gap-1.5 rounded-full border border-solid border-gray-200 bg-white px-3 py-0.5 text-xs md:text-sm"><span class="text-gray-500">7:30 AM - 7:30 AM</span></div>
+                    <div class="relative w-fit cursor-default items-center gap-1.5 rounded-full border border-solid border-gray-200 bg-white px-3 py-0.5 text-xs md:text-sm"><span class="text-gray-500">{props.activity.duration}</span></div>
+
                 </div>
-
-
+                
                 {/* Image */}
                 <div className="location_image">
-                    <img className="rounded-lg" src={man_walking_pic} alt="A man walking on the street" width={200} height={200} />
+                    <FetchImage query={props.activity.name}/>
                 </div>
             </div>
-
-            <div class="mx-5 flex items-center border-l-2 border-solid border-gray-200 py-4 pl-5 text-[12px] md:mx-6 md:text-sm border-solid"></div>
         </div>
     )
 }

@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import mapboxgl from 'mapbox-gl';
 import { useLocation } from "react-router-dom";
 import "../css/GenerateMap.css"
-import Day from "./Day.jsx";
 import UserInfo from "./UserInfo.jsx"
 import ImageContainer from "./ImageContainer.jsx";
 import DisplayCard from "./DisplayCard.jsx";
@@ -93,10 +92,9 @@ function GenerateMap() {
             </div>
             
             <div className="detail_container">
-                <ImageContainer/>
+                <ImageContainer location={location.state.location} response={location.state.responseData}/>
                 <UserInfo/>
                 <div className="detail_plan">
-                    {/* <Day/> */}
                     <DisplayCard response={location.state.responseData}/>
                 </div>
             </div>

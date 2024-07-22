@@ -32,7 +32,7 @@ function GeminiResponse(props){
         if (props.command) {
             fetchGeminiData();
         }
-    }, [props.command]);
+    }, [props]);
 
     if (loading) {
         return <p>Loading...</p>;
