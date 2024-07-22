@@ -11,5 +11,10 @@
 }
 
 .description{
-    font-size: 30px;
+    font-size: 15px;
+}
+
+.location_image{
+    max-width: 175px;
+    max-height: 175px;
 }

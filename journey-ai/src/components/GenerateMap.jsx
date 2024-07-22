@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import mapboxgl from 'mapbox-gl';
 import { useLocation } from "react-router-dom";
 import "../css/GenerateMap.css"
-import Card from "./Card.jsx";
 import Day from "./Day.jsx";
 import UserInfo from "./UserInfo.jsx"
 import ImageContainer from "./ImageContainer.jsx";
+import DisplayCard from "./DisplayCard.jsx";
 //public token
 mapboxgl.accessToken = 'pk.eyJ1Ijoia255aWhsYWkiLCJhIjoiY2x5YThiM2hpMHpzdzJqcHhhZGhqNmFsdyJ9.RpZAifKmlWn9kQRkakLRYg';
 
@@ -23,8 +23,6 @@ const init_map = (map_ref) => {
 function GenerateMap() {
     const location = useLocation();
 
-
-
     if(location.state.location){
         console.log(location.state);
     }
@@ -35,15 +33,14 @@ function GenerateMap() {
     useEffect(() => {
         const fetchMapData = async () => {
 
-            if(location.state.responseData){
-                try {
-                    console.log(location.state);
+            try {
+                console.log(location.state);
                 const response = await fetch("/map", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ location: location.state.location })
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ location: location.state.location })
                 });
 
                 if (!response.ok) {
@@ -58,8 +55,6 @@ function GenerateMap() {
             } catch (error) {
                 console.error('Error fetching map data:', error);
             }
-            }
-
             
         };
 
@@ -101,8 +96,8 @@ function GenerateMap() {
                 <ImageContainer/>
                 <UserInfo/>
                 <div className="detail_plan">
-                    <Day/>
-                    <Card response={location.state.responseData}/>
+                    {/* <Day/> */}
+                    <DisplayCard response={location.state.responseData}/>
                 </div>
             </div>
 
