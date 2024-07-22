@@ -51,6 +51,13 @@ app.post("/gemini_response", async (req, res) => {
         const response = result.response;
         const text = response.text();
         console.log("Received request for /gemini_reponse");
+        if(!text){
+            console.log("No response")
+        }
+
+        if(!prompt){
+            console.log("No prompt")
+        }
         console.log(prompt);
         console.log(text);
 
