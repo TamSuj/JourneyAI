@@ -3,8 +3,9 @@ import React from 'react';
 import Command from './components/Command';
 
 
-function App() {
-
+function App() 
+{
+    
   return (
       <div className="App">
           <div className="text-center landing-margin">
