@@ -12,24 +12,19 @@ function Command() {
     const [numOfPeople, setNumOfPeople] = useState('');
     const [command, setCommand] = useState('');
     const [day, setDay] = useState('');
-    const [shouldNavigate, setShouldNavigate] = useState(false);
-    
+    const [theme, setTheme] = useState('');
+    const [responseData, setResponseData] = useState(null);
+
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (shouldNavigate) {
-            navigate('/destination', { state: { location } });
-            setShouldNavigate(false);
-        }
-    }, [shouldNavigate, navigate, location]);
-
-    const handleSubmit = async() => {
-        const journeyCmd =  `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days and must use this JSON format look like this
+    const handleSubmit = async () => {
+        const journeyCmd = `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days in the ${theme} theme and must use this JSON format look like this
         example (Please keep the same key name, do not change them):
         {
-            "tripName": "Pasadena Getaway", 
+            "tripName": "Pasadena Trip", 
             "travelers": 3, 
             "duration": 2, 
+            "theme": "Culture",
             "itinerary": 
             [
                 {
@@ -53,13 +48,24 @@ function Command() {
                 }, 
             ]
         }`;
+
         setCommand(journeyCmd);
-        setShouldNavigate(true);
     };
+
+    const handleResponse = (data) => {
+        setResponseData(data);
+    };
+
+    useEffect(() => {
+        if (responseData) {
+            console.log("Response Data: ", responseData);
+            navigate('/destination', { state: { location: location, responseData: responseData } });
+        }
+    }, [responseData, navigate, location]);
 
     return (
         <div>
-            {/*Logo*/}
+            {/* Logo */}
             <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon'/>
             <div className={"search-parent"}>
                 <div className={"w-full min-w-2/3 lg:max-w-6xl"}>
@@ -67,7 +73,7 @@ function Command() {
                 </div>
                 <div>
                     <div className={"slide"}>
-                        <ThemeOptions/>
+                        <ThemeOptions setTheme={setTheme}/>
                     </div>
                 </div>
             </div>
@@ -81,7 +87,7 @@ function Command() {
                 </div>
             </div>
 
-            {/*Button to generate plan from input value*/}
+            {/* Button to generate plan from input value */}
             <div className={"flex justify-center"}>
                 <button
                     className={"bg-gray-800 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded flex flex-col mb-4"}
@@ -90,9 +96,8 @@ function Command() {
             </div>
 
             <div className={"mx-20 flex justify-center"}>
-                <GeminiResponse command={command}/>
+                <GeminiResponse command={command} onDataReceived={handleResponse}/>
             </div>
-
         </div>
     );
 }
