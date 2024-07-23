@@ -20,8 +20,8 @@ function Card( props ){
                 </div>
                 
                 {/* Image */}
-                <div className="location_image">
-                    <FetchImage query={props.activity.name}/>
+                <div className="location_image rounded-lg">
+                    <FetchImage query={props.activity.name} className="rounded-lg"/>
                 </div>
             </div>
         </div>
