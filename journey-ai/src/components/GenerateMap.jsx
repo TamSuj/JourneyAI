@@ -2,9 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import mapboxgl from 'mapbox-gl';
 import { useLocation } from "react-router-dom";
 import "../css/GenerateMap.css"
-import UserInfo from "./UserInfo.jsx"
-import ImageContainer from "./ImageContainer.jsx";
-import DisplayCard from "./DisplayCard.jsx";
+import DetailContainer from "./DetailContainer.jsx";
 //public token
 mapboxgl.accessToken = 'pk.eyJ1Ijoia255aWhsYWkiLCJhIjoiY2x5YThiM2hpMHpzdzJqcHhhZGhqNmFsdyJ9.RpZAifKmlWn9kQRkakLRYg';
 
@@ -60,7 +58,7 @@ function GenerateMap() {
         if (location.state?.location) {
             fetchMapData();
         }
-    }, [location.state?.location ]);
+    }, [location.state]);
 
     const map_ref = useRef(null);
     const map_obj = useRef(null);
@@ -91,13 +89,7 @@ function GenerateMap() {
                 <div ref={map_ref} style={{ width: '100%', height: '100vh' }}></div>
             </div>
             
-            <div className="detail_container">
-                <ImageContainer location={location.state.location} response={location.state.responseData}/>
-                <UserInfo/>
-                <div className="detail_plan">
-                    <DisplayCard response={location.state.responseData}/>
-                </div>
-            </div>
+            <DetailContainer location={location}/>
 
         </div>
         
