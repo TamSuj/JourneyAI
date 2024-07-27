@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
+import LoadingPage from "./LoadingPage";
 
-
-function GeminiResponse(props){
+function GeminiResponse(props) {
     const [data, setData] = useState('');
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchGeminiData = async() => {
+        const fetchGeminiData = async () => {
             try {
-                const response  = await fetch("/gemini_response",{
+                setLoading(true);
+
+                const response = await fetch("/gemini_response", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
-                    },                    
+                    },
                     body: JSON.stringify({ prompt: props.command })
                 });
                 if (!response.ok) {
@@ -35,17 +37,13 @@ function GeminiResponse(props){
         }
     }, [props]);
 
-    if (loading) {
-        return <p></p>
-    }
-
     if (error) {
         return <p>Error: {error}</p>;
     }
 
     return (
         <div className="GeminiResponse">
-            <p>{data}</p>
+            {isLoading ? <LoadingPage /> : <p>{data}</p>}
         </div>
     );
 }
