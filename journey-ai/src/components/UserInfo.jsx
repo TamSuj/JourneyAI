@@ -1,7 +1,29 @@
 import "../css/UserInfo.css"
 
 
+
 function UserInfo(){
+    // Get the current date and time
+    const currentDate = new Date();
+
+    // Options for formatting the date
+    const options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        // second: 'numeric',
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        // timeZoneName: 'short'
+    };
+
+    // Format the date
+    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(currentDate);
+
+    // Display the formatted date
+    // document.body.innerHTML = `<p>Current date and time: ${formattedDate}</p>`;
+
     return (
         <div className="post_info">
             <div className="user_info">
@@ -11,8 +33,9 @@ function UserInfo(){
                 </svg>
 
                 <div className="user_name_date">
-                    <p>Nhan Tri Danh</p>
-                    <p>Jul 17, 2024</p>
+                    <p>User</p>
+                    {/* <p>Jul 17, 2024</p> */}
+                    <p>{formattedDate}</p>
                 </div>
             </div>
 

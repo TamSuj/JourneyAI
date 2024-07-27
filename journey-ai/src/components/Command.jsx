@@ -6,6 +6,8 @@ import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
 import ThemeOptions from "./ThemeOptions.jsx";
+import journeyCmd from "./prompt.jsx"
+
 
 function Command() {
     const [location, setLocation] = useState('');
@@ -18,38 +20,9 @@ function Command() {
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
-        const journeyCmd = `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days in the ${theme} theme and must use this JSON format look like this
-        example (Please keep the same key name, do not change them):
-        {
-            "tripName": "Pasadena Trip", 
-            "travelers": 3, 
-            "duration": 2, 
-            "theme": "Culture",
-            "itinerary": 
-            [
-                {
-                    "day": 1, 
-                    "activities": 
-                    [
-                        {
-                            "name": "Visit the Huntington Library, Art Museum, and Botanical Gardens", 
-                            "type": "Culture & Nature", 
-                            "duration": "9am - 12pm", 
-                            "description": "Explore beautiful gardens, art exhibits, and historical manuscripts."
-                        }, 
+        const prompt = journeyCmd(location, numOfPeople, day, theme);
 
-                        {
-                            "name": "Dinner at The Royce at The Langham", 
-                            "type": "Dining", 
-                            "duration": "12:30pm - 2pm", 
-                            "description": "Enjoy fine dining with stunning views at this elegant restaurant."
-                        }
-                    ]
-                }, 
-            ]
-        }`;
-
-        setCommand(journeyCmd);
+        setCommand(prompt);
     };
 
     const handleResponse = (data) => {
@@ -65,6 +38,13 @@ function Command() {
 
     return (
         <div>
+            <div className="text-center landing-margin">
+               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Plan your trip in one
+                  click</h1>
+                <p className="mx-4 mt-6 text-xs leading-4 text-gray-600 sm:text-base">Let us help you generate the perfect plan for the trip
+                  by simply entering your destination, number of travelers, and days.</p>
+              <img className="landing-icon" src={"notion-icon.png"} alt='journeyAI Icon'/>
+            </div>
             {/* Logo */}
             <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon'/>
             <div className={"search-parent"}>

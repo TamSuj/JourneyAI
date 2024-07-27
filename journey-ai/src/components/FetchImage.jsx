@@ -1,8 +1,7 @@
 import {Fragment, useEffect, useState} from "react";
 import { createApi } from "unsplash-js";
 // import "./FetchImage.css";
-
-function FetchImage({query}){
+function FetchImage({query, className }){
     const [data, setPhotosResponse] = useState(null);
     const api = createApi({
         // accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
@@ -16,7 +15,7 @@ function FetchImage({query}){
                 <a className="credit"
                     target="_blank"
                     href={`https://unsplash.com/@${user.username}`}
-                ><img className="img rounded-lg" src={urls.regular} alt={"Image by ${user.name}"}/>
+                ><img className={`img ${className}`} src={urls.regular} alt={"Image by ${user.name}"}/>
                 </a>
             </Fragment>
         );

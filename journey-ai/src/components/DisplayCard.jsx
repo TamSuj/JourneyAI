@@ -20,26 +20,29 @@ function DisplayCard({ response }){
     }, [response]);
 
     return(
-        <div id="card-container">
-            {parsedResponse && parsedResponse.itinerary ? (
-                parsedResponse.itinerary.map((day, index) => (
-                    <div key={index} className="day-card">
+        <div className="detail_plan">
+            <div id="card-container">
+                {parsedResponse && parsedResponse.itinerary ? (
+                    parsedResponse.itinerary.map((day, index) => (
+                        <div key={index} className="day-card">
 
-                        {/* Day */}
-                        <div className="day_plan">
-                            <h1 class="border-b-2 border-gray-300 pb-6">Day {index + 1}</h1>
+                            {/* Day */}
+                            <div className="day_plan">
+                                <h1 class="border-b-2 border-gray-300 pb-6">Day {index + 1}</h1>
+                            </div>
+                            
+                            {/* Card */}
+                            {day.activities && day.activities.map((activity, activityIndex) => (
+                                createCard(activity, activityIndex)
+                            ))}
                         </div>
-                        
-                        {/* Card */}
-                        {day.activities && day.activities.map((activity, activityIndex) => (
-                            createCard(activity, activityIndex)
-                        ))}
-                    </div>
-                ))
-            ) : (
-                <div>No itinerary found</div>
-            )}
+                    ))
+                ) : (
+                    <div>No itinerary found</div>
+                )}
+            </div>
         </div>
+        
     )
 
 }
