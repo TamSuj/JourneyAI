@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+
 function GeminiResponse(props){
     const [data, setData] = useState('');
     const [loading, setLoading] = useState(true);
@@ -35,7 +36,7 @@ function GeminiResponse(props){
     }, [props]);
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <p></p>
     }
 
     if (error) {
