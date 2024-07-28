@@ -1,22 +1,5 @@
 function ThemeOption() {
     return (
-
-        // <div id="theme-options">
-        //     <input type="checkbox" name="Adventure" value="adventure"/>
-        //     <label htmlFor="Adventure">Adventure</label><br/>
-        //
-        //     <input type="checkbox" name="Cultural" value="cultural"/>
-        //     <label htmlFor="Cultural">Cultural</label><br/>
-        //
-        //     <input type="checkbox" name="Beach" value="beach"/>
-        //     <label htmlFor="Beach">Beach</label><br/>
-        //
-        //     <input type="checkbox" name="City" value="city"/>
-        //     <label htmlFor="City">City</label><br/>
-        //
-        //     <input type="checkbox" name="Nature" value="nature"/>
-        //     <label htmlFor="Nature">Nature</label><br/>
-        // </div>
         <div>
             <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
                     className={"text-white bg-orange-500 p-3 ring-orange-500 focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-3 text-center inline-flex items-center dark:bg-orange-500 dark:hover:bg-orange-700 dark:focus:ring-white"}
