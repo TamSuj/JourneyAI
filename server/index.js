@@ -1,33 +1,29 @@
 import express from "express";
 import {GoogleGenerativeAI} from "@google/generative-ai";
-// import {mapboxgl} from 'mapbox-gl';
-// import {mapboxGeocoder} from '@mapbox/mapbox-gl-geocoder';
 import dotenv from 'dotenv';
+import axios from "axios";
+
 
 dotenv.config();
 
 const API_KEY = process.env.API_KEY;
-// const MAP_KEY = process.env.MAP_KEY;
+const GG_PLACE_KEY = process.env.GG_PLACE_KEY;
+
 
 if (!API_KEY) {
     console.error("API key is not defined. Please set it in the .env file.");
 }
 
-// if (!MAP_KEY){
-//     console.error("MAP key is not defined. Please set it in the .env file.")
-// }
+if (!GG_PLACE_KEY){
+    console.error("Google API key not defined");
+}
 
 const PORT = 3001;
 const app = express();
 
 app.use(express.json());
 
-
-// Initialize Google Generative AI client
 const genAI = new GoogleGenerativeAI(API_KEY);
-
-// Initialize Map client
-// const mapBox = new mapboxGeocoder(MAP_KEY);
 
 
 const model = genAI.getGenerativeModel({ 
@@ -36,6 +32,22 @@ const model = genAI.getGenerativeModel({
 });
 
 
+app.get("/place_search", async (req, res) => {
+    try {
+        const request = {
+            textQuery: "New York",
+            key: GG_PLACE_KEY
+        };
+
+        const response = await axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants%20in%20Sydney&key=${GG_PLACE_KEY}`)
+
+        console.log("------------->GG PLACE RESPONSE:   ", response.data);
+        res.json(response.data);
+    } catch (error) {
+        console.error('Error fetching data from Google Places API:', error);
+        res.status(500).json({ error: 'Failed to fetch data from Google Places API' });
+    }
+});
 
 app.get("/api", (req, res) => {
     console.log("Received request for /api");
