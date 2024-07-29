@@ -43,6 +43,15 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+    <script>
+      async function loadPlacesLibrary() {
+        const { Place } = await google.maps.importLibrary("places");
+        // Now you can use the `Place` object
+        console.log("Places Library loaded", Place);
+      }
 
+      // Call the function to load the Places Library
+      loadPlacesLibrary();
+    </script>
   </body>
 </html>
