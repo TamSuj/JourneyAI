@@ -12,7 +12,7 @@ const init_map = (map_ref) => {
         container: map_ref.current,
         style: 'mapbox://styles/mapbox/streets-v12',
         center: [-118.2437, 34.0522], //initial center of map when first loaded
-        zoom: 10, // initial zoom level
+        zoom: 9, // initial zoom level
     });
 };
 
@@ -45,6 +45,9 @@ function GenerateMap() {
                 }
 
                 const data = await response.json();
+
+                console.log('check location data');
+                console.log(data.location);
 
                 setCenter(data.center);
                 setZoom(data.zoom);
@@ -84,14 +87,23 @@ function GenerateMap() {
 
         //if doesn't exist, initialize marker
         if(!marker_ref.current){
+
+            console.log('marker first time initialized.');
+
             marker_ref.current = new mapboxgl.Marker({ color : 'red'})
-                .setLngLat(center)
-                .addTo(map_obj.current)
+            marker_ref.current.setLngLat(center)
+            marker_ref.current.addTo(map_obj.current)
+
+                console.log(marker_ref.current);
+
         } else {
-            console.log('check in');
+
+            console.log('marker exist');
+            console.log(marker_ref.current);
+
             marker_ref.current.setLngLat(center) //update
+
         }
-        
     }
 
     }, [center, zoom]);
