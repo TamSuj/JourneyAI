@@ -39,7 +39,7 @@ app.get("/place_search", async (req, res) => {
             key: GG_PLACE_KEY
         };
 
-        const response = await axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants%20in%20Sydney&key=${GG_PLACE_KEY}`)
+        const response = await axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${request.textQuery}&key=${GG_PLACE_KEY}`)
 
         console.log("------------->GG PLACE RESPONSE:   ", response.data);
         res.json(response.data);
