@@ -17,7 +17,7 @@ function DisplayTitle({ response }){
     return(
         <div>
             {parsedResponse && (
-                <h1 className="title">{parsedResponse.tripName}</h1>
+                <h1 className="title font-semibold" >{parsedResponse.tripName}</h1>
             )}
         </div>
     )

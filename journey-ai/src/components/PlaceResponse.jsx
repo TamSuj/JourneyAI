@@ -1,44 +1,103 @@
-import { useEffect, useState } from "react";
 
-function PlaceResponse() {
-    const [data, setData] = useState(null);
-    const [isLoading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+async function placeDetail(location){
+    const fetchPlaceDetail = async() => {
+        try {
+            const response = await fetch("/place_search", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({location: location})
+            })
 
-    useEffect(() => {
-        const fetchPlaceData = async () => {
-            try {
-                setLoading(true);
-                const response = await fetch("/place_search"); // Ensure the URL matches your server setup
-                const result = await response.json();
-                setData(result);
-                console.log("------------->GG PLACE RESPONSE:   ", result)
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
+            const result = await response.json();
+            const fullData = result.results[0];
+            
+            //Your fullData look like this
+            // {
+            //     business_status: 'OPERATIONAL',
+            //     formatted_address: '24690 Washington Ave, Murrieta, CA 92562, United States',
+            //     geometry: [Object],
+            //     icon: 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png',
+            //     icon_background_color: '#FF9E67',
+            //     icon_mask_base_uri: 'https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet',
+            //     name: 'The Mill Restaurant',
+            //     opening_hours: [Object],
+            //     photos: [Array],
+            //     place_id: 'ChIJDU2qC0qC3IARAujApc97pTU',
+            //     plus_code: [Object],
+            //     price_level: 2,
+            //     rating: 4.6,
+            //     reference: 'ChIJDU2qC0qC3IARAujApc97pTU',
+            //     types: [Array],
+            //     user_ratings_total: 1095
+            //   }
+
+            const data = {
+                place_name : fullData.name,
+                place_id: fullData.place_id,
+                price_level: fullData.price_level,
+                rating: fullData.rating,
+                photo_reference: fullData.photos[0].photo_reference,
+                lat: fullData.geometry.location.lat,
+                lng: fullData.geometry.location.lng
             }
-        };
+            return data;
 
-        fetchPlaceData();
-    }, []);
+        } catch (error) {
+            console.error("Error from placeDetail(), ", error);
+        }
+    }
 
-    if (isLoading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
-
-    return (
-        <div>
-            {data && (
-                <ul>
-                    {data.results.map((place) => (
-                        <li key={place.place_id}>
-                            {place.name} - {place.geometry.location.lat}, {place.geometry.location.lng}
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
-    );
+    return fetchPlaceDetail();
 }
 
-export default PlaceResponse;
+
+//This function return photo URL for <img> tag
+async function placePhoto(location){
+    const place_detail = await placeDetail(location);
+    const photo_ref = place_detail.photo_reference;
+    const fetchPhtoData = async () => {
+        try {
+            const response = await fetch("/photo_search", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({photoRef: photo_ref})
+            })
+
+            const result = await response.json();
+            return result.photoUrl;
+
+        } catch (error) {
+            console.error("Error from placePhoto(), ", error);
+        }
+    };
+    return fetchPhtoData();
+}
+
+//This function return photo URL for <img> tag
+async function placePhotoWithRef(photo_ref){
+    const fetchPhotoData = async () => {
+        try {
+            const response = await fetch("/photo_search", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({photoRef: photo_ref})
+            })
+
+            const result = await response.json();
+            return result.photoUrl;
+
+        } catch (error) {
+            console.error("Error from placePhoto(), ", error);
+        }
+    };
+    return fetchPhotoData();
+}
+
+
+export {placeDetail, placePhoto, placePhotoWithRef};
