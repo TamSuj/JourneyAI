@@ -32,14 +32,30 @@ const model = genAI.getGenerativeModel({
 });
 
 
-app.get("/place_search", async (req, res) => {
+app.post("/photo_search", async (req, res) => {
     try {
-        const request = {
-            textQuery: "New York",
-            key: GG_PLACE_KEY
-        };
+        const { photoRef } = req.body; // Destructure the photo reference from the request body
+        const max_h = 175;
+        const max_w = 175;
+        const key = GG_PLACE_KEY;
 
-        const response = await axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${request.textQuery}&key=${GG_PLACE_KEY}`)
+        const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${max_w}&maxheight=${max_h}&photo_reference=${photoRef}&key=${key}`;
+        
+        // No need to make an additional request with axios; simply return the URL
+        res.json({ photoUrl: url });
+    } catch (error) {
+        console.error('Error fetching data from Google Photo API:', error);
+        res.status(500).json({ error: 'Failed to fetch data from Google Photo API' });
+    }
+});
+
+
+
+app.post("/place_search", async (req, res) => {
+    try {
+        const {location} = req.body;
+
+        const response = await axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${location}&key=${GG_PLACE_KEY}`)
 
         console.log("------------->GG PLACE RESPONSE:   ", response.data);
         res.json(response.data);
