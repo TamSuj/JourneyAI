@@ -1,40 +1,65 @@
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
 import Card from "./Card.jsx";
-import "../css/Card.css"
-import "../css/Day.css"
+import "../css/Card.css";
+import "../css/Day.css";
 
-function createCard(activity, activityIndex){
-    return <Card activity={activity} activityIndex={activityIndex}/>
+library.add(fas, far, fab)
+
+
+function createCard(activity, activityIndex) {
+    return <Card activity={activity} activityIndex={activityIndex} />;
 }
 
-function DisplayCard({ response }){
+function DisplayCard({ response }) {
     const [parsedResponse, setParsedResponse] = useState(null);
+    const [open, setOpen] = useState([]);
 
     useEffect(() => {
         try {
             const parsed = typeof response === 'string' ? JSON.parse(response) : response;
             setParsedResponse(parsed);
+            setOpen(new Array(parsed.itinerary.length).fill(true)); // Create a new array with the same length and fill with false
         } catch (error) {
             console.error('Error parsing response:', error);
         }
     }, [response]);
 
-    return(
+    const toggleDown = (index) => {
+        setOpen((prevState) => {
+            const newState = [...prevState];
+            newState[index] = !newState[index];
+            return newState;
+        });
+    };
+
+    return (
         <div className="detail_plan">
             <div id="card-container">
                 {parsedResponse && parsedResponse.itinerary ? (
                     parsedResponse.itinerary.map((day, index) => (
                         <div key={index} className="day-card">
-
-                            {/* Day */}
-                            <div className="day_plan">
-                                <h1 class="border-b-2 border-gray-300 pb-6">Day {index + 1}</h1>
-                            </div>
+                            <button id="drop-down-days" className="day_plan w-full" type="button" onClick={() => toggleDown(index)}>
+                                <div className="flex items-center justify-between border-b-2 border-gray-300">
+                                    <h1>Day {index + 1}</h1>
+                                    <FontAwesomeIcon icon="fa-solid fa-caret-down" />
+                                </div>
+                            </button>
                             
-                            {/* Card */}
-                            {day.activities && day.activities.map((activity, activityIndex) => (
-                                createCard(activity, activityIndex)
-                            ))}
+
+                            {open[index] && (
+                                <div className="dropdown">
+                                    <ul>
+                                        {day.activities && day.activities.map((activity, activityIndex) => (
+                                            createCard(activity, activityIndex)
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                         </div>
                     ))
                 ) : (
@@ -42,10 +67,7 @@ function DisplayCard({ response }){
                 )}
             </div>
         </div>
-        
-    )
-
+    );
 }
-
 
 export default DisplayCard;

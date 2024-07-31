@@ -32,6 +32,22 @@ const model = genAI.getGenerativeModel({
 });
 
 
+app.post("/place_detail", async (req, res) => {
+    try {
+        const {place_id} = req.body;
+        const fields = ["price_level"];
+        const fieldsParams = fields.join(",");
+        const response = await axios.get(`https://maps.googleapis.com/maps/api/place/details/json?fields=${fieldsParams}&place_id=${place_id}&key=${GG_PLACE_KEY}`);
+        console.log("------------->GG PLACE RESPONSE:   ", response.data);
+
+        res.json({place_detail: response.data});
+    } catch (error) {
+        console.error('Error fetching data from Google Place Detail API:', error);
+        res.status(500).json({ error: 'Failed to fetch data from Google Place Detail API' });
+    }
+})
+
+
 app.post("/photo_search", async (req, res) => {
     try {
         const { photoRef } = req.body; // Destructure the photo reference from the request body
@@ -57,7 +73,6 @@ app.post("/place_search", async (req, res) => {
 
         const response = await axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${location}&key=${GG_PLACE_KEY}`)
 
-        console.log("------------->GG PLACE RESPONSE:   ", response.data);
         res.json(response.data);
     } catch (error) {
         console.error('Error fetching data from Google Places API:', error);

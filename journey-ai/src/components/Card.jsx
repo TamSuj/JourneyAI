@@ -16,6 +16,7 @@ function Card(props) {
     // const iconName = props.activity.description || 'question';
     const [placeName, setPlaceName] = useState('');
     const [photoUrl, setPhotoUrl] = useState('');
+    const [price, setPrice] = useState();
 
     useEffect(() => {
         const fetchPlaceDetailData = async () => {
@@ -24,6 +25,7 @@ function Card(props) {
                 const photoURL = await placePhotoWithRef(details.photo_reference);
                 setPlaceName(details.place_name);
                 setPhotoUrl(photoURL);
+                setPrice(details.price_level);
             } catch (err) {
                 console.error("Error fetching place details:", err);
             }
@@ -52,6 +54,8 @@ function Card(props) {
 
                     <div className="relative w-fit cursor-default items-center gap-1.5 rounded-full border border-solid border-gray-200 bg-white px-3 py-0.5 text-xs md:text-sm">
                         <span className="text-gray-500">{props.activity.duration}</span>
+                        <span className="text-gray-500">{price}</span>
+
                     </div>
                 </div>
 
