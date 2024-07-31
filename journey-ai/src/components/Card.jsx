@@ -55,14 +55,14 @@ function Card(props) {
             <div className="card flex w-full rounded-lg bg-gray-50 p-3">
                 <div className="location_description flex">
                     <div className="description">
-                        <p className="font-semibold"><FontAwesomeIcon icon={iconDefinition}/> - {placeName}</p>
-                        <p className="card-description text-slate-500">{props.activity.description}</p>
+                        <p className="font-semibold text-lg"><FontAwesomeIcon icon={iconDefinition}/> - {placeName}</p>
+                        <p className="card-description text-slate-500 text-base">{props.activity.description}</p>
                     </div>
 
                     <div className="relative w-fit cursor-default items-center gap-1.5 rounded-full border border-solid border-gray-200 bg-white px-3 py-0.5 text-xs md:text-sm">
                         <span className="text-gray-500">{props.activity.duration}</span>
                     </div>
-                    <p className="text-gray-500  px-3"><FontAwesomeIcon icon="fa-solid fa-money-bill" /> {getPriceLevel(price)}</p>
+                    <p className="text-gray-500  px-3"><FontAwesomeIcon icon="fa-solid fa-dollar-sign" /> {getPriceLevel(price)}</p>
 
                 </div>
 
