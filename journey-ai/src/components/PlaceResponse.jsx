@@ -42,6 +42,8 @@ async function placeDetail(location){
                 lat: fullData.geometry.location.lat,
                 lng: fullData.geometry.location.lng
             }
+
+            console.log(data);
             return data;
 
         } catch (error) {

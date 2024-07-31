@@ -32,6 +32,7 @@ function Command() {
         setResponseData(data);
     };
 
+
     useEffect(() => {
         if (responseData) {
             console.log("Response Data: ", responseData);
