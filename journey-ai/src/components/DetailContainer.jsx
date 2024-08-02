@@ -1,10 +1,10 @@
 import ImageContainer from "./ImageContainer";
 import UserInfo from "./UserInfo";
 import DisplayCard from "./DisplayCard";
+import "./Destination.css"
 
 function DetailContainer({location}){
     return (
-
         <div className="detail_container">
             <ImageContainer location={location.state.location} response={location.state.responseData}/>
             <UserInfo/>

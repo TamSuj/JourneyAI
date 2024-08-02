@@ -1,4 +1,5 @@
 import {Fragment, useEffect, useState} from "react";
+import "./Destination.css"
 import { createApi } from "unsplash-js";
 // import "./FetchImage.css";
 function FetchImage({query, className }){
@@ -12,11 +13,13 @@ function FetchImage({query, className }){
         const { user, urls } = photo;
         return (
             <Fragment>
-                <a className="credit"
-                    target="_blank"
-                    href={`https://unsplash.com/@${user.username}`}
-                ><img className={`img ${className}`} src={urls.regular} alt={"Image by ${user.name}"}/>
-                </a>
+                <div className={"text-xs text-gray-500 photocomp"}>
+                    <a className="credit"
+                        target="_blank"
+                        href={`https://unsplash.com/@${user.username}`}
+                    ><img className={`lg:max-w-full max-w-0`} src={urls.regular} alt={"Image by ${user.name}"}/>Photo by {user.name}
+                    </a> on <a href={`https://unsplash.com/?utm_source=your_app_name&utm_medium=referral`}>Unsplash</a>
+                </div>
             </Fragment>
         );
     };
@@ -45,7 +48,7 @@ function FetchImage({query, className }){
     } else {
         const photo = data.response.results[0]; // Only display the first photo
         return (
-            <PhotoComp photo={photo} />
+            <PhotoComp className={""} photo={photo} />
         );
     }
 };

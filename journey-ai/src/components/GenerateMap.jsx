@@ -86,13 +86,13 @@ function GenerateMap() {
     return (
         <div className="mapPage">
             <div className="map">
-                <div ref={map_ref} style={{ width: '100%', height: '100vh' }}></div>
+                <div ref={map_ref} style={{width: '100%', height: '100vh'}}></div>
             </div>
-            
+            <div className="dummy absolute top-0 left-0 w-full h-10 bg-white text-center text-white z-50 lg:hidden md:hidden"></div>
             <DetailContainer location={location}/>
 
         </div>
-        
+
     )
 }
 

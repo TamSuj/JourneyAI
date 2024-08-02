@@ -28,7 +28,7 @@ function Card(props) {
                             <FontAwesomeIcon icon={iconDefinition}/>
                         </p>
 
-                        <p className="card-description text-slate-500">{props.activity.description}</p>
+                        <p className="card-description text-slate-500 pb-2">{props.activity.description}</p>
                     </div>
 
                     <div className="relative w-fit cursor-default items-center gap-1.5 rounded-full border border-solid border-gray-200 bg-white px-3 py-0.5 text-xs md:text-sm">
