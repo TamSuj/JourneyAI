@@ -3,8 +3,12 @@ import mapboxgl from 'mapbox-gl';
 import { useLocation } from "react-router-dom";
 import "../css/GenerateMap.css"
 import DetailContainer from "./DetailContainer.jsx";
+import CustomizePlan from "./CustomizePlan.jsx";
+
+
 //public token
 mapboxgl.accessToken = 'pk.eyJ1Ijoia255aWhsYWkiLCJhIjoiY2x5YThiM2hpMHpzdzJqcHhhZGhqNmFsdyJ9.RpZAifKmlWn9kQRkakLRYg';
+//Need fix
 
 //initialize map obj with CTOR
 const init_map = (map_ref) => {
@@ -85,7 +89,8 @@ function GenerateMap() {
     //We need to redesign this 
     return (
         <div className="mapPage">
-            <div className="map">
+            <div className="map relative">
+                <CustomizePlan/>
                 <div ref={map_ref} style={{ width: '100%', height: '100%' }}></div>
             </div>
             

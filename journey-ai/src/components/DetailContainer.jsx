@@ -6,7 +6,7 @@ import DisplayCard from "./DisplayCard";
 function DetailContainer({location}){
     return (
 
-        <div className="detail_container">
+        <div className="detail_container pb-10">
             {/* <DaysNavBar/> */}
             <ImageContainer location={location.state.location} response={location.state.responseData}/>
             <UserInfo/>
