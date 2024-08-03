@@ -1,5 +1,26 @@
+async function placeDetail(placeId) {
+    const fetchDetail = async () => {
+        try {
+            const response = await fetch("/place_detail", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({ place_id: placeId })
+            });
 
-async function placeDetail(location){
+            const result = await response.json();
+            console.log("API Response:", result);
+            return result.place_detail.result; // Ensure it returns the 'result' key
+        } catch (error) {
+            console.error("Error from place detail()", error);
+            throw error;
+        }
+    };
+    return await fetchDetail();
+}
+
+async function placeSearch(location){
     const fetchPlaceDetail = async() => {
         try {
             const response = await fetch("/place_search", {
@@ -43,21 +64,21 @@ async function placeDetail(location){
                 lng: fullData.geometry.location.lng
             }
 
-            console.log(data);
+            console.log(result);
             return data;
 
         } catch (error) {
-            console.error("Error from placeDetail(), ", error);
+            console.error("Error from placeSearch(), ", error);
         }
     }
 
-    return fetchPlaceDetail();
+    return await fetchPlaceDetail();
 }
 
 
 //This function return photo URL for <img> tag
 async function placePhoto(location){
-    const place_detail = await placeDetail(location);
+    const place_detail = await placeSearch(location);
     const photo_ref = place_detail.photo_reference;
     const fetchPhtoData = async () => {
         try {
@@ -98,8 +119,8 @@ async function placePhotoWithRef(photo_ref){
             console.error("Error from placePhoto(), ", error);
         }
     };
-    return fetchPhotoData();
+    return await fetchPhotoData();
 }
 
 
-export {placeDetail, placePhoto, placePhotoWithRef};
+export {placeDetail, placeSearch, placePhoto, placePhotoWithRef};
