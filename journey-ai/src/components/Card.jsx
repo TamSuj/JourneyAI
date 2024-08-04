@@ -4,8 +4,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import { findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import "../css/Card.css";
+import { findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { placeSearch, placePhotoWithRef } from './PlaceResponse.jsx';
 import DetailCard from './DetailCard.jsx';
 
@@ -17,8 +17,11 @@ function Card(props) {
     const [price, setPrice] = useState('');
     const [openDetail, setOpenDetail] = useState(false);
     const [placeId, setPlaceId] = useState('');
+    const [isDataFetched, setIsDataFetched] = useState(false); // New state for caching
 
     useEffect(() => {
+        if (isDataFetched) return; // Skip if data is already fetched
+
         const fetchPlaceDetailData = async () => {
             try {
                 const details = await placeSearch(props.activity.location_name);
@@ -27,12 +30,14 @@ function Card(props) {
                 setPlaceName(details.place_name);
                 setPhotoUrl(photoURL);
                 setPrice(details.price_level);
+                setIsDataFetched(true); // Mark data as fetched
             } catch (err) {
                 console.error("Error fetching place details:", err);
             }
         };
+
         fetchPlaceDetailData();
-    }, [props]);
+    }, [props.activity.location_name, isDataFetched]);
 
     const iconDefinition = findIconDefinition({ iconName: props.activity.type });
 
@@ -51,16 +56,15 @@ function Card(props) {
             default:
                 return 'N/A';
         }
-    }
+    };
 
     const cardDetailClicked = () => {
         setOpenDetail((prevState) => !prevState);
-    }
+    };
 
     return (
         <div key={props.activityIndex} className="detail pt-6">
-            <DetailCard show={openDetail} onClose={cardDetailClicked} placeId={placeId} placeName={placeName} photoURL={photoUrl}/>
-
+            <DetailCard show={openDetail} onClose={cardDetailClicked} placeId={placeId} placeName={placeName} photoURL={photoUrl} />
             <div className="card flex w-full rounded-lg bg-gray-50 p-3">
                 <div className="location_description flex">
                     <div className="description">
@@ -69,13 +73,11 @@ function Card(props) {
                         </button>
                         <p className="card-description text-slate-500 text-base">{props.activity.description}</p>
                     </div>
-
                     <div className="relative w-fit cursor-default items-center gap-1.5 rounded-full border border-solid border-gray-200 bg-white px-3 py-0.5 text-xs md:text-sm">
                         <p className="text-gray-500">{props.activity.duration}</p>
                     </div>
                     <p className="text-gray-500 px-3"><FontAwesomeIcon icon="fa-solid fa-dollar-sign" /> {getPriceLevel(price)}</p>
                 </div>
-
                 <div className="location_image rounded-lg">
                     {photoUrl && <img src={photoUrl} alt="Place" className="rounded-lg" />}
                 </div>

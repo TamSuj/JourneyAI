@@ -10,7 +10,7 @@ async function placeDetail(placeId) {
             });
 
             const result = await response.json();
-            console.log("API Response:", result);
+            // console.log("API Response:", result);
             return result.place_detail.result; // Ensure it returns the 'result' key
         } catch (error) {
             console.error("Error from place detail()", error);
@@ -64,7 +64,7 @@ async function placeSearch(location){
                 lng: fullData.geometry.location.lng
             }
 
-            console.log(result);
+            // console.log(result);
             return data;
 
         } catch (error) {
