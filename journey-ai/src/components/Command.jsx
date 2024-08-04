@@ -8,6 +8,7 @@ import DayCount from "./DayCount.jsx";
 import ThemeOptions from "./ThemeOptions.jsx";
 import journeyCmd from "./prompt.jsx"
 import LoadingPage from "./LoadingPage.jsx";
+import UserPrompt from "./UserPrompt.jsx";
 
 
 function Command() {
@@ -18,6 +19,7 @@ function Command() {
     const [theme, setTheme] = useState(null);
     const [responseData, setResponseData] = useState(null);
     const [isLoading, setLoading] = useState(false);
+    const [openAiChat, setOpenAiChat] = useState(false);
 
     const navigate = useNavigate();
 
@@ -39,6 +41,9 @@ function Command() {
         setResponseData(data);
     };
 
+    const handleOpenAiChat = () => {
+        setOpenAiChat((prevState) => !prevState)
+    };
 
     useEffect(() => {
         if (responseData) {
@@ -46,37 +51,48 @@ function Command() {
             navigate('/destination', { state: { location: location, responseData: responseData } });
         }
     }, [responseData]);
-
     return (
         <>
-            {isLoading && <LoadingPage/>}
+            {isLoading && <LoadingPage />}
+            {
+                openAiChat && (
+                    <UserPrompt show={openAiChat} onClose={handleOpenAiChat} />
+                )
+            }
             <div id="command">
                 <div className="text-center landing-margin">
-                <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Plan your trip in one
-                    click</h1>
+                    <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Plan your trip in one
+                        click</h1>
                     <p className="mx-4 mt-6 text-xs leading-4 text-gray-600 sm:text-base">Let us help you generate the perfect plan for the trip
-                    by simply entering your destination, number of travelers, and days.</p>
-                <img className="landing-icon" src={"notion-icon.png"} alt='journeyAI Icon'/>
+                        by simply entering your destination, number of travelers, and days.</p>
+                    <img className="landing-icon" src={"notion-icon.png"} alt='journeyAI Icon' />
                 </div>
                 {/* Logo */}
-                <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon'/>
-                <div className={"search-parent"}>
-                    <div className={"w-full min-w-2/3 lg:max-w-6xl"}>
-                        <LocationInput setLocation={setLocation}/>
+                <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon' />
+                
+                <div className="flex items-center justify-center">
+                    <div className="flex-shrink-0 text-white">
+                        <button className="bg-orange-500 p-3 ring-orange-500 focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm text-center inline-flex items-center dark:bg-orange-500 dark:hover:bg-orange-700 dark:focus:ring-white" onClick={handleOpenAiChat}>
+                            AI
+                        </button>
                     </div>
-                    <div>
-                        <div className={"slide"}>
-                            <ThemeOptions setTheme={setTheme}/>
-                        </div>
+
+                    <div className="w-1/2 max-w-lg mx-2">
+                        <LocationInput setLocation={setLocation} />
+                    </div>
+
+                    <div className="flex-shrink-0 mx-2">
+                        <ThemeOptions setTheme={setTheme} />
                     </div>
                 </div>
+
 
                 <div className={"trip-options"}>
                     <div className={"mx-10"}>
-                        <PeopleCount setNumOfPeople={setNumOfPeople}/>
+                        <PeopleCount setNumOfPeople={setNumOfPeople} />
                     </div>
                     <div className={"mx-10"}>
-                        <DayCount setNumberOfDay={setDay}/>
+                        <DayCount setNumberOfDay={setDay} />
                     </div>
                 </div>
 
@@ -88,21 +104,17 @@ function Command() {
                     </button>
                 </div>
 
-
                 {/* Only ask Gemini when the prompt is ready */}
-                {   
+                {
                     command && (
                         <div className={"mx-20 flex justify-center"}>
-                            <GeminiResponse command={command} onDataReceived={handleResponse} setLoading={setLoading}/>
-                        </div>   
+                            <GeminiResponse command={command} onDataReceived={handleResponse} setLoading={setLoading} />
+                        </div>
                     )
                 }
 
             </div>
-        
         </>
-
-
     );
 }
 
