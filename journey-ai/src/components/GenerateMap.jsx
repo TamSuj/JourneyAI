@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from 'mapbox-gl';
+import "mapbox-gl/dist/mapbox-gl.css";
 import { useLocation } from "react-router-dom";
 import "../css/GenerateMap.css"
 import DetailContainer from "./DetailContainer.jsx";
 import CustomizePlan from "./CustomizePlan.jsx";
-
 
 //public token
 mapboxgl.accessToken = 'pk.eyJ1Ijoia255aWhsYWkiLCJhIjoiY2x5YThiM2hpMHpzdzJqcHhhZGhqNmFsdyJ9.RpZAifKmlWn9kQRkakLRYg';
@@ -66,6 +66,7 @@ function GenerateMap() {
 
     const map_ref = useRef(null);
     const map_obj = useRef(null);
+    const marker_obj = useRef(null);
 
     //if doesn't exist, create one
     useEffect(() => {
@@ -73,6 +74,7 @@ function GenerateMap() {
         if (!map_obj.current) {
             map_obj.current = init_map(map_ref);
         }
+
     }, []);
 
     //flyTo
@@ -83,6 +85,24 @@ function GenerateMap() {
                 zoom: zoom,
                 essential: true
             });
+        }
+        
+        //center is array
+        if(center)
+        {
+            const lngLat = { lon: center[0], lat: center[1] };
+        
+
+        // console.log(center) //array
+            if(!marker_obj.current){
+
+                marker_obj.current = new mapboxgl.Marker({color : 'red'})
+
+                marker_obj.current.setLngLat(lngLat)
+                marker_obj.current.addTo(map_obj.current)
+            } else {
+                marker_obj.current.setLngLat(lngLat);
+            }
         }
     }, [center, zoom]);
 

@@ -33,7 +33,7 @@ async function placeSearch(location){
 
             const result = await response.json();
             const fullData = result.results[0];
-            
+            // console.log(result)
             //Your fullData look like this
             // {
             //     business_status: 'OPERATIONAL',
@@ -62,9 +62,10 @@ async function placeSearch(location){
                 photo_reference: fullData.photos[0].photo_reference,
                 lat: fullData.geometry.location.lat,
                 lng: fullData.geometry.location.lng
+    
             }
 
-            // console.log(result);
+
             return data;
 
         } catch (error) {
