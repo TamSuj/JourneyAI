@@ -22,7 +22,7 @@ function GeminiResponse(props) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                console.log("GEMINIResponse: ", data.message);
+                // console.log("GEMINIResponse: ", data.message);
                 props.onDataReceived(data.message);
                 setData(data.message);
             } catch (error) {
@@ -35,7 +35,7 @@ function GeminiResponse(props) {
         if (props.command) {
             fetchGeminiData();
         }
-    }, [props]);
+    }, [props.command]);
 
     if (error) {
         return <p>Error: {error}</p>;

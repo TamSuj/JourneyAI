@@ -22,11 +22,11 @@ const init_map = (map_ref) => {
 
 
 function GenerateMap() {
-    const location = useLocation();
+    const location = useLocation();  /// locatiom.state.location and location.state.responseData
 
-    if(location.state.location){
-        console.log(location.state);
-    }
+    // if(location.state.location){
+    //     console.log(location.state);
+    // }
 
     const [center, setCenter] = useState(null);
     const [zoom, setZoom] = useState(null);
@@ -35,7 +35,7 @@ function GenerateMap() {
         const fetchMapData = async () => {
 
             try {
-                console.log(location.state);
+                // console.log(location.state);
                 const response = await fetch("/map", {
                 method: "POST",
                 headers: {

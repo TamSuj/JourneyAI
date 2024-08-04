@@ -22,7 +22,7 @@ function CustomizePlan() {
             <button className="flex items-center p-2 bg-black dark:text-white rounded-lg" onClick={handleOpen}>
                 <FontAwesomeIcon icon="fa-solid fa-bars" />
             </button>
-
+            
             {/* {
                 open && (
                     <CustomizeOptions show={open} onClose={handleOpen}/>

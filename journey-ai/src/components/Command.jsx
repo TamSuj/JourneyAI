@@ -11,11 +11,11 @@ import LoadingPage from "./LoadingPage.jsx";
 
 
 function Command() {
-    const [location, setLocation] = useState('');
-    const [numOfPeople, setNumOfPeople] = useState('');
-    const [command, setCommand] = useState('');
-    const [day, setDay] = useState('');
-    const [theme, setTheme] = useState('');
+    const [location, setLocation] = useState(null);
+    const [numOfPeople, setNumOfPeople] = useState(null);
+    const [command, setCommand] = useState(null);
+    const [day, setDay] = useState(null);
+    const [theme, setTheme] = useState(null);
     const [responseData, setResponseData] = useState(null);
     const [isLoading, setLoading] = useState(false);
 
@@ -29,6 +29,13 @@ function Command() {
     };
 
     const handleResponse = (data) => {
+        //reset
+        setCommand(null);
+        setNumOfPeople(null);
+        setDay(null);
+        setTheme(null);
+        setLoading(false);
+
         setResponseData(data);
     };
 
@@ -38,7 +45,7 @@ function Command() {
             console.log("Response Data: ", responseData);
             navigate('/destination', { state: { location: location, responseData: responseData } });
         }
-    }, [responseData, navigate, location]);
+    }, [responseData]);
 
     return (
         <>
@@ -81,9 +88,16 @@ function Command() {
                     </button>
                 </div>
 
-                <div className={"mx-20 flex justify-center"}>
-                    <GeminiResponse command={command} onDataReceived={handleResponse} setLoading={setLoading}/>
-                </div>
+
+                {/* Only ask Gemini when the prompt is ready */}
+                {   
+                    command && (
+                        <div className={"mx-20 flex justify-center"}>
+                            <GeminiResponse command={command} onDataReceived={handleResponse} setLoading={setLoading}/>
+                        </div>   
+                    )
+                }
+
             </div>
         
         </>

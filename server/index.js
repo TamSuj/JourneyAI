@@ -32,17 +32,23 @@ const model = genAI.getGenerativeModel({
 });
 
 
+app.post("/hotel_seach", async (req, res) => {
+
+});
+
+
 app.post("/place_detail", async (req, res) => {
     try {
         const {place_id} = req.body;
-        console.log("Received place_id:", place_id);
 
         const fields = ["formatted_address", "formatted_phone_number", "international_phone_number", "opening_hours", "url", "website", "rating", "reviews", "price_level"];
         const fieldsParams = fields.join(",");
         const response = await axios.get(`https://maps.googleapis.com/maps/api/place/details/json?fields=${fieldsParams}&place_id=${place_id}&key=${GG_PLACE_KEY}`);
-        console.log("------------->GG PLACE Detail RESPONSE:   ", response.data);
+        // console.log("------------->GG PLACE Detail RESPONSE:   ", response.data);
 
         res.json({place_detail: response.data});
+        console.log("PLACE DETAIL API got triggered");
+
     } catch (error) {
         console.error('Error fetching data from Google Place Detail API:', error);
         res.status(500).json({ error: 'Failed to fetch data from Google Place Detail API' });
@@ -61,6 +67,8 @@ app.post("/photo_search", async (req, res) => {
         
         // No need to make an additional request with axios; simply return the URL
         res.json({ photoUrl: url });
+        console.log("PHOTO SEARCH API got triggered");
+
     } catch (error) {
         console.error('Error fetching data from Google Photo API:', error);
         res.status(500).json({ error: 'Failed to fetch data from Google Photo API' });
@@ -76,6 +84,8 @@ app.post("/place_search", async (req, res) => {
         const response = await axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${location}&key=${GG_PLACE_KEY}`)
 
         res.json(response.data);
+        console.log("PLACE SEARCH API got triggered");
+
     } catch (error) {
         console.error('Error fetching data from Google Places API:', error);
         res.status(500).json({ error: 'Failed to fetch data from Google Places API' });
@@ -95,7 +105,6 @@ app.post("/gemini_response", async (req, res) => {
         const result = await model.generateContent(prompt);
         const response = result.response;
         const text = response.text();
-        console.log("Received request for /gemini_reponse");
         if(!text){
             console.log("No response")
         }
@@ -103,10 +112,10 @@ app.post("/gemini_response", async (req, res) => {
         if(!prompt){
             console.log("No prompt")
         }
-        console.log(prompt);
-        console.log(text);
 
         res.json({ message: text });
+        console.log("GEMINI API got triggered");
+
 
     } catch (error) {
         console.error('Error fetching data from Generative AI:', error);
@@ -138,6 +147,10 @@ app.post("/map", async (req, res) => {
         } else {
             res.status(400).json({error: "No coordinates found"});
         }
+
+        console.log("MAP BOX API got triggered");
+
+
     } catch (error) {
         console.error('Error fetching coordinates:', error);
         throw error;
