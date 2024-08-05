@@ -5,11 +5,11 @@ import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
-import ThemeOptions from "./ThemeOptions.jsx";
+// import ThemeOptions from "./ThemeOptions.jsx";
 import journeyCmd from "./prompt.jsx"
 import LoadingPage from "./LoadingPage.jsx";
-import UserPrompt from "./UserPrompt.jsx";
-
+// import UserPrompt from "./UserPrompt.jsx";
+import CustomizeOptions from "./CustomizeOptions.jsx";
 
 function Command() {
     const [location, setLocation] = useState(null);
@@ -19,12 +19,13 @@ function Command() {
     const [theme, setTheme] = useState(null);
     const [responseData, setResponseData] = useState(null);
     const [isLoading, setLoading] = useState(false);
-    const [openAiChat, setOpenAiChat] = useState(false);
+    const [openCustomizeBox, setOpenCustomizeBox] = useState(false);
+    const [specialRequest, setSpecialRequest] = useState(null);
 
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
-        const prompt = journeyCmd(location, numOfPeople, day, theme);
+        const prompt = journeyCmd(location, numOfPeople, day, theme, specialRequest);
 
         setCommand(prompt);
         setLoading(true);
@@ -36,13 +37,14 @@ function Command() {
         setNumOfPeople(null);
         setDay(null);
         setTheme(null);
+        setSpecialRequest(null);
         setLoading(false);
 
         setResponseData(data);
     };
 
-    const handleOpenAiChat = () => {
-        setOpenAiChat((prevState) => !prevState)
+    const handleOpenCustomizeBox = () => {
+        setOpenCustomizeBox((prevState) => !prevState)
     };
 
     useEffect(() => {
@@ -55,8 +57,8 @@ function Command() {
         <>
             {isLoading && <LoadingPage />}
             {
-                openAiChat && (
-                    <UserPrompt show={openAiChat} onClose={handleOpenAiChat} />
+                openCustomizeBox && (
+                    <CustomizeOptions show={openCustomizeBox} onClose={handleOpenCustomizeBox} setTheme={setTheme} setSpecialRequest={setSpecialRequest}/>
                 )
             }
             <div id="command">
@@ -71,18 +73,23 @@ function Command() {
                 <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon' />
                 
                 <div className="flex items-center justify-center">
-                    <div className="flex-shrink-0 text-white">
+                    {/* <div className="flex-shrink-0 text-white">
                         <button className="bg-orange-500 p-3 ring-orange-500 focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm text-center inline-flex items-center dark:bg-orange-500 dark:hover:bg-orange-700 dark:focus:ring-white" onClick={handleOpenAiChat}>
                             AI
                         </button>
-                    </div>
+                    </div> */}
 
                     <div className="w-1/2 max-w-lg mx-2">
                         <LocationInput setLocation={setLocation} />
                     </div>
 
                     <div className="flex-shrink-0 mx-2">
-                        <ThemeOptions setTheme={setTheme} />
+                        <button className="bg-orange-500 p-3 ring-orange-500 focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm text-center inline-flex items-center dark:bg-orange-500 dark:hover:bg-orange-700 dark:focus:ring-white text-white" onClick={handleOpenCustomizeBox}>
+                            Personalize
+                            <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
 

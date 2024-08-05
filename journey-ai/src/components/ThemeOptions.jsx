@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 function ThemeOption(props) {
     const [selectedOptions, setSelectedOptions] = useState([]);
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
     const themeOptions = ["Beach", "City", "Nature", "Culture"];
 
     const handleSelected = (curOption) => {
@@ -21,13 +21,13 @@ function ThemeOption(props) {
         props.setTheme(selectedOptions.join(","));
     }, [selectedOptions, props]);
 
-    const toggleDown = () => {
-        setOpen(!open);
-    };
+    // const toggleDown = () => {
+    //     setOpen(!open);
+    // };
 
     return (
         <div className="relative flex flex-col">
-            <button
+            {/* <button
                 id="dropdownDefaultButton"
                 onClick={toggleDown}
                 className="text-white bg-orange-500 p-3 ring-orange-500 focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-3 text-center inline-flex items-center dark:bg-orange-500 dark:hover:bg-orange-700 dark:focus:ring-white"
@@ -37,10 +37,10 @@ function ThemeOption(props) {
                 <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                 </svg>
-            </button>
+            </button> */}
 
-            {open && (
-                <div className="absolute z-10 bg-white border rounded shadow-lg w-44 mt-2 top-full left-0">
+            {/* {open && ( */}
+                <div className="bg-white">
                     <ul className="flex flex-col py-2 text-sm text-black">
                         {themeOptions.map((theme) => (
                             <li key={theme}>
@@ -58,7 +58,7 @@ function ThemeOption(props) {
                         ))}
                     </ul>
                 </div>
-            )}
+            {/* )} */}
         </div>
     );
 }
