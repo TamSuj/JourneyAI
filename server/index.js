@@ -32,11 +32,6 @@ const model = genAI.getGenerativeModel({
 });
 
 
-app.post("/hotel_seach", async (req, res) => {
-
-});
-
-
 app.post("/place_detail", async (req, res) => {
     try {
         const {place_id} = req.body;
@@ -101,6 +96,8 @@ app.get("/api", (req, res) => {
 app.post("/gemini_response", async (req, res) => {
     try {
         const { prompt } = req.body; // Correctly destructure the prompt
+        console.log("PROMPT:  ");
+        console.log(prompt);
 
         const result = await model.generateContent(prompt);
         const response = result.response;

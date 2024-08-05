@@ -1,6 +1,6 @@
 // prompt.jsx
-function journeyCmd(location, numOfPeople, day, theme){ 
-    return `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days in the ${theme} theme and must use this JSON format look like this
+function journeyCmd(location, numOfPeople, day, theme, specialRequest){ 
+    return `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days in the ${theme} theme. Also I want special thing is that ${specialRequest} and must use this JSON format look like this
 example (Please keep the same key name, do not change them), 
 :
 {

@@ -7,7 +7,7 @@ function LocationInput({ setLocation }) {
 
     return (
         <div>
-            <form >
+            <form className="w-full">
                 <label htmlFor="search"
                        className="mb-0.5 text-sm font-medium text-black sr-only dark:text-white">Your destination</label>
 
@@ -27,7 +27,7 @@ function LocationInput({ setLocation }) {
                         id="search"
                         onChange={ handleChange }
                         // className="block w-3/5 p-3 ps-12 text-sm text-black border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        className="block w-2/5 p-3 ps-12 text-sm text-black border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500"
+                        className="block w-full p-3 ps-12 text-sm text-black border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Your destination"
                         required
                     />
