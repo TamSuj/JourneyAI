@@ -36,7 +36,7 @@ function GenerateMap() {
 
             try {
                 // console.log(location.state);
-                const response = await fetch("/map", {
+                const response = await fetch("/api/mapbox/map", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

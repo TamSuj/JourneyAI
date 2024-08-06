@@ -11,7 +11,7 @@ function GeminiResponse(props) {
             try {
                 setLoading(true);
 
-                const response = await fetch("/gemini_response", {
+                const response = await fetch("/api/gemini/gemini_response", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
