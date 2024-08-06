@@ -3,9 +3,6 @@ import {GoogleGenerativeAI} from "@google/generative-ai";
 // import {mapboxgl} from 'mapbox-gl';
 // import {mapboxGeocoder} from '@mapbox/mapbox-gl-geocoder';
 import dotenv from 'dotenv';
-import { initializeApp, createUserWithEmailAndPasswordm,  signInWithEmailAndPassword, } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { getAnalytics } from "firebase/analytics";
 
 dotenv.config();
 
@@ -108,61 +105,3 @@ app.listen(PORT, () => {
 })
 
 
-const firebaseConfig = {
-    apiKey: "AIzaSyAp8a4pizk-xB_QCq9yPUMyhIzzoqYcAwA",
-    authDomain: "journey-ai-375aa.firebaseapp.com",
-    projectId: "journey-ai-375aa",
-    storageBucket: "journey-ai-375aa.appspot.com",
-    messagingSenderId: "136550060760",
-    appId: "1:136550060760:web:e74a1af5fe5d7aa889bdad",
-    measurementId: "G-HY66M9D22L"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth(app);
-createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        // ...
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-    });
-signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        // ...
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-    });
-
-const provider = new GoogleAuthProvider();
-signInWithPopup(auth, provider)
-    .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-    }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-});
-
-// Import the functions you need from the SDKs you need
