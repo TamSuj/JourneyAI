@@ -9,7 +9,7 @@ function DetailCard({ show, onClose, placeId, placeName, photoURL }) {
         const fetchData = async () => {
             try {
                 const placeDetailData = await placeDetail(placeId);
-                // console.log("Fetched place details:", placeDetailData);
+                console.log("Fetched place details:", placeDetailData);
                 setPlaceDetails(placeDetailData); // Update state with fetched details
             } catch (error) {
                 console.error("Error from fetching place detail data:", error);

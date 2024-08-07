@@ -16,7 +16,7 @@ example (Please keep the same key name, do not change them),
             [
                 {
                     "name": "Visit the Huntington Library, Art Museum, and Botanical Gardens", 
-                    "location_name: Huntington Library, San Marino, CA":,
+                    "location_name": "Huntington Library, San Marino, CA",
                     "type": "palette", 
                     "duration": "9am - 12pm", 
                     "description": "Explore beautiful gardens, art exhibits, and historical manuscripts."
@@ -24,7 +24,7 @@ example (Please keep the same key name, do not change them),
 
                 {
                     "name": "Dinner at The Royce at The Langham", 
-                    "location_name: The Royce Wood Fired Steakhouse, Pasadena, CA":,
+                    "location_name: "The Royce Wood Fired Steakhouse, Pasadena, CA",
                     "type": "utensils", 
                     "duration": "12:30pm - 2pm", 
                     "description": "Enjoy fine dining with stunning views at this elegant restaurant."

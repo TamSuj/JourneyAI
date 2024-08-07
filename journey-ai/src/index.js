@@ -5,6 +5,7 @@ import './index.css';
 import App from './App.jsx';
 import reportWebVitals from './reportWebVitals.js';
 import GenerateMap from "./components/GenerateMap.jsx";
+import SavedPlanPage from './components/SavedPlanPage.jsx';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -14,6 +15,7 @@ root.render(
       <Route path='/'>
         <Route index element={<App/>}/> 
         <Route path='destination' element={<GenerateMap/>}/> 
+        <Route path='saved_plan_testing' element={<SavedPlanPage/>}/>
       </Route>
     </Routes>
   </BrowserRouter>

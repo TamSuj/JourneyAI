@@ -31,6 +31,8 @@ function Card(props) {
                 setPhotoUrl(photoURL);
                 setPrice(details.price_level);
                 setIsDataFetched(true); // Mark data as fetched
+                console.log("Detail: ", details);
+                console.log("Photo url: ", photoURL);
             } catch (err) {
                 console.error("Error fetching place details:", err);
             }
