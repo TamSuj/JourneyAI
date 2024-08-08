@@ -2,24 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { placeDetail } from './PlaceResponse';
 import CommentCard from './CommentCard';
 
-function DetailCard({ show, onClose, placeId, placeName, photoURL }) {
+function DetailCard({ show, onClose, placeId, placeName, photoURL, placeDetailDataFromDb }) {
     const [placeDetails, setPlaceDetails] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const placeDetailData = await placeDetail(placeId);
-                // console.log("Fetched place details:", placeDetailData);
+                console.log("Fetched place details:", placeDetailData);
                 setPlaceDetails(placeDetailData); // Update state with fetched details
             } catch (error) {
-                console.error("Error from fetching place detail data:", error);
+                console.error("Error fetching place detail data:", error);
             }
         };
 
-        if (placeId) {
+        if (placeDetailDataFromDb) {
+            setPlaceDetails(placeDetailDataFromDb);
+        } else if (placeId) {
             fetchData();
         }
-    }, [placeId]);
+    }, [placeId, placeDetailDataFromDb]);
 
     if (!show) {
         return null;
@@ -37,7 +39,7 @@ function DetailCard({ show, onClose, placeId, placeName, photoURL }) {
                             {placeName}
                         </div>
                         <div className='text-sm'>
-                            {placeDetails ? placeDetails.formatted_address : 'Loading address...'}
+                            {placeDetails?.formatted_address || 'Loading address...'}
                         </div>
                     </div>
                     <div className="location_image rounded-lg">
@@ -48,7 +50,7 @@ function DetailCard({ show, onClose, placeId, placeName, photoURL }) {
                 <div className='pt-5'>
                     <div className='text-xl font-bold mb-2'>Opening</div>
                     <div>
-                        {placeDetails && placeDetails.opening_hours ? (
+                        {placeDetails?.opening_hours?.weekday_text ? (
                             placeDetails.opening_hours.weekday_text.map((text, index) => (
                                 <div key={index}>{text}</div>
                             ))
@@ -61,10 +63,10 @@ function DetailCard({ show, onClose, placeId, placeName, photoURL }) {
                 <div className='mb-4 pt-5'>
                     <div className='text-xl font-bold mb-2'>Rating and Reviews</div>
                     <div className='flex flex-wrap gap-4 p-4'>
-                        {placeDetails && placeDetails.reviews ? (
+                        {placeDetails?.reviews ? (
                             placeDetails.reviews.map((review, index) => (
                                 <div key={index} className="mb-2">
-                                    <CommentCard rate={review.rating} time={review.relative_time_description} comment={review.text}/>
+                                    <CommentCard rate={review.rating} time={review.relative_time_description} comment={review.text} />
                                 </div>
                             ))
                         ) : (
@@ -77,19 +79,14 @@ function DetailCard({ show, onClose, placeId, placeName, photoURL }) {
                     <div className='text-xl font-bold mb-2'>Contact</div>
                     <div className='flex flex-row'>
                         <div className='relative w-fit cursor-default items-center gap-1.5 rounded-full border border-solid border-gray-200 bg-white px-3 py-0.5 text-xs md:text-sm truncate'>
-                            {
-                                placeDetails && placeDetails.website ? (
-                                    <a href={placeDetails.website}>{placeDetails.website}</a>
-                                ) : ("No Available Website")
-                            }
-                            
+                            {placeDetails?.website ? (
+                                <a href={placeDetails.website}>{placeDetails.website}</a>
+                            ) : ("No Available Website")}
                         </div>
                         <div className='relative w-fit cursor-default items-center gap-1.5 rounded-full border border-solid border-gray-200 bg-white px-3 py-0.5 text-xs md:text-sm'>
-                            {
-                                placeDetails && placeDetails.formatted_phone_number ? (
-                                    <a href={placeDetails.formatted_phone_number}>{placeDetails.formatted_phone_number}</a>
-                                ) : ("No Available phone number")
-                            }
+                            {placeDetails?.formatted_phone_number ? (
+                                <a href={placeDetails.formatted_phone_number}>{placeDetails.formatted_phone_number}</a>
+                            ) : ("No Available phone number")}
                         </div>
                     </div>
                 </div>
@@ -97,5 +94,6 @@ function DetailCard({ show, onClose, placeId, placeName, photoURL }) {
         </div>
     );
 }
+
 
 export default DetailCard;
