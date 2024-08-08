@@ -4,9 +4,10 @@ import Heading from "./Heading.jsx"
 
 function SavedPlanPage() {
   const [savedPlan, setSavedPlan] = useState(null);
-
+  const [userId, setUserId] = useState(null);
   useEffect(() => {
     const userID = '1'; // Should be a string to match your server logic
+
     const fetchDataById = async () => {
       try {
         const response = await fetch(`/api/saved_plan/${userID}`);
@@ -16,6 +17,7 @@ function SavedPlanPage() {
 
         const data = await response.json();
         setSavedPlan(data);
+        setUserId(userID)
       } catch (error) {
         console.error(error);
       }
@@ -47,7 +49,7 @@ function SavedPlanPage() {
             {savedPlan.saved_plan && savedPlan.saved_plan.length > 0 ? (
                 savedPlan.saved_plan.map(plan => (
                   <div key={plan.plan_id}>
-                    <SavedPlanCard tripname={plan.tripname} city={plan.city} days={plan.duration}/>
+                    <SavedPlanCard tripname={plan.tripname} city={plan.city} days={plan.duration} userId={userId} planId={plan.plan_id}/>
                     {/* Display other plan details */} 
                   </div>
               ))

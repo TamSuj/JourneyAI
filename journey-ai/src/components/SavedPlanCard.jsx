@@ -1,14 +1,19 @@
 import FetchImage from "./FetchImage.jsx"
 import "../css/SavedPlanCard.css"
+import { useNavigate } from "react-router-dom";
 
-function SavedPlanPage({tripname, city, days}){
+function SavedPlanCard({tripname, city, days, userId, planId}){
+    const navigate = useNavigate()
 
+    const handleCardClicked = () => {
+        navigate(`/destination/${userId}/${planId}`);
+    }
 
     return (
         <div className="flex flex-col w-52">
             <FetchImage className="rounded-t-lg" query={city}/>
 
-            <a class="card1 rounded-b-lg" href="#">
+            <div class="card1 rounded-b-lg" onClick={handleCardClicked}>
                 <h3>{tripname}</h3>
                 <p class="small">{days} days</p>
                 <div class="go-corner" href="#">
@@ -16,10 +21,10 @@ function SavedPlanPage({tripname, city, days}){
                     →
                 </div>
                 </div>
-            </a>
+            </div>
             
         </div>
     )
 }
 
-export default SavedPlanPage;
+export default SavedPlanCard;
