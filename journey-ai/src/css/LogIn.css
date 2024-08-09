@@ -39,13 +39,13 @@
 }
 
 .login-info-text {
+    margin: 0 4px 0 4px;
     color: #94969f;
     font-size: 12px;
 }
 
 .login-button-info-text {
     margin-top: 0;
-    margin-bottom: 20px;
 }
 
 .login-button-container {
@@ -55,9 +55,11 @@
 
 .login-button {
     display: block;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
+    margin: 20px;
     width: 100%;
-    /*     max-width: 162px; */
+    max-width: 288px;
+
     padding-left: 40%;
     position: relative;
     font-size: 13px;
@@ -194,7 +196,7 @@
 }
 
 .login-login-button {
-    background-color: #6a2c91;
+    background-color: #F97316;
     color: #fff;
     font-size: 13px;
     font-weight: 500;
@@ -205,11 +207,10 @@
     border: 0;
     text-transform: uppercase;
     border-radius: 3px;
-    font-family: arial;
 }
 
 .login-login-button:hover {
-    background: #A543E2;
+    background: gray;
 }
 
 .login-login-button:focus {
@@ -236,7 +237,7 @@
 }
 
 .login-create-account-link {
-    margin-left: 5px;
+    margin-left: 5rem;
 }
 
 @media (min-width: 360px) {
@@ -508,7 +509,6 @@
     border: 0;
     text-transform: uppercase;
     border-radius: 3px;
-    font-family: arial;
 }
 
 .register-register-button:hover {

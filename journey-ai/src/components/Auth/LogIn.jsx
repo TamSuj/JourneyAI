@@ -1,7 +1,7 @@
-import "../css/LogIn.css";
-import { useAuth } from "../contexts/authContext/index.jsx";
+import "../../css/LogIn.css";
+import { useAuth } from "../../contexts/authContext/index.jsx";
 import { useState } from "react";
-import { doSignInWithEmailAndPassword, doSignInWithGoogle } from "../firebase/auth.js";
+import { doSignInWithEmailAndPassword, doSignInWithGoogle } from "../../firebase/auth.js";
 
 function LogIn() {
     const { userLoggedIn } = useAuth();
@@ -37,12 +37,6 @@ function LogIn() {
     return (
         <div>
             {userLoggedIn}
-            <button
-                className="bg-gray-800 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded flex flex-col mb-4"
-                onClick={onGoogleSignIn}
-            >
-                Login with Google
-            </button>
 
             <div className="container-fluid loginbg">
                 <div className="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 col-xs-12 login-box">
@@ -93,9 +87,9 @@ function LogIn() {
                     </form>
                     {error && <p className="text-red-500 text-center">{error}</p>}
                     <div className="login-link-container">
-                        <a className="login-link" href="#">Recover password</a>
+                        <a className="login-link" href="#">Forgot password?</a>
                         <div className="login-right-links">
-                            <span className="login-info-text">New to Journey AI?</span>
+                            {/*<span className="login-info-text">New to Journey AI?</span>*/}
                             <a className="login-create-account-link login-link" href="#">Create Account</a>
                         </div>
                     </div>
