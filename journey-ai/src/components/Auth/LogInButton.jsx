@@ -5,12 +5,7 @@ function LogInButton() {
     const [showLogIn, setShowLogIn] = useState(false);
 
     const handleClick = () => {
-        if(!showLogIn){
-            setShowLogIn(true);
-        } else {
-            setShowLogIn(false);
-        }
-
+        setShowLogIn(!showLogIn)
     };
     return (
         <div>
