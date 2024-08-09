@@ -7,7 +7,7 @@ import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
 import ThemeOptions from "./ThemeOptions.jsx";
 import journeyCmd from "./prompt.jsx"
-
+import LogIn from "./LogIn.jsx";
 
 function Command() {
     const [location, setLocation] = useState('');
@@ -38,6 +38,7 @@ function Command() {
 
     return (
         <div>
+            <LogIn/>
             <div className="text-center landing-margin">
                <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Plan your trip in one
                   click</h1>
@@ -47,6 +48,7 @@ function Command() {
             </div>
             {/* Logo */}
             <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon'/>
+
             <div className={"search-parent"}>
                 <div className={"w-full min-w-2/3 lg:max-w-6xl"}>
                     <LocationInput setLocation={setLocation}/>
@@ -78,6 +80,8 @@ function Command() {
             <div className={"mx-20 flex justify-center"}>
                 <GeminiResponse command={command} onDataReceived={handleResponse}/>
             </div>
+
+
         </div>
     );
 }
