@@ -6,12 +6,12 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import "../css/Card.css";
 import { findIconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { placeSearch, placePhotoWithRef } from './PlaceResponse.jsx';
+// import { placeSearch, placePhotoWithRef } from './PlaceResponse.jsx';
 import DetailCard from './DetailCard.jsx';
 
 library.add(fas, far, fab);
 
-function Card(props) {
+function GenerateDestinationCard(props) {
     const [placeName, setPlaceName] = useState('');
     const [photoUrl, setPhotoUrl] = useState('');
     const [price, setPrice] = useState('');
@@ -24,15 +24,13 @@ function Card(props) {
 
         const fetchPlaceDetailData = async () => {
             try {
-                const details = await placeSearch(props.activity.location_name);
-                const photoURL = await placePhotoWithRef(details.photo_reference);
-                setPlaceId(details.place_id);
-                setPlaceName(details.place_name);
-                setPhotoUrl(photoURL);
-                setPrice(details.price_level);
+                setPlaceId(props.activity.place_detail.place_id);
+                setPlaceName(props.activity.location_name);
+                setPhotoUrl(props.activity.place_detail.photo_url);
+                setPrice(props.activity.place_detail.price_level);
                 setIsDataFetched(true); // Mark data as fetched
-                console.log("Detail: ", details);
-                console.log("Photo url: ", photoURL);
+                console.log("Detail: ", props.activity.place_detail);
+                console.log("Photo url: ", props.activity.place_detail.photo_url);
             } catch (err) {
                 console.error("Error fetching place details:", err);
             }
@@ -66,7 +64,7 @@ function Card(props) {
 
     return (
         <div key={props.activityIndex} className="detail pt-6">
-            <DetailCard show={openDetail} onClose={cardDetailClicked} placeId={placeId} placeName={placeName} photoURL={photoUrl} />
+            <DetailCard show={openDetail} onClose={cardDetailClicked} placeId={placeId} placeName={placeName} photoURL={photoUrl} placeDetailDataFromDb={props.activity.place_detail}/>
             <div className="card flex w-full rounded-lg bg-gray-50 p-3">
                 <div className="location_description flex">
                     <div className="description">
@@ -88,4 +86,4 @@ function Card(props) {
     );
 }
 
-export default Card;
+export default GenerateDestinationCard;

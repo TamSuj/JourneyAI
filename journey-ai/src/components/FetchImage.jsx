@@ -8,6 +8,7 @@ function FetchImage({query, className }){
         accessKey: 'pCKjY638XRrEvYTwlpIXdlC2c7ZjLhvkjrJ2qxzl7i0'
     });
 
+    //Need fix
     const PhotoComp = ({ photo }) => {
         const { user, urls } = photo;
         return (

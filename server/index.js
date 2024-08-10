@@ -1,107 +1,71 @@
-import express from "express";
-import {GoogleGenerativeAI} from "@google/generative-ai";
-// import {mapboxgl} from 'mapbox-gl';
-// import {mapboxGeocoder} from '@mapbox/mapbox-gl-geocoder';
+import express from 'express';
 import dotenv from 'dotenv';
+import placeRoutes from './routes/googleApiService.js';
+import mapRoutes from './routes/mapBoxApiService.js';
+import geminiRoutes from './routes/geminiApiService.js';
+import data from './UserSavedPlan.js';
 
 dotenv.config();
 
-const API_KEY = process.env.API_KEY;
-// const MAP_KEY = process.env.MAP_KEY;
-
-if (!API_KEY) {
-    console.error("API key is not defined. Please set it in the .env file.");
-}
-
-// if (!MAP_KEY){
-//     console.error("MAP key is not defined. Please set it in the .env file.")
-// }
-
-const PORT = 3001;
 const app = express();
-
 app.use(express.json());
 
+app.use('/api/place', placeRoutes);
+app.use('/api/mapbox', mapRoutes);
+app.use('/api/gemini', geminiRoutes);
 
-// Initialize Google Generative AI client
-const genAI = new GoogleGenerativeAI(API_KEY);
+const PORT = process.env.PORT || 3001;
 
-// Initialize Map client
-// const mapBox = new mapboxGeocoder(MAP_KEY);
+app.get('/api/saved_plan/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  const userIdInt = parseInt(userId);
 
+  if (userIdInt === data.id) {
+    res.json(data);
+    console.log(data);
+  } else {
+    console.log("Not found");
+    res.status(404).send('User Not Found'); // Adjusted to 404
+  }
+});
 
-const model = genAI.getGenerativeModel({ 
-    model: "gemini-1.5-flash",
-    generationConfig: {responseMimeType: "application/json"}
+app.post('/api/login', async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  console.log("LOGIN get triggered");
+  if (username === 'jack' && password === "jack"){
+    res.json(data);
+  } else {
+    console.log("wrong pass or username");
+  }
 });
 
 
+app.get('/api/saved_plan/:userId/:planId', async (req, res) => {
+  const userId = req.params.userId;
+  const planId = req.params.planId;
 
-app.get("/api", (req, res) => {
-    console.log("Received request for /api");
-    res.json({ message: "Connected" });
-});
+  // Assuming data.saved_plan contains your saved plans
+  const saved_plans = data.saved_plan;
 
+  // Convert userId and planId to integers if they are stored as integers
+  const userIdInt = parseInt(userId);
+  const planIdInt = parseInt(planId);
 
-app.post("/gemini_response", async (req, res) => {
-    try {
-        const { prompt } = req.body; // Correctly destructure the prompt
-
-        const result = await model.generateContent(prompt);
-        const response = result.response;
-        const text = response.text();
-        console.log("Received request for /gemini_reponse");
-        if(!text){
-            console.log("No response")
-        }
-
-        if(!prompt){
-            console.log("No prompt")
-        }
-        console.log(prompt);
-        console.log(text);
-
-        res.json({ message: text });
-
-    } catch (error) {
-        console.error('Error fetching data from Generative AI:', error);
-        throw error;
+  // Replace this check with actual logic to validate userId and planId
+  if(userIdInt === 1) { // Example check, replace with actual validation
+    const plan = saved_plans.find(p => p.plan_id === planIdInt);
+    
+    if (plan) {
+      res.json(plan);
+    } else {
+      res.status(404).json({ message: 'Plan not found' });
     }
+  } else {
+    res.status(400).json({ message: 'Invalid userId or planId' });
+  }
 });
-
-
-app.post("/map", async (req, res) => {
-    try {
-        const { location } = req.body;
-        const apiKey = 'pk.eyJ1Ijoia255aWhsYWkiLCJhIjoiY2x5YThiM2hpMHpzdzJqcHhhZGhqNmFsdyJ9.RpZAifKmlWn9kQRkakLRYg';
-        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(location)}.json?access_token=${apiKey}`;
-
-        const response = await fetch(url); //get url
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch coordinates');
-        }
-
-        const data = await response.json(); //parse
-
-        if (data.features.length > 0) {
-            const coordinates = data.features[0].center;
-            res.json({
-                center: coordinates,
-                zoom: 10 // Example zoom level
-            });
-        } else {
-            res.status(400).json({error: "No coordinates found"});
-        }
-    } catch (error) {
-        console.error('Error fetching coordinates:', error);
-        throw error;
-    }
-});
-
 
 app.listen(PORT, () => {
-    console.log(`Server listening on Port: ${PORT}`);
-})
-
-
+  console.log(`Server listening on Port: ${PORT}`);
+});

@@ -1,26 +1,28 @@
 import { useEffect, useState } from "react";
+import LoadingPage from "./LoadingPage";
 
-
-function GeminiResponse(props){
+function GeminiResponse(props) {
     const [data, setData] = useState('');
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchGeminiData = async() => {
+        const fetchGeminiData = async () => {
             try {
-                const response  = await fetch("/gemini_response",{
+                setLoading(true);
+
+                const response = await fetch("/api/gemini/gemini_response", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
-                    },                    
+                    },
                     body: JSON.stringify({ prompt: props.command })
                 });
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                console.log("GEMINIResponse: ", data.message);
+                // console.log("GEMINIResponse: ", data.message);
                 props.onDataReceived(data.message);
                 setData(data.message);
             } catch (error) {
@@ -33,11 +35,7 @@ function GeminiResponse(props){
         if (props.command) {
             fetchGeminiData();
         }
-    }, [props]);
-
-    if (loading) {
-        return <p></p>
-    }
+    }, [props.command]);
 
     if (error) {
         return <p>Error: {error}</p>;
@@ -45,7 +43,7 @@ function GeminiResponse(props){
 
     return (
         <div className="GeminiResponse">
-            <p>{data}</p>
+            {isLoading ? <LoadingPage /> : <p>{data}</p>}
         </div>
     );
 }
