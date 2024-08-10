@@ -8,6 +8,7 @@
 .location_description{
     display: flex;
     flex-direction: column;
+    margin-right: 1.5rem;
 }
 
 .description{

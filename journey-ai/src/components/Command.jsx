@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
 // import ThemeOptions from "./ThemeOptions.jsx";
 import journeyCmd from "./prompt.jsx"
+import LogInButton from "./Auth/LogInButton.jsx";
 import LoadingPage from "./LoadingPage.jsx";
 // import UserPrompt from "./UserPrompt.jsx";
 import CustomizeOptions from "./CustomizeOptions.jsx";
@@ -119,8 +119,8 @@ function Command() {
                         </div>
                     )
                 }
-
             </div>
+            <LogInButton/>
         </>
     );
 }
