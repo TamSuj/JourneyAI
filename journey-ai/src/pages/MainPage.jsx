@@ -1,10 +1,9 @@
 import '../css/MainPage.css';
 import React from 'react';
-import Command from './Command.jsx';
+import Command from '../components/Command.jsx';
 
 
 function MainPage() {
-
   return (
     <Command/>
   );

@@ -4,12 +4,10 @@ import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
-// import ThemeOptions from "./ThemeOptions.jsx";
 import journeyCmd from "./prompt.jsx"
-import LogInButton from "./Auth/LogInButton.jsx";
 import LoadingPage from "./LoadingPage.jsx";
-// import UserPrompt from "./UserPrompt.jsx";
 import CustomizeOptions from "./CustomizeOptions.jsx";
+import SignOutButton from "./Auth/SignOutButton.jsx";
 
 function Command() {
     const [location, setLocation] = useState(null);
@@ -120,7 +118,7 @@ function Command() {
                     )
                 }
             </div>
-            <LogInButton/>
+            <SignOutButton></SignOutButton>
         </>
     );
 }

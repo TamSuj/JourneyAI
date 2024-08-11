@@ -14,7 +14,7 @@ app.use('/api/place', placeRoutes);
 app.use('/api/mapbox', mapRoutes);
 app.use('/api/gemini', geminiRoutes);
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.REACT_APP_PORT || 3001;
 
 app.get('/api/saved_plan/:userId', async (req, res) => {
   const userId = req.params.userId;
