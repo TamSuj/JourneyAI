@@ -8,6 +8,8 @@ import { ProtectedrRoutes } from './components/ProtectedRoutes.jsx';
 import LoadingPage from './components/LoadingPage.jsx';
 import MainPage from './pages/MainPage.jsx';
 import "./index.css"
+import SavedPlanPage from './pages/SavedPlanPage.jsx';
+import GenerateDestinationPage from './pages/GenerateDestinationPage.jsx';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -36,6 +38,18 @@ function App() {
       <Route path='/homepage' element={
         <ProtectedrRoutes user={user}>
             <MainPage></MainPage>
+        </ProtectedrRoutes>
+        }
+      ></Route>
+        <Route path='/saved_plans' element={
+        <ProtectedrRoutes user={user}>
+            <SavedPlanPage></SavedPlanPage>
+        </ProtectedrRoutes>
+        }
+      ></Route>
+      <Route path='/saved_plans/destination' element={
+        <ProtectedrRoutes user={user}>
+            <GenerateDestinationPage></GenerateDestinationPage>
         </ProtectedrRoutes>
         }
       ></Route>
