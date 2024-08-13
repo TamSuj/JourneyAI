@@ -4,12 +4,10 @@ import LocationInput from "./LocationInput";
 import GeminiResponse from './GeminiResponse.jsx';
 import PeopleCount from './PeopleCount.jsx';
 import DayCount from "./DayCount.jsx";
-// import ThemeOptions from "./ThemeOptions.jsx";
 import journeyCmd from "./prompt.jsx"
-import LogInButton from "./Auth/LogInButton.jsx";
 import LoadingPage from "./LoadingPage.jsx";
-// import UserPrompt from "./UserPrompt.jsx";
 import CustomizeOptions from "./CustomizeOptions.jsx";
+import Header from "./Header.jsx";
 
 function Command() {
     const [location, setLocation] = useState(null);
@@ -52,9 +50,10 @@ function Command() {
             console.log("Response Data: ", responseData);
             navigate('/destination', { state: { location: location, responseData: responseData } });
         }
-    }, [responseData]);
+    }, [responseData, location, navigate]);
     return (
         <>
+            <Header></Header>
             {isLoading && <LoadingPage />}
             {
                 openCustomizeBox && (
@@ -70,7 +69,7 @@ function Command() {
                     <img className="landing-icon" src={"notion-icon.png"} alt='journeyAI Icon' />
                 </div>
                 {/* Logo */}
-                <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon' />
+                {/* <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon' /> */}
                 
                 <div className="flex items-center justify-center">
                     {/* <div className="flex-shrink-0 text-white">
@@ -120,7 +119,10 @@ function Command() {
                     )
                 }
             </div>
-            <LogInButton/>
+            {/* <button className="absolute right-40 top-0 h-auto text-gray-600 mx-7 mt-2 hover:text-gray-900 hover:underline py-3 px-2 rounded flex items-center justify-center mb-4 space-x-2">
+                saved plan
+            </button>
+            <SignOutButton></SignOutButton> */}
         </>
     );
 }

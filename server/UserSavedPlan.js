@@ -199,3 +199,31 @@ const data = {
   
   export default data;
   
+
+//users (Collection)
+// │
+// ├── uid1234 (Document)
+// │   ├── username: "Jack"
+// │   ├── email: "jack@example.com"
+// │   └── saved_plans (Subcollection)
+// │       ├── plan_id_1 (Document)
+// │       │   ├── tripname: "Paris Day Trip"
+// │       │   ├── city: "Paris"
+// │       │   ├── duration: 4
+// │       │   └── itinerary: [ ... ]
+// │       └── plan_id_2 (Document)
+// │           ├── tripname: "New York Getaway"
+// │           ├── city: "New York"
+// │           ├── duration: 3
+// │           └── itinerary: [ ... ]
+// │
+// └── uid5678 (Document)
+//     ├── username: "Jane"
+//     ├── email: "jane@example.com"
+//     └── saved_plans (Subcollection)
+//         └── plan_id_1 (Document)
+//             ├── tripname: "Tokyo Adventure"
+//             ├── city: "Tokyo"
+//             ├── duration: 7
+//             └── itinerary: [ ... ]
+

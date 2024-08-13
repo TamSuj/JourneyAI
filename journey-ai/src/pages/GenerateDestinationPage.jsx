@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import mapboxgl from 'mapbox-gl';
 import "mapbox-gl/dist/mapbox-gl.css";
 import "../css/GenerateMap.css";
-import CustomizePlan from "./CustomizePlan.jsx";
-import ImageContainer from "./ImageContainer.jsx";
-import UserInfo from "./UserInfo.jsx";
-import GenerateDestinationCard from "./GenerateDestinationCard.jsx";
+import CustomizePlan from "../components/CustomizePlan.jsx";
+import ImageContainer from "../components/ImageContainer.jsx";
+import UserInfo from "../components/UserInfo.jsx";
+import GenerateDestinationCard from "../components/GenerateDestinationCard.jsx";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -41,26 +41,18 @@ function GenerateDestinationPage() {
     const marker_obj = useRef(null);
     const { userId, planId } = useParams();
     const [city, setCity] = useState('')
-    
+    const dataPassedHere = useLocation();
+    const data = dataPassedHere.state.saved_plans;
+    const plan_id = dataPassedHere.state.plan_id;
+    // const plan_id = 1;
+
+    console.log(data);
 
     useEffect(() => {
-        const fetchPlanData = async () => {
-            try {
-                const response = await fetch(`/api/saved_plan/${userId}/${planId}`);
-                if (!response.ok) {
-                    throw new Error("Could not fetch data from /api/saved_plan/:userId/:planId");
-                }
-                const data = await response.json();
-                setPlanData(data);
-                setOpen(new Array(data.itinerary.length).fill(true)); // Create a new array with the same length and fill with false
-
-            } catch (error) {
-                console.error("Error fetching plan data:", error);
-            }
-        };
-
-        fetchPlanData();
-    }, [userId, planId]);
+        const plan = data.find(p => p.plan_id === plan_id);
+        setPlanData(plan);
+        setOpen(new Array(plan.itinerary.length).fill(true));
+    })
 
     useEffect(() => {
         if (planData && planData.city) {
