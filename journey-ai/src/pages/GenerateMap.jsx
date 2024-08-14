@@ -3,8 +3,8 @@ import mapboxgl from 'mapbox-gl';
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useLocation } from "react-router-dom";
 import "../css/GenerateMap.css"
-import DetailContainer from "./DetailContainer.jsx";
-import CustomizePlan from "./CustomizePlan.jsx";
+import DetailContainer from "../components/DetailContainer.jsx";
+import CustomizePlan from "../components/CustomizePlan.jsx";
 
 // public token
 mapboxgl.accessToken = 'pk.eyJ1Ijoia255aWhsYWkiLCJhIjoiY2x5YThiM2hpMHpzdzJqcHhhZGhqNmFsdyJ9.RpZAifKmlWn9kQRkakLRYg';

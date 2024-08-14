@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import mapboxgl from 'mapbox-gl';
 import "mapbox-gl/dist/mapbox-gl.css";
 import "../css/GenerateMap.css";
+import "../css/Day.css";
 import CustomizePlan from "../components/CustomizePlan.jsx";
 import ImageContainer from "../components/ImageContainer.jsx";
 import UserInfo from "../components/UserInfo.jsx";

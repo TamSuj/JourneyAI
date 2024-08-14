@@ -10,19 +10,23 @@ import MainPage from './pages/MainPage.jsx';
 import "./index.css"
 import SavedPlanPage from './pages/SavedPlanPage.jsx';
 import GenerateDestinationPage from './pages/GenerateDestinationPage.jsx';
+import GenerateMap from './pages/GenerateMap.jsx';
 
 function App() {
   const [user, setUser] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
+  const [userUid, setUserUid] = useState('');
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if(user){
         setUser(user);
-        setIsFetching(false); 
+        setIsFetching(false);
+        setUserUid(user.uid); 
         return;
       }
       setUser(null);
       setIsFetching(false);
+      setUserUid(''); 
     });
     return () => unsubscribe();
   }, [])
@@ -38,6 +42,12 @@ function App() {
       <Route path='/homepage' element={
         <ProtectedrRoutes user={user}>
             <MainPage></MainPage>
+        </ProtectedrRoutes>
+        }
+      ></Route>
+      <Route path='/destination' element={
+        <ProtectedrRoutes user={user}>
+            <GenerateMap></GenerateMap>
         </ProtectedrRoutes>
         }
       ></Route>
