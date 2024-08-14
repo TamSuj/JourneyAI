@@ -8,6 +8,8 @@ function UserInfo(){
     const [liked, setLiked] = useState(false);
     const clickLike = () => {
         setLiked(!liked);
+        //write to the database
+        //depend on the loged in user id
     }
 
     // Options for formatting the date
