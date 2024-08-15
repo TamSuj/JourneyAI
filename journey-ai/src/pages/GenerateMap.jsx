@@ -4,7 +4,8 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { useLocation } from "react-router-dom";
 import "../css/GenerateMap.css"
 import DetailContainer from "../components/DetailContainer.jsx";
-import CustomizePlan from "../components/CustomizePlan.jsx";
+import { useUser } from "../UserContext.jsx";
+// import CustomizePlan from "../components/CustomizePlan.jsx";
 
 // public token
 mapboxgl.accessToken = 'pk.eyJ1Ijoia255aWhsYWkiLCJhIjoiY2x5YThiM2hpMHpzdzJqcHhhZGhqNmFsdyJ9.RpZAifKmlWn9kQRkakLRYg';
@@ -39,15 +40,19 @@ function GenerateMap() {
     const [parsedResponse, setParsedResponse] = useState(null);
     const location = useLocation(); // location.state.location and location.state.responseData
     const response = location.state.responseData;
+    const { setCity, setDuration } = useUser();
 
     useEffect(() => {
         try {
+            setCity(location.state.location);
             const parsed = typeof response === 'string' ? JSON.parse(response) : response;
             setParsedResponse(parsed);
+            setDuration(parseInt(parsed.duration));
         } catch (error) {
             console.error('Error parsing response:', error);
         }
     }, [response]);
+    
 
     const location_names = getAllLocationName(parsedResponse);
     console.log(location_names);
@@ -118,7 +123,7 @@ function GenerateMap() {
     return (
         <div className="mapPage">
             <div className="map relative">
-                <CustomizePlan />
+                {/* <CustomizePlan /> */}
                 <div ref={map_ref} style={{ width: '100%', height: '100%' }}></div>
             </div>
             <DetailContainer location={location} />
