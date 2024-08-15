@@ -1,70 +1,68 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import LogInPage from './components//Auth/LogInPage.jsx';
-// import { Private } from './pages/private.jsx';
+import LogInPage from './components/Auth/LogInPage.jsx';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase/firebase.js';
 import { ProtectedrRoutes } from './components/ProtectedRoutes.jsx';
 import LoadingPage from './components/LoadingPage.jsx';
 import MainPage from './pages/MainPage.jsx';
-import "./index.css"
+import "./index.css";
 import SavedPlanPage from './pages/SavedPlanPage.jsx';
 import GenerateDestinationPage from './pages/GenerateDestinationPage.jsx';
 import GenerateMap from './pages/GenerateMap.jsx';
+import { useUser } from './UserContext.jsx';
 
 function App() {
   const [user, setUser] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
-  const [userUid, setUserUid] = useState('');
+  const { setUserUid } = useUser(); // Destructure setUserUid from the context
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if(user){
+      if (user) {
         setUser(user);
         setIsFetching(false);
         setUserUid(user.uid); 
-        return;
+      } else {
+        setUser(null);
+        setIsFetching(false);
+        setUserUid(null);
       }
-      setUser(null);
-      setIsFetching(false);
-      setUserUid(''); 
     });
-    return () => unsubscribe();
-  }, [])
 
-  if(isFetching){
-    return <LoadingPage></LoadingPage>
+    return () => unsubscribe();
+  }, [setUserUid]);
+
+  if (isFetching) {
+    return <LoadingPage />;
   }
 
   return (
     <BrowserRouter>
-    <Routes>
-      <Route index path='/' element={<LogInPage user={user}></LogInPage>}></Route>
-      <Route path='/homepage' element={
-        <ProtectedrRoutes user={user}>
-            <MainPage></MainPage>
-        </ProtectedrRoutes>
-        }
-      ></Route>
-      <Route path='/destination' element={
-        <ProtectedrRoutes user={user}>
-            <GenerateMap></GenerateMap>
-        </ProtectedrRoutes>
-        }
-      ></Route>
+      <Routes>
+        <Route index path='/' element={<LogInPage user={user} />} />
+        <Route path='/homepage' element={
+          <ProtectedrRoutes user={user}>
+            <MainPage />
+          </ProtectedrRoutes>
+        } />
+        <Route path='/destination' element={
+          <ProtectedrRoutes user={user}>
+            <GenerateMap />
+          </ProtectedrRoutes>
+        } />
         <Route path='/saved_plans' element={
-        <ProtectedrRoutes user={user}>
-            <SavedPlanPage></SavedPlanPage>
-        </ProtectedrRoutes>
-        }
-      ></Route>
-      <Route path='/saved_plans/destination' element={
-        <ProtectedrRoutes user={user}>
-            <GenerateDestinationPage></GenerateDestinationPage>
-        </ProtectedrRoutes>
-        }
-      ></Route>
-    </Routes>
-  </BrowserRouter>
+          <ProtectedrRoutes user={user}>
+            <SavedPlanPage />
+          </ProtectedrRoutes>
+        } />
+        <Route path='/saved_plans/destination' element={
+          <ProtectedrRoutes user={user}>
+            <GenerateDestinationPage />
+          </ProtectedrRoutes>
+        } />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
