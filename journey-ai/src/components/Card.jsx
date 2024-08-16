@@ -6,8 +6,9 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import "../css/Card.css";
 import { findIconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { placeSearch, placePhotoWithRef } from './PlaceResponse.jsx';
+import { placeSearch, placePhotoWithRef, placeDetail } from './PlaceResponse.jsx';
 import DetailCard from './DetailCard.jsx';
+import { useUser } from '../UserContext.jsx';
 
 library.add(fas, far, fab);
 
@@ -17,29 +18,69 @@ function Card(props) {
     const [price, setPrice] = useState('');
     const [openDetail, setOpenDetail] = useState(false);
     const [placeId, setPlaceId] = useState('');
+    const [coordinate, setCoordinate] = useState({});
     const [isDataFetched, setIsDataFetched] = useState(false); // New state for caching
+    const { addNewActivity } = useUser();
+    const [placeDetailData, setPlaceDetailData] = useState(null);
 
     useEffect(() => {
         if (isDataFetched) return; // Skip if data is already fetched
-
+    
         const fetchPlaceDetailData = async () => {
             try {
                 const details = await placeSearch(props.activity.location_name);
                 const photoURL = await placePhotoWithRef(details.photo_reference);
-                setPlaceId(details.place_id);
-                setPlaceName(details.place_name);
-                setPhotoUrl(photoURL);
-                setPrice(details.price_level);
-                setIsDataFetched(true); // Mark data as fetched
-                console.log("Detail: ", details);
-                console.log("Photo url: ", photoURL);
+                const placeDetailData = await placeDetail(details.place_id);
+    
+                if (details && placeDetailData) {
+                    console.log(details);
+                    setPlaceId(details.place_id);
+                    setPlaceName(details.place_name);
+                    setPrice(details.price_level);
+                    
+                    if (placeDetailData.geometry && placeDetailData.geometry.location) {
+                        setCoordinate(placeDetailData.geometry.location);
+                    }
+    
+                    setPhotoUrl(photoURL);
+                    setPlaceDetailData(placeDetailData);
+                    setIsDataFetched(true); // Mark data as fetched
+                }
+    
+                // Now that all state updates are done, create the newActivity object
+                const newActivity = {
+                    location_name: details.place_name,
+                    type: props.activity.type,
+                    duration: props.activity.duration,
+                    description: props.activity.description,
+                    place_detail: {
+                        location: placeDetailData.geometry?.location || {},
+                        place_id: details.place_id,
+                        photoUrl: photoURL,
+                        price_level: details.price_level,
+                        formatted_address: placeDetailData.formatted_address,
+                        formatted_phone_number: placeDetailData.formatted_phone_number,
+                        website: placeDetailData.website,
+                        opening_hours: {
+                            weekday_text: placeDetailData.opening_hours?.weekday_text || []
+                        },
+                        reviews: placeDetailData.reviews || []
+                    }
+                };
+    
+                console.log("New Activity:", newActivity); // Log the new activity object
+    
+                addNewActivity(newActivity); // Corrected function name
             } catch (err) {
                 console.error("Error fetching place details:", err);
             }
         };
-
+    
         fetchPlaceDetailData();
     }, [props.activity.location_name, isDataFetched]);
+    
+    
+    
 
     const iconDefinition = findIconDefinition({ iconName: props.activity.type });
 
@@ -66,7 +107,7 @@ function Card(props) {
 
     return (
         <div key={props.activityIndex} className="detail pt-6">
-            <DetailCard show={openDetail} onClose={cardDetailClicked} placeId={placeId} placeName={placeName} photoURL={photoUrl} />
+            <DetailCard show={openDetail} onClose={cardDetailClicked} placeDetailData={placeDetailData} placeName={placeName} photoURL={photoUrl} />
             <div className="card flex w-full rounded-lg bg-gray-50 p-3">
                 <div className="location_description flex">
                     <div className="description">

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { placeDetail } from './PlaceResponse';
+// import { placeDetail } from './PlaceResponse';
 import CommentCard from './CommentCard';
 
-function DetailCard({ show, onClose, placeId, placeName, photoURL, placeDetailDataFromDb }) {
+function DetailCard({ show, onClose, placeDetailData, placeName, photoURL, placeDetailDataFromDb }) {
     const [placeDetails, setPlaceDetails] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const placeDetailData = await placeDetail(placeId);
-                console.log("Fetched place details:", placeDetailData);
+                // const placeDetailData = await placeDetail(placeId);
+                // console.log("Fetched place details:", placeDetailData);
                 setPlaceDetails(placeDetailData); // Update state with fetched details
             } catch (error) {
                 console.error("Error fetching place detail data:", error);
@@ -18,10 +18,13 @@ function DetailCard({ show, onClose, placeId, placeName, photoURL, placeDetailDa
 
         if (placeDetailDataFromDb) {
             setPlaceDetails(placeDetailDataFromDb);
-        } else if (placeId) {
+            console.log("set detail data from db")
+        } else if (placeDetailData) {
             fetchData();
+            console.log("set detail data")
+
         }
-    }, [placeId, placeDetailDataFromDb]);
+    }, [placeDetailData, placeDetailDataFromDb]);
 
     if (!show) {
         return null;

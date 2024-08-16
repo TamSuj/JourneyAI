@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
+import { doc, updateDoc, arrayUnion, getDoc, setDoc } from "firebase/firestore";
+import { db } from "./firebase/firebase.js";
 
 // Create a UserContext
 const UserContext = createContext();
@@ -11,20 +13,61 @@ export const UserProvider = ({ children }) => {
   const [tripName, setTripName] = useState(null);
   const [itinerary, setItinerary] = useState([]);
   const [activities, setActivities] = useState([]);
-  
 
+  const addNewActivity = (activity) => {
+    console.log("Activity to add:", activity);
+    setActivities((prevActivities) => [...prevActivities, activity]);
+  };
+
+  const resetActivity = () => {
+    setActivities([]);
+  };
+
+  const savePlan = async () => {
+    const newPlan = {
+      city: city,
+      duration: duration,
+      itinerary: [...itinerary, { activities }],
+      tripname: tripName,
+    };
+
+    const userRef = doc(db, "users", userUid);
+
+    try {
+      const userDoc = await getDoc(userRef);
+      if (!userDoc.exists()) {
+        await setDoc(userRef, {
+          saved_plans: [newPlan],
+        });
+        console.log("User document created with new plan");
+      } else {
+        await updateDoc(userRef, {
+          saved_plans: arrayUnion(newPlan),
+        });
+        console.log("New plan added to existing document");
+      }
+      setCity(null);
+      setDuration(null);
+      setTripName(null);
+      setItinerary([]);
+      resetActivity();
+    } catch (error) {
+      console.error("Error saving plan:", error);
+    }
+  };
 
   return (
     <UserContext.Provider value={{
-        userUid, setUserUid,
-        city, setCity,
-        duration, setDuration,
-        tripName, setTripName,
-        itinerary, setItinerary,
-        activities, setActivities,
-      }}>
-        {children}
-      </UserContext.Provider>
+      userUid, setUserUid,
+      city, setCity,
+      duration, setDuration,
+      tripName, setTripName,
+      itinerary, setItinerary,
+      activities, setActivities,
+      addNewActivity, savePlan,
+    }}>
+      {children}
+    </UserContext.Provider>
   );
 };
 
@@ -35,9 +78,9 @@ export const useUser = () => {
 
 // saved_plans : [
 //     {
-//         city: "Paris",
-//         duration: 4,
-//         tripName: "paris day trip",
+//         city: "Paris", yes
+//         duration: 4, yes
+//         tripName: "paris day trip", yes
 //         itinerary : [
 //             {
 //                 activities: [

@@ -1,12 +1,25 @@
 import "../css/UserInfo.css"
 import {useState} from "react";
+import { useUser } from "../UserContext";
 
 function UserInfo(){
     // Get the current date and time
     const currentDate = new Date();
-
     const [liked, setLiked] = useState(false);
+    const { savePlan } = useUser();
+
     const clickLike = () => {
+        if(liked){
+            //delete data
+        } else{
+            // addNewActivity();
+            // console.log("Activity added to the current list");
+    
+            // Save the entire plan, including the new activity
+            savePlan();
+            console.log("Plan saved to cloud");
+        }
+        
         setLiked(!liked);
         //write to the database
         //depend on the loged in user id
