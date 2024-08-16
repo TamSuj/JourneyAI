@@ -40,7 +40,7 @@ function GenerateMap() {
     const [parsedResponse, setParsedResponse] = useState(null);
     const location = useLocation(); // location.state.location and location.state.responseData
     const response = location.state.responseData;
-    const { setCity, setDuration } = useUser();
+    const { setCity, setDuration, setTripName } = useUser();
 
     useEffect(() => {
         try {
@@ -48,11 +48,12 @@ function GenerateMap() {
             const parsed = typeof response === 'string' ? JSON.parse(response) : response;
             setParsedResponse(parsed);
             setDuration(parseInt(parsed.duration));
+            setTripName(parsed.tripName);
         } catch (error) {
             console.error('Error parsing response:', error);
         }
     }, [response]);
-    
+
 
     const location_names = getAllLocationName(parsedResponse);
     console.log(location_names);
