@@ -49,22 +49,22 @@ function Card(props) {
     
                 // Now that all state updates are done, create the newActivity object
                 const newActivity = {
-                    location_name: details.place_name,
-                    type: props.activity.type,
-                    duration: props.activity.duration,
-                    description: props.activity.description,
+                    location_name: details.place_name || "Not Found",
+                    type: props.activity.type || "Not Found",
+                    duration: props.activity.duration || "Not Found",
+                    description: props.activity.description || "Not Found", 
                     place_detail: {
-                        location: placeDetailData.geometry?.location || {},
-                        place_id: details.place_id,
-                        photoUrl: photoURL,
-                        price_level: details.price_level,
-                        formatted_address: placeDetailData.formatted_address,
-                        formatted_phone_number: placeDetailData.formatted_phone_number,
-                        website: placeDetailData.website,
+                        location: placeDetailData.geometry?.location || "Not Found",
+                        place_id: details.place_id || "Not Found",
+                        photoUrl: photoURL || "Not Found",
+                        price_level: details.price_level || "Not Found",
+                        formatted_address: placeDetailData.formatted_address || "Not Found",
+                        formatted_phone_number: placeDetailData.formatted_phone_number || "Not Found",
+                        website: placeDetailData.website || "Not Found",
                         opening_hours: {
                             weekday_text: placeDetailData.opening_hours?.weekday_text || []
                         },
-                        reviews: placeDetailData.reviews || []
+                        reviews: placeDetailData.reviews || "Not Found"
                     }
                 };
     

@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
-import { doc, updateDoc, arrayUnion, getDoc, setDoc } from "firebase/firestore";
-import { db } from "./firebase/firebase.js";
-
+import {doc, updateDoc, arrayUnion, arrayRemove, getDoc, setDoc} from "firebase/firestore"
+import { db } from "./firebase/firebase.js"
 // Create a UserContext
 const UserContext = createContext();
 
@@ -13,61 +12,74 @@ export const UserProvider = ({ children }) => {
   const [tripName, setTripName] = useState(null);
   const [itinerary, setItinerary] = useState([]);
   const [activities, setActivities] = useState([]);
+  // const [newActivity, setNewActivity] = useState(null);
 
-  const addNewActivity = (activity) => {
-    console.log("Activity to add:", activity);
+
+
+const addNewActivity = (activity) => {
+    console.log("Activity to add:", activity); // Check if activity is correctly passed
+    // Assuming activities is a state variable holding the list of activities
     setActivities((prevActivities) => [...prevActivities, activity]);
-  };
+};
 
+  //Reset activity
   const resetActivity = () => {
     setActivities([]);
-  };
+  }
 
+  //Save a new plan
   const savePlan = async () => {
+    console.log("Activities list after add: ", activities);
+    
     const newPlan = {
-      city: city,
-      duration: duration,
-      itinerary: [...itinerary, { activities }],
-      tripname: tripName,
+        city: city,
+        duration: duration,
+        itinerary: [...itinerary, {activities}],
+        tripname: tripName
     };
 
     const userRef = doc(db, "users", userUid);
 
-    try {
+    try { 
       const userDoc = await getDoc(userRef);
-      if (!userDoc.exists()) {
+      if(!userDoc.exists()){
+          // Create a new document if it doesn't exist
         await setDoc(userRef, {
-          saved_plans: [newPlan],
+            saved_plans: [newPlan],  // Initialize with the new plan
         });
         console.log("User document created with new plan");
       } else {
+        // Document exists, add new plan to the existing document
         await updateDoc(userRef, {
-          saved_plans: arrayUnion(newPlan),
+            saved_plans: arrayUnion(newPlan)
         });
         console.log("New plan added to existing document");
       }
+      // Resetting the states after saving
       setCity(null);
       setDuration(null);
       setTripName(null);
       setItinerary([]);
-      resetActivity();
+      // setNewActivity(null);
+      resetActivity();  // Clear activities after saving the plan
     } catch (error) {
       console.error("Error saving plan:", error);
     }
-  };
+  }
 
   return (
     <UserContext.Provider value={{
-      userUid, setUserUid,
-      city, setCity,
-      duration, setDuration,
-      tripName, setTripName,
-      itinerary, setItinerary,
-      activities, setActivities,
-      addNewActivity, savePlan,
-    }}>
-      {children}
-    </UserContext.Provider>
+        userUid, setUserUid,
+        city, setCity,
+        duration, setDuration,
+        tripName, setTripName,
+        itinerary, setItinerary,
+        activities, setActivities,
+        addNewActivity, savePlan,
+        // setNewActivity
+      }}>
+        {children}
+      </UserContext.Provider>
   );
 };
 
