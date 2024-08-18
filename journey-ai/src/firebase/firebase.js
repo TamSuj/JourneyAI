@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"
 
 const firebaseConfig = {
-    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    apiKey:process.env.FIREBASE_API_KEY || "AIzaSyDUMMY-KEY1234567890abcdefgHijkLMnOpQrS",
     authDomain: process.env.REACT_APP_AUTH_DOMAIN,
     projectId: process.env.REACT_APP_PROJECT_ID,
     storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
@@ -12,8 +12,14 @@ const firebaseConfig = {
     measurementId: process.env.REACT_APP_MEASURE_ID
 };
 
+
 const app = initializeApp(firebaseConfig);
+
 const auth = getAuth(app);
+
 const db = getFirestore(app);
 
+
 export { app, auth, db};
+
+

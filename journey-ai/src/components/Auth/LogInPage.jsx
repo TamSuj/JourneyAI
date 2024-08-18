@@ -10,7 +10,9 @@ import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider  } from
 import { auth } from "../../firebase/firebase.js";
 
 library.add(fas, fab);
+
 const provider = new GoogleAuthProvider()
+
 function LogInPage({ user }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

@@ -7,6 +7,10 @@ dotenv.config();
 
 const router = express.Router();
 
+
+// const GG_PLACE_KEY = 'AIzaSyCUGy6ckR2hcn__IZ4ckW5nGvaHUAL3DJQ'
+console.log("google api", process.env.GG_PLACE_KEY)
+
 const GG_PLACE_KEY = process.env.GG_PLACE_KEY;
 
 if (!GG_PLACE_KEY){
