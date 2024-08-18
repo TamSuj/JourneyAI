@@ -13,31 +13,50 @@ export const UserProvider = ({ children }) => {
   const [tripName, setTripName] = useState(null);
   const [itinerary, setItinerary] = useState([]);
 
-  const addNewActivity = (activity, dayIndex) => {
+  const addNewActivity = (activity, dayIndex, activityIndex) => {
     setItinerary(prevItinerary => {
-      // Create a copy of the previous itinerary
       const updatedItinerary = [...prevItinerary];
-      
-      // Ensure the dayIndex is within bounds
+  
       if (dayIndex >= 0 && dayIndex < updatedItinerary.length) {
-        // Add the new activity to the appropriate day's itinerary
-        updatedItinerary[dayIndex].activities = [...(updatedItinerary[dayIndex].activities || []), activity];
+        // Ensure activities are added at the correct position
+        const dayActivities = [...updatedItinerary[dayIndex].activities];
+        dayActivities[activityIndex] = activity;
+        updatedItinerary[dayIndex].activities = dayActivities;
       }
-      
+  
       return updatedItinerary;
     });
   };
+  
 
   // const resetActivity = () => {
   //   setActivities([]);
   // }
+  const getSavedPlanCount = async (userUid) => {
+    const userDocRef = doc(db, "users", userUid);
+    const userDocSnap = await getDoc(userDocRef);
+    if (userDocSnap.exists()) {
+      const userData = userDocSnap.data();
+      const savedPlanCount = userData.saved_plan ? userData.saved_plan.length : 0;
+      console.log(`Number of saved plans for user ${userUid}:`, savedPlanCount);
+      return savedPlanCount;
+    } else {
+        console.log("No such document!");
+        return 0;
+    }
+  }
 
   const savePlan = async () => {    
+    console.log("Itinerary that is going to get saved");
+    console.log(itinerary);
+    const savedPlanCount = await getSavedPlanCount(userUid);
+
     const newPlan = {
         city: city,
         duration: duration,
         itinerary: itinerary, // Correctly use the `itinerary` state
-        tripname: tripName
+        tripname: tripName,
+        plan_id: savedPlanCount + 1
     };
 
     const userRef = doc(db, "users", userUid);

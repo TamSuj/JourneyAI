@@ -70,7 +70,7 @@ function Card(props) {
                 };
                 console.log("Day:", props.dayindex); // Log the new activity object
                 console.log("New Activity:", newActivity); // Log the new activity object
-                addNewActivity(newActivity, props.dayindex);
+                addNewActivity(newActivity, props.dayindex, props.activityIndex);
                 
             } catch (err) {
                 console.error("Error fetching place details:", err);

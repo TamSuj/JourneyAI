@@ -25,26 +25,20 @@ function DisplayCard({ response }) {
         try {
             const parsed = typeof response === 'string' ? JSON.parse(response) : response;
             setParsedResponse(parsed);
-            setOpen(new Array(parsed.itinerary.length).fill(true)); // Create a new array with the same length and fill with false
-
+            setOpen(new Array(parsed.itinerary.length).fill(true));
+    
             const duration = parsed.duration;
-            const initialItineray= [];
-            
-            for(let day = 1; day <= duration; day++){
-                initialItineray.push(
-                    {
-                        day: day,
-                        activities: []
-                    }
-                )
-            }
-
-            setItinerary(initialItineray);
-
+            const initialItinerary = parsed.itinerary.map((day, dayIndex) => ({
+                day: dayIndex + 1,
+                activities: day.activities || []
+            }));
+    
+            setItinerary(initialItinerary);
         } catch (error) {
             console.error('Error parsing response:', error);
         }
     }, [response]);
+    
 
     const toggleDown = (index) => {
         setOpen((prevState) => {
