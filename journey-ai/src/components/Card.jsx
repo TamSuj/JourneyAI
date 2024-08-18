@@ -22,6 +22,7 @@ function Card(props) {
     const [isDataFetched, setIsDataFetched] = useState(false); // New state for caching
     const { addNewActivity } = useUser();
     const [placeDetailData, setPlaceDetailData] = useState(null);
+    // const { initialItineray } = useUser();
 
     useEffect(() => {
         if (isDataFetched) return; // Skip if data is already fetched
@@ -64,13 +65,13 @@ function Card(props) {
                         opening_hours: {
                             weekday_text: placeDetailData.opening_hours?.weekday_text || []
                         },
-                        reviews: placeDetailData.reviews || "Not Found"
+                        reviews: placeDetailData.reviews || []
                     }
                 };
-    
+                console.log("Day:", props.dayindex); // Log the new activity object
                 console.log("New Activity:", newActivity); // Log the new activity object
-    
-                addNewActivity(newActivity); // Corrected function name
+                addNewActivity(newActivity, props.dayindex);
+                
             } catch (err) {
                 console.error("Error fetching place details:", err);
             }
