@@ -42,6 +42,8 @@ function GenerateDestinationPage() {
     const marker_obj = useRef(null);
     const { userId, planId } = useParams();
     const [city, setCity] = useState('')
+
+
     const dataPassedHere = useLocation();
     const data = dataPassedHere.state.saved_plans;
     const plan_id = dataPassedHere.state.plan_id;
@@ -129,7 +131,7 @@ function GenerateDestinationPage() {
             
             <div className="detail_container pb-10">
                 <ImageContainer location={city}></ImageContainer>
-                <UserInfo></UserInfo>
+                <UserInfo likeOption={true}></UserInfo>
 
                 <div className="detail_plan">
                     <div id="card-container">

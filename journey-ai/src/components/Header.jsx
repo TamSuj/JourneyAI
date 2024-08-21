@@ -23,7 +23,7 @@ function Header(){
             <div className="flex flex-row gap-7 pr-10 items-center h-full">
                 <button className="flex items-center" onClick={navigateToSavePlanPage}>
                     <FontAwesomeIcon icon="fa-solid fa-box-archive" />
-                    <span className="ml-2">Saved Plan</span>
+                    <span className="ml-2 text-gray-600">Saved Plan</span>
                 </button>
                 <SignOutButton></SignOutButton>
             </div>

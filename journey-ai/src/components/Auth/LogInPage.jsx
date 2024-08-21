@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import login_background from '../../pictures/login_background.png';
 
 import SignUp from "./SignUp.jsx";
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider  } from "firebase/auth";
@@ -26,24 +27,15 @@ function LogInPage({ user }) {
     const handleSigninWithGoogle = () => {
         signInWithPopup(auth, provider)
         .then((result) => {
-            // This gives you a Google Access Token. You can use it to access the Google API.
             const credential = GoogleAuthProvider.credentialFromResult(result);
             const token = credential.accessToken;
-            // The signed-in user info.
             const user = result.user;
-            // IdP data available using getAdditionalUserInfo(result)
-            // ...
         }).catch((error) => {
-            // Handle Errors here.
             const errorCode = error.code;
             const errorMessage = error.message;
-            // The email of the user's account used.
             const email = error.customData.email;
-            // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
-            // ...
-    });
-
+        });
     }
 
     const handleSignUp = () => {    
@@ -52,14 +44,13 @@ function LogInPage({ user }) {
     };
 
     const handleSignIn = (e) => {
-        e.preventDefault(); // Prevent form submission
+        e.preventDefault(); 
         if (!email || !password) {
             return;
         }
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                // console.log(user);
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -69,12 +60,18 @@ function LogInPage({ user }) {
     };
 
     return (
-        <>  
+        <div style={{
+            backgroundImage: `url(${login_background})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            minHeight: '100vh'
+        }}>  
             {openSignUpForm && 
                 <SignUp open={openSignUpForm} onClose={handleSignUp} />
             }
             {isSigningIn && 
-                <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
+                <div className="flex justify-center items-center min-h-screen p-4">
                     <div className="bg-white shadow-xl rounded-lg p-8 w-full max-w-sm">
                         <h2 className="text-2xl font-bold text-center text-orange-500 mb-6">Login</h2>
 
@@ -128,7 +125,7 @@ function LogInPage({ user }) {
                     </div>
                 </div>
             }
-        </>
+        </div>
     );
 }
 

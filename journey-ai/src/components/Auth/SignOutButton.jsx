@@ -12,7 +12,7 @@ function SignOutButton(){
         <div>
             <button onClick={handleSignOut}
             ><i className="fa-solid fa-user"></i>
-                <span> Sign Out</span>
+                <span className="text-gray-600"> Sign Out</span>
             </button>
         </div>
     )
