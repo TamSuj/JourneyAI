@@ -1,6 +1,6 @@
 import ThemeOption from "./ThemeOptions";
-
-function UserPrompt({ show, onClose, setTheme, setSpecialRequest}) {
+import BudgetSlider from "./BudgetSlider";
+function UserPrompt({ show, onClose, setTheme, setSpecialRequest, setBudget}) {
 
     const handleChange = (event) => {
         setSpecialRequest(event.target.value);
@@ -12,7 +12,7 @@ function UserPrompt({ show, onClose, setTheme, setSpecialRequest}) {
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50" onClick={onClose}>
-            <div className="bg-white p-6 rounded-lg w-full max-w-xl h-1/2 overflow-y-auto relative"
+            <div className="bg-white p-6 rounded-lg w-full max-w-xl h-2/3 overflow-y-auto relative"
                 onClick={(e) => e.stopPropagation()}>
                 <div className="flex flex-col h-full">
                     <div className="text-xl font-bold mb-2">
@@ -21,6 +21,14 @@ function UserPrompt({ show, onClose, setTheme, setSpecialRequest}) {
 
                     <div>
                         <ThemeOption setTheme={setTheme}></ThemeOption>
+                    </div>
+
+                    <div className="text-xl font-bold mb-2">
+                        Budget level
+                    </div>
+
+                    <div> 
+                        <BudgetSlider setBudget={setBudget}></BudgetSlider>
                     </div>
 
                     <div className="text-xl font-bold mb-2">

@@ -2,12 +2,12 @@ import "../css/UserInfo.css"
 import {useState} from "react";
 import { useUser } from "../UserContext";
 
-function UserInfo(){
+function UserInfo({likeOption}){
     // Get the current date and time
     const currentDate = new Date();
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(likeOption);
     const { savePlan } = useUser();
-
+    
     const clickLike = () => {
         if(liked){
             //delete data

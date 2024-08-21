@@ -11,6 +11,7 @@ export const UserProvider = ({ children }) => {
   const [city, setCity] = useState(null);
   const [duration, setDuration] = useState(null);
   const [tripName, setTripName] = useState(null);
+  const [totalEstimation, setTotalEstimation] = useState(null);
   const [itinerary, setItinerary] = useState([]);
 
   const addNewActivity = (activity, dayIndex, activityIndex) => {
@@ -56,7 +57,8 @@ export const UserProvider = ({ children }) => {
         duration: duration,
         itinerary: itinerary, // Correctly use the `itinerary` state
         tripname: tripName,
-        plan_id: savedPlanCount + 1
+        plan_id: savedPlanCount + 1,
+        estimated_total: totalEstimation
     };
 
     const userRef = doc(db, "users", userUid);
@@ -80,6 +82,7 @@ export const UserProvider = ({ children }) => {
       setCity(null);
       setDuration(null);
       setTripName(null);
+      setTotalEstimation(null);
       setItinerary([]);
       // resetActivity();  // Clear activities after saving the plan
     } catch (error) {
@@ -94,6 +97,7 @@ export const UserProvider = ({ children }) => {
         duration, setDuration,
         tripName, setTripName,
         itinerary, setItinerary,
+        totalEstimation, setTotalEstimation,
         addNewActivity, savePlan,
       }}>
         {children}

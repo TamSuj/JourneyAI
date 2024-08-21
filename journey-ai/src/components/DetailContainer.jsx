@@ -9,7 +9,7 @@ function DetailContainer({location}){
         <div className="detail_container pb-10">
             {/* <DaysNavBar/> */}
             <ImageContainer location={location.state.location} response={location.state.responseData}/>
-            <UserInfo/>
+            <UserInfo likeOption={false}/>
             <DisplayCard response={location.state.responseData}/>
         </div>
     )

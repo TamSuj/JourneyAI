@@ -41,23 +41,6 @@ function GenerateDestinationCard(props) {
 
     const iconDefinition = findIconDefinition({ iconName: props.activity.type });
 
-    const getPriceLevel = (price) => {
-        switch (price) {
-            case 0:
-                return 'Free';
-            case 1:
-                return 'Inexpensive';
-            case 2:
-                return 'Moderate';
-            case 3:
-                return 'Expensive';
-            case 4:
-                return 'Very Expensive';
-            default:
-                return 'N/A';
-        }
-    };
-
     const cardDetailClicked = () => {
         setOpenDetail((prevState) => !prevState);
     };
@@ -73,10 +56,12 @@ function GenerateDestinationCard(props) {
                         </button>
                         <p className="card-description text-slate-500 text-base">{props.activity.description}</p>
                     </div>
-                    <div className="relative w-fit cursor-default items-center gap-1.5 rounded-full border border-solid border-gray-200 bg-white px-3 py-0.5 text-xs md:text-sm">
-                        <p className="text-gray-500">{props.activity.duration}</p>
+                    <div className='flex flex-row items-center'>
+                        <div className="relative w-fit cursor-default items-center gap-1.5 rounded-full border border-solid border-gray-200 bg-white px-3 py-0.5 text-xs md:text-sm">
+                            <p className="text-gray-500">{props.activity.duration}</p>
+                        </div>
+                        <p className="px-3"> • <FontAwesomeIcon icon="fa-solid fa-dollar-sign" /> {price}</p> 
                     </div>
-                    <p className="text-gray-500 px-3"><FontAwesomeIcon icon="fa-solid fa-dollar-sign" /> {getPriceLevel(price)}</p>
                 </div>
                 <div className="location_image rounded-lg">
                     {photoUrl && <img src={photoUrl} alt="Place" className="rounded-lg" />}

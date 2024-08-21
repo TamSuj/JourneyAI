@@ -19,11 +19,15 @@ function Command() {
     const [isLoading, setLoading] = useState(false);
     const [openCustomizeBox, setOpenCustomizeBox] = useState(false);
     const [specialRequest, setSpecialRequest] = useState(null);
+    const [budget, setBudget] = useState("Mid")
 
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
-        const prompt = journeyCmd(location, numOfPeople, day, theme, specialRequest);
+        // { value: 0, label: 'Cheap' },
+        // { value: 1, label: 'Mid' },
+        // { value: 2, label: 'High' },
+        const prompt = journeyCmd(location, numOfPeople, day, theme, specialRequest, budget);
 
         setCommand(prompt);
         setLoading(true);
@@ -57,7 +61,7 @@ function Command() {
             {isLoading && <LoadingPage />}
             {
                 openCustomizeBox && (
-                    <CustomizeOptions show={openCustomizeBox} onClose={handleOpenCustomizeBox} setTheme={setTheme} setSpecialRequest={setSpecialRequest}/>
+                    <CustomizeOptions show={openCustomizeBox} onClose={handleOpenCustomizeBox} setTheme={setTheme} setSpecialRequest={setSpecialRequest} setBudget={setBudget}/>
                 )
             }
             <div id="command">

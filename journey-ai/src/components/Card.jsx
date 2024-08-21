@@ -37,7 +37,7 @@ function Card(props) {
                     console.log(details);
                     setPlaceId(details.place_id);
                     setPlaceName(details.place_name);
-                    setPrice(details.price_level);
+                    setPrice(props.activity.price_level);
                     
                     if (placeDetailData.geometry && placeDetailData.geometry.location) {
                         setCoordinate(placeDetailData.geometry.location);
@@ -57,8 +57,8 @@ function Card(props) {
                     place_detail: {
                         location: placeDetailData.geometry?.location || "Not Found",
                         place_id: details.place_id || "Not Found",
-                        photoUrl: photoURL || "Not Found",
-                        price_level: details.price_level || "Not Found",
+                        photo_url: photoURL || "Not Found",
+                        price_level: props.activity.price_level || "Not Found",
                         formatted_address: placeDetailData.formatted_address || "Not Found",
                         formatted_phone_number: placeDetailData.formatted_phone_number || "Not Found",
                         website: placeDetailData.website || "Not Found",
@@ -80,27 +80,8 @@ function Card(props) {
         fetchPlaceDetailData();
     }, [props.activity.location_name, isDataFetched]);
     
-    
-    
 
     const iconDefinition = findIconDefinition({ iconName: props.activity.type });
-
-    const getPriceLevel = (price) => {
-        switch (price) {
-            case 0:
-                return 'Free';
-            case 1:
-                return 'Inexpensive';
-            case 2:
-                return 'Moderate';
-            case 3:
-                return 'Expensive';
-            case 4:
-                return 'Very Expensive';
-            default:
-                return 'N/A';
-        }
-    };
 
     const cardDetailClicked = () => {
         setOpenDetail((prevState) => !prevState);
@@ -112,15 +93,18 @@ function Card(props) {
             <div className="card flex w-full rounded-lg bg-gray-50 p-3">
                 <div className="location_description flex">
                     <div className="description">
-                        <button className="font-semibold text-lg" onClick={cardDetailClicked}>
+                        <button className="font-semibold text-lg hover:underline" onClick={cardDetailClicked}>
                             <FontAwesomeIcon icon={iconDefinition} /> - {placeName}
                         </button>
                         <p className="card-description text-slate-500 text-base">{props.activity.description}</p>
                     </div>
-                    <div className="relative w-fit cursor-default items-center gap-1.5 rounded-full border border-solid border-gray-200 bg-white px-3 py-0.5 text-xs md:text-sm">
-                        <p className="text-gray-500">{props.activity.duration}</p>
+                    <div className='flex flex-row items-center'>
+                        <div className="relative w-fit cursor-default items-center gap-1.5 rounded-full border border-solid border-gray-200 bg-white px-3 py-0.5 text-xs md:text-sm">
+                            <p className="text-gray-500">{props.activity.duration}</p>
+                        </div>
+                        <p className="px-3"> • <FontAwesomeIcon icon="fa-solid fa-dollar-sign" /> {price}</p> 
                     </div>
-                    <p className="text-gray-500 px-3"><FontAwesomeIcon icon="fa-solid fa-dollar-sign" /> {getPriceLevel(price)}</p>
+
                 </div>
                 <div className="location_image rounded-lg">
                     {photoUrl && <img src={photoUrl} alt="Place" className="rounded-lg" />}
