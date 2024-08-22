@@ -20,7 +20,7 @@ function Header(){
     return(
         <div className="header flex flex-row h-10 justify-between items-center">
             <div className="icon flex items-center h-full">
-                <img className="logo-orange" src={"logo-orange.png"} alt='journeyAI Icon' />
+                <a href="/"><img className="logo-orange" src={"logo-orange.png"} alt='journeyAI Icon'/></a>
             </div>
 
             <div className="flex flex-row gap-7 pr-10 items-center h-full">

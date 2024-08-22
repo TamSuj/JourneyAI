@@ -6,7 +6,7 @@ function UserInfo({ likeOption }) {
     // Get the current date and time
     const currentDate = new Date();
     const [liked, setLiked] = useState(likeOption);
-    const { savePlan } = useUser();
+    const { savePlan, userUid } = useUser();
 
     // Retrieve liked state from localStorage on component mount
     useEffect(() => {
@@ -14,10 +14,13 @@ function UserInfo({ likeOption }) {
         if (savedLikeState !== null) {
             setLiked(JSON.parse(savedLikeState));
         }
-    }, []);
+    }, [setLiked]);
 
     // When the user clicks the like button
     const clickLike = useCallback(() => {
+        if (!userUid) return; // Prevent saving if user is not logged in
+
+
         const newLikedState = !liked;
         setLiked(newLikedState);
         localStorage.setItem("liked", JSON.stringify(newLikedState));
@@ -60,8 +63,20 @@ function UserInfo({ likeOption }) {
             </div>
 
             <div className="like_info">
-                <button onClick={clickLike}>
-                    <i className={`fa-heart ${liked ? 'fa-solid text-red-500' : 'fa-regular text-gray-500'} text-2xl`}></i>
+                <button 
+                    onClick={clickLike}
+                    disabled={!userUid}
+                    title={!userUid ? "You must be logged in to save the plan" : ""} // Show tooltip if not logged in
+
+                    >
+                    {
+                        !userUid && <i class="fa-regular fa-heart text-gray-500"></i>
+                        
+                    }
+                    {
+                        userUid && <i className={`fa-heart ${liked ? 'fa-solid text-red-500' : 'fa-regular text-gray-500'} text-2xl`}></i>
+                        
+                    }
                 </button>
             </div>
         </div>
