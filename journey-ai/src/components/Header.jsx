@@ -1,5 +1,7 @@
 import SignOutButton from "./Auth/SignOutButton";
 import { useNavigate } from "react-router-dom";
+import SignInButton from "./Auth/SignInButton";
+import { useUser } from "../UserContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -9,6 +11,7 @@ library.add(fas, far, fab)
 
 function Header(){
     const navigate = useNavigate();
+    const { userUid } = useUser();
 
     const navigateToSavePlanPage = () => {
         navigate('/saved_plans');
@@ -21,11 +24,24 @@ function Header(){
             </div>
 
             <div className="flex flex-row gap-7 pr-10 items-center h-full">
-                <button className="flex items-center" onClick={navigateToSavePlanPage}>
-                    <FontAwesomeIcon icon="fa-solid fa-box-archive" />
-                    <span className="ml-2 text-gray-600">Saved Plan</span>
-                </button>
-                <SignOutButton></SignOutButton>
+                {
+                    userUid && 
+                    <div className="flex items-center gap-5">
+                        <button className="flex items-center" onClick={navigateToSavePlanPage}>
+                            <FontAwesomeIcon icon="fa-solid fa-box-archive" />
+                            <span className="ml-2 text-gray-600">Saved Plan</span>
+                        </button>
+                        <SignOutButton></SignOutButton>
+                    </div>  
+                }
+
+                {
+                    !userUid && 
+                    <div className="flex items-center">
+                        <SignInButton></SignInButton>
+                    </div>
+                }
+
             </div>
         </div>
 

@@ -6,7 +6,6 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import "../css/Card.css";
 import { findIconDefinition } from '@fortawesome/fontawesome-svg-core';
-// import { placeSearch, placePhotoWithRef } from './PlaceResponse.jsx';
 import DetailCard from './DetailCard.jsx';
 
 library.add(fas, far, fab);

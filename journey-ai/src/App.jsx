@@ -40,17 +40,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index path='/' element={<LogInPage user={user} />} />
-        <Route path='/homepage' element={
-          <ProtectedrRoutes user={user}>
-            <MainPage />
-          </ProtectedrRoutes>
-        } />
-        <Route path='/destination' element={
-          <ProtectedrRoutes user={user}>
-            <GenerateMap />
-          </ProtectedrRoutes>
-        } />
+        <Route index path='/login' element={<LogInPage user={user} />} />
+        <Route path='/' element={<MainPage />}/>
+        <Route path='/destination' element={<GenerateMap/>} />
+
+        {/* Protected Routes */}
         <Route path='/saved_plans' element={
           <ProtectedrRoutes user={user}>
             <SavedPlanPage />
