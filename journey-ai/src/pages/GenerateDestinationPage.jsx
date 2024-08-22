@@ -128,8 +128,8 @@ function GenerateDestinationPage() {
                 <CustomizePlan />
                 <div ref={map_ref} style={{ width: '100%', height: '100%' }}></div>
             </div>
-            
-            <div className="detail_container pb-10">
+            <div className="dummy absolute top-0 left-0 w-full h-10 bg-white text-center text-white z-50 lg:hidden md:hidden"></div>
+            <div className="detail_container pb-10 ">
                 <ImageContainer location={city}></ImageContainer>
                 <UserInfo likeOption={true}></UserInfo>
 

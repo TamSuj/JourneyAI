@@ -8,7 +8,6 @@
 .location_description{
     display: flex;
     flex-direction: column;
-    margin-right: 1.5rem;
 }
 
 .description{
@@ -18,4 +17,16 @@
 .location_image{
     max-width: 175px;
     max-height: 175px;
+}
+
+/*Responsive*/
+@media (max-width: 768px) {
+    .card{
+        display: block;
+    }
+
+    .location_image{
+        max-width: 100%;
+        max-height: 100%;
+    }
 }

@@ -11,3 +11,8 @@
     font-size: 32px;
 }
 
+@media (max-width: 1022px) {
+    .title {
+        display: none;
+    }
+}

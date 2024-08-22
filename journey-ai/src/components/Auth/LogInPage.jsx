@@ -15,6 +15,7 @@ library.add(fas, fab);
 const provider = new GoogleAuthProvider()
 
 function LogInPage({ user }) {
+    const [error, setError] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [openSignUpForm, setOpenSignUpForm] = useState(false);
@@ -27,14 +28,12 @@ function LogInPage({ user }) {
     const handleSigninWithGoogle = () => {
         signInWithPopup(auth, provider)
         .then((result) => {
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
-            const user = result.user;
+            // Handle result (user, token) securely
+            // e.g., securely send the token to your backend if necessary
         }).catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            const email = error.customData.email;
-            const credential = GoogleAuthProvider.credentialFromError(error);
+            // Avoid logging error details in production
+            console.error("Google sign-in failed.");
+            setError("Login with Google failed. Please try again.");
         });
     }
 
@@ -50,12 +49,12 @@ function LogInPage({ user }) {
         }
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                const user = userCredential.user;
+                // const user = userCredential.user;
             })
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
+                // Avoid logging sensitive information
+                console.error("Login failed."); // Generic log for debugging
+                setError("Login failed. Please check your credentials and try again.");
             });
     };
 
@@ -90,6 +89,8 @@ function LogInPage({ user }) {
                             </div>
 
                             <form className="flex flex-col gap-4" onSubmit={handleSignIn}>
+                                {error && <div className="text-red-500 text-center">{error} <FontAwesomeIcon icon="fa-regular fa-face-rolling-eyes" /></div>}
+
                                 <input
                                     type="email"
                                     className="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-orange-500"
