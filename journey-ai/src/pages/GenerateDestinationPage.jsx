@@ -49,7 +49,7 @@ function GenerateDestinationPage() {
     const plan_id = dataPassedHere.state.plan_id;
     // const plan_id = 1;
 
-    console.log(data);
+    // console.log(data);
 
     useEffect(() => {
         const plan = data.find(p => p.plan_id === plan_id);

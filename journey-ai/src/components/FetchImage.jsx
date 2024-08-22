@@ -16,9 +16,9 @@ function FetchImage({query, className }){
                 <div className={"text-xs text-gray-500 photocomp"}>
                     <a className="credit"
                         target="_blank"
-                        href={`https://unsplash.com/@${user.username}`}
-                    ><img className={`lg:max-w-full max-w-0`} src={urls.regular} alt={"Image by ${user.name}"}/>Photo by {user.name}
-                    </a> on <a href={`https://unsplash.com/?utm_source=your_app_name&utm_medium=referral`}>Unsplash</a>
+                        // href={`https://unsplash.com/@${user.username}`}
+                    ><img className={`lg:max-w-full max-w-0`} src={urls.regular} alt={"Image by ${user.name}"}/>
+                    </a>
                 </div>
             </Fragment>
         );

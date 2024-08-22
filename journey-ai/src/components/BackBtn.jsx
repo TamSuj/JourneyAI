@@ -1,12 +1,20 @@
 // import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../css/Destination.css"
 
 
 function BackBtn(){
     const navigate = useNavigate();
+    const location = useLocation();
+
+
     const goBack = () =>{
-        navigate("/");
+        if(location.state.from === "/saved_plans/destination"){
+           navigate("/saved_plans"); 
+        } else {
+            navigate("/")
+        }
+        
     }
 
     return (

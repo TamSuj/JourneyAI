@@ -6,7 +6,7 @@ function SavedPlanCard({tripname, city, days, userId, planId, saved_plans_data})
     const navigate = useNavigate()
 
     const handleCardClicked = () => {
-        navigate(`/saved_plans/destination`, {state: {saved_plans: saved_plans_data, plan_id: planId}});
+        navigate(`/saved_plans/destination`, {state: {saved_plans: saved_plans_data, plan_id: planId, from: "/saved_plans/destination"}});
     }
 
     return (

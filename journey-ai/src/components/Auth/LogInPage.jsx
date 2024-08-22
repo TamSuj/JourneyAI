@@ -22,7 +22,7 @@ function LogInPage({ user }) {
     const [isSigningIn, setSigningIn] = useState(true);
 
     if (user) {
-        return <Navigate to={'/homepage'} />;
+        return <Navigate to={'/'} />;
     }
 
     const handleSigninWithGoogle = () => {

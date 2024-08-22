@@ -38,7 +38,7 @@ export const UserProvider = ({ children }) => {
     const userDocSnap = await getDoc(userDocRef);
     if (userDocSnap.exists()) {
       const userData = userDocSnap.data();
-      const savedPlanCount = userData.saved_plan ? userData.saved_plan.length : 0;
+      const savedPlanCount = userData.saved_plans ? userData.saved_plans.length : 0;
       console.log(`Number of saved plans for user ${userUid}:`, savedPlanCount);
       return savedPlanCount;
     } else {
