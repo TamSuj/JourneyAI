@@ -107,7 +107,10 @@ function Card(props) {
     const iconDefinition = findIconDefinition({ iconName: props.activity.type });
 
     const cardDetailClicked = () => {
-        setOpenDetail((prevState) => !prevState);
+        if(userUid){
+            setOpenDetail((prevState) => !prevState);
+        }
+        
     };
 
     return (
@@ -118,7 +121,12 @@ function Card(props) {
             <div className="card flex w-full rounded-lg bg-gray-50 p-3">
                 <div className="location_description flex">
                     <div className="description">
-                        <button className="font-semibold text-lg hover:underline" onClick={cardDetailClicked}>
+                        <button 
+                            className="font-semibold text-lg hover:underline" 
+                            onClick={cardDetailClicked}
+                            title={!userUid ? "Please Log-in or Sign-up to see more detail" : ""} // Show tooltip if not logged in
+
+                        >
                             <FontAwesomeIcon icon={iconDefinition} /> - {placeName}
                         </button>
                         <p className="card-description text-slate-500 text-base">{props.activity.description}</p>

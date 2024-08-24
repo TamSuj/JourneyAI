@@ -14,11 +14,18 @@
     font-size: 15px;
 }
 
-.location_image{
-    max-width: 175px;
-    max-height: 175px;
+.photo-location_image {
+    width: 100%;
+    max-width: 400px; /* Adjust based on your layout */
+    height: auto; /* Maintain aspect ratio */
+    overflow: hidden;
 }
 
+.photo-location_image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Adjusts how the image fits within the container */
+}
 /*Responsive*/
 @media (max-width: 768px) {
     .card{
