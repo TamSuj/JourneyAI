@@ -1,41 +1,47 @@
 import "../css/UserInfo.css";
 import { useState, useCallback, useEffect } from "react";
 import { useUser } from "../UserContext";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import usePersistState from "../usePersistState";
 
 function UserInfo({ likeOption }) {
-    // Get the current date and time
     const currentDate = new Date();
-    const [liked, setLiked] = useState(likeOption);
     const { savePlan, userUid } = useUser();
+    const [openSnackBar, setOpenSnackBar] = useState(false);
 
-    // Retrieve liked state from localStorage on component mount
-    useEffect(() => {
-        const savedLikeState = localStorage.getItem("liked");
-        if (savedLikeState !== null) {
-            setLiked(JSON.parse(savedLikeState));
+    // Initialize state based on either likeOption or localStorage
+    const [liked, setLiked] = usePersistState(likeOption, 'liked');
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
         }
-    }, [setLiked]);
+        setOpenSnackBar(false);
+    };
 
-    // When the user clicks the like button
+    // Handle like button click
     const clickLike = useCallback(() => {
-        if (!userUid) return; // Prevent saving if user is not logged in
-
+        if (!userUid) {
+            setOpenSnackBar(true);
+            return;
+        }
 
         const newLikedState = !liked;
         setLiked(newLikedState);
-        localStorage.setItem("liked", JSON.stringify(newLikedState));
-        
+
+        // Save the liked state to localStorage with a plan-specific key
+        // localStorage.setItem(`liked_${planId}`, JSON.stringify(newLikedState));
+
         if (newLikedState) {
-            // Add new activity
             savePlan();
             console.log("Plan saved to cloud");
         } else {
-            // Delete activity logic
             console.log("Activity removed from the list");
         }
-    }, [liked, savePlan]);
+    }, [liked, savePlan, userUid]);
 
-    // Options for formatting the date
+    // Date formatting options
     const options = {
         year: 'numeric',
         month: 'long',
@@ -45,41 +51,55 @@ function UserInfo({ likeOption }) {
         timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     };
 
-    // Format the date
     const formattedDate = new Intl.DateTimeFormat('en-US', options).format(currentDate);
 
     return (
-        <div className="post_info">
-            <div className="user_info">
-                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16">
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                    <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                </svg>
+        <>
+            <Snackbar
+                open={openSnackBar}
+                autoHideDuration={5000}
+                onClose={handleClose}
+            >
+                <Alert
+                    onClose={handleClose}
+                    severity="warning"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    Please login or signup to save the itinerary.
+                </Alert>
+            </Snackbar>
 
-                <div className="user_name_date">
-                    <p>User</p>
-                    <p>{formattedDate}</p>
+            <div className="post_info">
+                <div className="user_info">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                        <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                    </svg>
+
+                    <div className="user_name_date">
+                        <p>User</p>
+                        <p>{formattedDate}</p>
+                    </div>
+                </div>
+
+                <div className="like_info">
+                    <button
+                        onClick={clickLike}
+                        title={!userUid ? "You must be logged in to save the plan" : ""}
+                    >
+                        {
+                            userUid && 
+                            <i className={`fa-heart ${liked ? 'fa-solid text-red-500' : 'fa-regular text-gray-500'} text-2xl`}></i>
+                        }
+                        {
+                            !userUid && 
+                            <i className="fa-regular fa-heart text-gray-500 text-2xl"></i>
+                        }
+                    </button>
                 </div>
             </div>
-
-            <div className="like_info">
-                <button 
-                    onClick={clickLike}
-                    disabled={!userUid}
-                    title={!userUid ? "You must be logged in to save the plan" : ""} // Show tooltip if not logged in
-
-                    >
-                    {
-                        !userUid && <i class="fa-regular fa-heart text-gray-500"></i>
-                        
-                    }
-                    {
-                        userUid && <i className={`fa-heart ${liked ? 'fa-solid text-red-500' : 'fa-regular text-gray-500'} text-2xl`}></i>
-                        
-                    }
-                </button>
-            </div>
-        </div>
+        </>
     );
 }
 
