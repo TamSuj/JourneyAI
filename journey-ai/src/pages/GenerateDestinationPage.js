@@ -16,7 +16,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 library.add(fas, far, fab)
 
 // public token
-mapboxgl.accessToken = 'pk.eyJ1Ijoia255aWhsYWkiLCJhIjoiY2x5YThiM2hpMHpzdzJqcHhhZGhqNmFsdyJ9.RpZAifKmlWn9kQRkakLRYg';
+mapboxgl.accessToken = process.env.REACT_APP_MAP_BOX;
 
 // initialize map obj with CTOR
 const init_map = (map_ref) => {
