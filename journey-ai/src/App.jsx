@@ -8,8 +8,8 @@ import LoadingPage from './components/LoadingPage.jsx';
 import MainPage from './pages/MainPage.jsx';
 import "./index.css";
 import SavedPlanPage from './pages/SavedPlanPage.jsx';
-import GenerateDestinationPage from './pages/GenerateDestinationPage.jsx';
-import GenerateMap from './pages/GenerateMap.jsx';
+import GenerateDestinationPage from './pages/GenerateDestinationPage.js';
+import GenerateMap from './pages/GenerateMap.js';
 import { useUser } from './UserContext.jsx';
 
 function App() {

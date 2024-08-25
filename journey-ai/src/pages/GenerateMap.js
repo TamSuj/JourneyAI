@@ -8,7 +8,7 @@ import { useUser } from "../UserContext.jsx";
 // import CustomizePlan from "../components/CustomizePlan.jsx";
 
 // public token
-mapboxgl.accessToken = 'pk.eyJ1Ijoia255aWhsYWkiLCJhIjoiY2x5YThiM2hpMHpzdzJqcHhhZGhqNmFsdyJ9.RpZAifKmlWn9kQRkakLRYg';
+mapboxgl.accessToken = process.env.REACT_APP_MAP_BOX;
 
 // initialize map obj with CTOR
 const init_map = (map_ref) => {
