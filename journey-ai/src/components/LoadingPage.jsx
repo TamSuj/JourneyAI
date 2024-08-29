@@ -5,7 +5,7 @@ function LoadingPage() {
 
     return (
         <div class="loading-items">
-            <div class="loading">
+            <div class="loading2">
                 <span></span>
                 <span></span>
                 <span></span>

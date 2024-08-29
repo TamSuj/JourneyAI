@@ -1,6 +1,25 @@
 // prompt.jsx
-function journeyCmd(location, numOfPeople, day, theme){ 
-    return `List a traveling plan with at ${location} city for a group of ${numOfPeople} people for ${day} days in the ${theme} theme and must use this JSON format look like this
+function journeyCmd(location, numOfPeople, day, theme, specialRequest, budget){ 
+
+    let addTheme = "";
+    let addBudget = "";
+    let addSpecial = "";
+    let addCustomize = "";
+
+    if(theme){
+        addTheme = `in the ${theme} theme`;
+    }
+    if(budget){
+        addBudget = `and with the ${budget} budget`; 
+    }
+    if(specialRequest){
+        addSpecial = `. Also I want special thing is that ${specialRequest}`;
+    }
+
+    addCustomize = addTheme + addBudget + addSpecial;
+
+    return `List a traveling plan with at ${location} city. For a group of ${numOfPeople} people in ${day} days ${addCustomize}. Please
+    estimate the price for each activities based on number of people also (in US dollar and must use this JSON format look like this
 example (Please keep the same key name, do not change them), 
 :
 {
@@ -8,6 +27,7 @@ example (Please keep the same key name, do not change them),
     "travelers": ${numOfPeople}, 
     "duration": ${day}, 
     "theme": "${theme}",
+    "estimated_total" : "500",
     "itinerary": 
     [
         {
@@ -16,20 +36,24 @@ example (Please keep the same key name, do not change them),
             [
                 {
                     "name": "Visit the Huntington Library, Art Museum, and Botanical Gardens", 
+                    "location_name": "Huntington Library, San Marino, CA",
                     "type": "palette", 
                     "duration": "9am - 12pm", 
+                    "price_level": "30 - 35",
                     "description": "Explore beautiful gardens, art exhibits, and historical manuscripts."
                 }, 
 
                 {
                     "name": "Dinner at The Royce at The Langham", 
+                    "location_name: "The Royce Wood Fired Steakhouse, Pasadena, CA",
                     "type": "utensils", 
-                    "duration": "12:30pm - 2pm", 
+                    "duration": "12:30pm - 2pm",
+                    "price_level": "40 - 50", 
                     "description": "Enjoy fine dining with stunning views at this elegant restaurant."
                 }
-            ]
+            ],
         }, 
-    ]
+    ],
 }
     
 Note: Each activity's type should match one of the following values. The corresponding value will be used as the icon identifier:
