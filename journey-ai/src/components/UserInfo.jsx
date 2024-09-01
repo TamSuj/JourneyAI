@@ -1,6 +1,6 @@
 import "../css/UserInfo.css";
-import { useState, useCallback, useEffect } from "react";
-import { useUser } from "../UserContext";
+import { useState, useCallback } from "react";
+import { useUser } from "../UserContext.js";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import usePersistState from "../usePersistState";

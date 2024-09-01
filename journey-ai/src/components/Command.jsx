@@ -27,9 +27,12 @@ function Command() {
         // { value: 0, label: 'Cheap' },
         // { value: 1, label: 'Mid' },
         // { value: 2, label: 'High' },
+
+        //When user click "Generate" button we will generate a prompt for GeminiAI with those filter
         const prompt = journeyCmd(location, numOfPeople, day, theme, specialRequest, budget);
 
         setCommand(prompt);
+        //Set Loading to true and wait for the response from Gemini and proceed to the destination route when it's done
         setLoading(true);
     };
 
@@ -42,13 +45,17 @@ function Command() {
         setSpecialRequest(null);
         setLoading(false);
 
+        //Now the response from Gemini is back, we'll go to the /destination route
         setResponseData(data);
     };
 
+    //Open the filter box
     const handleOpenCustomizeBox = () => {
         setOpenCustomizeBox((prevState) => !prevState)
     };
 
+
+    //Proceed to /destination when response data is back
     useEffect(() => {
         if (responseData) {
             console.log("Response Data: ", responseData);
@@ -72,16 +79,7 @@ function Command() {
                         by simply entering your destination, number of travelers, and days.</p>
                     <img className="landing-icon" src={"notion-icon.png"} alt='journeyAI Icon' />
                 </div>
-                {/* Logo */}
-                {/* <img className={"logo-orange"} src={"logo-orange.png"} alt='journeyAI Icon' /> */}
-                
                 <div className="flex items-center justify-center">
-                    {/* <div className="flex-shrink-0 text-white">
-                        <button className="bg-orange-500 p-3 ring-orange-500 focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm text-center inline-flex items-center dark:bg-orange-500 dark:hover:bg-orange-700 dark:focus:ring-white" onClick={handleOpenAiChat}>
-                            AI
-                        </button>
-                    </div> */}
-
                     <div className="w-1/2 max-w-lg mx-2">
                         <LocationInput setLocation={setLocation} />
                     </div>

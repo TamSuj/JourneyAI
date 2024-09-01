@@ -4,7 +4,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { useLocation } from "react-router-dom";
 import "../css/GenerateMap.css"
 import DetailContainer from "../components/DetailContainer.jsx";
-import { useUser } from "../UserContext.jsx";
+import { useUser } from "../UserContext.js";
 // import CustomizePlan from "../components/CustomizePlan.jsx";
 
 // public token
@@ -53,7 +53,7 @@ function GenerateMap() {
         } catch (error) {
             console.error('Error parsing response:', error);
         }
-    }, [response]);
+    }, [response, location.state.location, setCity, setParsedResponse, setDuration, setTripName, setTotalEstimation]);
 
 
     const location_names = getAllLocationName(parsedResponse);

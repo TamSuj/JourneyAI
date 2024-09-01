@@ -14,8 +14,12 @@ export const UserProvider = ({ children }) => {
   const [totalEstimation, setTotalEstimation] = useState(null);
   const [itinerary, setItinerary] = useState([]);
 
+
+  //Add each activity into the whole itinerary
   const addNewActivity = (activity, dayIndex, activityIndex) => {
+    //update itinerary
     setItinerary(prevItinerary => {
+      //recieve current itinerary
       const updatedItinerary = [...prevItinerary];
   
       if (dayIndex >= 0 && dayIndex < updatedItinerary.length) {
@@ -29,17 +33,18 @@ export const UserProvider = ({ children }) => {
     });
   };
   
-
-  // const resetActivity = () => {
-  //   setActivities([]);
-  // }
+  //get number of saved plan to create planId
   const getSavedPlanCount = async (userUid) => {
+    //retrieve the doc reference base on Userid
     const userDocRef = doc(db, "users", userUid);
+
+    //get a snapshot/infor about the doc
     const userDocSnap = await getDoc(userDocRef);
     if (userDocSnap.exists()) {
+      //access the data array
       const userData = userDocSnap.data();
       const savedPlanCount = userData.saved_plans ? userData.saved_plans.length : 0;
-      console.log(`Number of saved plans for user ${userUid}:`, savedPlanCount);
+      // console.log(`Number of saved plans for user ${userUid}:`, savedPlanCount);
       return savedPlanCount;
     } else {
         console.log("No such document!");
@@ -47,11 +52,15 @@ export const UserProvider = ({ children }) => {
     }
   }
 
+  //Save the new itinerary into the associate doc
   const savePlan = async () => {    
-    console.log("Itinerary that is going to get saved");
-    console.log(itinerary);
+    // console.log("Itinerary that is going to get saved");
+    // console.log(itinerary);
+
+    //Check count to get new planId
     const savedPlanCount = await getSavedPlanCount(userUid);
 
+    //Formatted Data to add to Firebase
     const newPlan = {
         city: city,
         duration: duration,
@@ -61,22 +70,24 @@ export const UserProvider = ({ children }) => {
         estimated_total: totalEstimation
     };
 
+    //Refer to the doc with specific userUid
     const userRef = doc(db, "users", userUid);
 
     try { 
+      //Gain access to the Doc
       const userDoc = await getDoc(userRef);
       if(!userDoc.exists()){
         // Create a new document if it doesn't exist
         await setDoc(userRef, {
             saved_plans: [newPlan],  // Initialize with the new plan
         });
-        console.log("User document created with new plan");
+        // console.log("User document created with new plan");
       } else {
         // Document exists, add new plan to the existing document
         await updateDoc(userRef, {
             saved_plans: arrayUnion(newPlan)
         });
-        console.log("New plan added to existing document");
+        // console.log("New plan added to existing document");
       }
       // Resetting the states after saving
       setCity(null);
