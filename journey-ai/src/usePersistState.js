@@ -10,14 +10,14 @@ export default function usePersistState(initial_value, id){
         } 
         // Otherwise use initial_value that was passed to the function
         return initial_value;
-    }, []);
+    }, [id, initial_value]);
 
     const [state, setState] = useState(_initial_value);
 
     useEffect(() => {
         const state_str = JSON.stringify(state); // Stringified state
         localStorage.setItem('state:' + id, state_str) // Set stringified state as item in localStorage
-    }, [state]);
+    }, [state, id]);
 
     return [state, setState]
 }

@@ -1,16 +1,17 @@
+import "./index.css";
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import LogInPage from './components/Auth/LogInPage.jsx';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase/firebase.js';
 import { ProtectedrRoutes } from './components/ProtectedRoutes.jsx';
+import { useUser } from './UserContext.js';
 import LoadingPage from './components/LoadingPage.jsx';
 import MainPage from './pages/MainPage.jsx';
-import "./index.css";
 import SavedPlanPage from './pages/SavedPlanPage.jsx';
 import GenerateDestinationPage from './pages/GenerateDestinationPage.js';
 import GenerateMap from './pages/GenerateMap.js';
-import { useUser } from './UserContext.jsx';
+import LogInPage from './components/Auth/LogInPage.jsx';
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -19,11 +20,12 @@ function App() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      //If someone logged-in, we will set the userUid for the UserContext so all the component in the App has access to it
       if (user) {
         setUser(user);
         setIsFetching(false);
         setUserUid(user.uid); 
-      } else {
+      } else {  // If not we just set null
         setUser(null);
         setIsFetching(false);
         setUserUid(null);
@@ -31,14 +33,15 @@ function App() {
     });
 
     return () => unsubscribe();
-  }, [setUserUid]);
+  }, [setUserUid]);   //Only update when there is a new loged-in user
 
+  //If we still waiting for data of response,...etc turn on the Loading Page
   if (isFetching) {
     return <LoadingPage />;
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter>  
       <Routes>
         <Route index path='/login' element={<LogInPage user={user} />} />
         <Route path='/' element={<MainPage />}/>
