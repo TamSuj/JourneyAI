@@ -5,13 +5,16 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import usePersistState from "../usePersistState";
 
-function UserInfo({ likeOption }) {
+function UserInfo({ likeOption, isInSavedDestinationPage, plan_id }) {
     const currentDate = new Date();
     const { savePlan, userUid } = useUser();
     const [openSnackBar, setOpenSnackBar] = useState(false);
 
     // Initialize state based on either likeOption or localStorage
-    const [liked, setLiked] = usePersistState(likeOption, 'liked');
+
+    const [liked, setLiked] = usePersistState(likeOption, `liked_${plan_id}`);  
+    
+
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -88,6 +91,10 @@ function UserInfo({ likeOption }) {
                         onClick={clickLike}
                         title={!userUid ? "You must be logged in to save the plan" : ""}
                     >
+                        {
+                            isInSavedDestinationPage &&
+                            <i className={'fa-heart fa-solid text-red-500 text-2xl'}></i>
+                        }
                         {
                             userUid && 
                             <i className={`fa-heart ${liked ? 'fa-solid text-red-500' : 'fa-regular text-gray-500'} text-2xl`}></i>
