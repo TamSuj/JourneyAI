@@ -37,6 +37,8 @@ function GenerateDestinationPage() {
     const [planData, setPlanData] = useState(null);
     const [center, setCenter] = useState(null);
     const [zoom, setZoom] = useState(null);
+
+    
     const map_ref = useRef(null);
     const map_obj = useRef(null);
     const marker_obj = useRef(null);

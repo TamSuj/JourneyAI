@@ -10,6 +10,7 @@ import { useUser } from "../UserContext.jsx";
 // public token
 mapboxgl.accessToken = process.env.REACT_APP_MAP_BOX;
 
+
 // initialize map obj with CTOR
 const init_map = (map_ref) => {
     return new mapboxgl.Map({
@@ -24,6 +25,7 @@ function getAllLocationName(responseData){
     if (!responseData || !responseData.itinerary) return [];
 
     const itinerary = responseData.itinerary;
+
     const location_names = [];
 
     itinerary.forEach(days => {
@@ -101,26 +103,60 @@ function GenerateMap() {
     }, []);
 
     useEffect(() => {
-        if (map_obj.current && center) {
-            map_obj.current.flyTo({
-                center: center,
-                zoom: zoom,
-                essential: true
-            });
-        }
+        const fetchAndPlaceMarkers = async () => {
+            const validLocations = location_names.filter(
+                location => {return !location.toLowerCase().includes('various');
+        });
+            
+        console.log("length after validation: ", validLocations.length)
+        console.log(validLocations)
 
-        if (center) {
-            const lngLat = { lon: center[0], lat: center[1] };
+            if (center && validLocations.length > 0) {
 
-            if (!marker_obj.current) {
-                marker_obj.current = new mapboxgl.Marker({ color: 'red' });
-                marker_obj.current.setLngLat(lngLat);
-                marker_obj.current.addTo(map_obj.current);
-            } else {
-                marker_obj.current.setLngLat(lngLat);
+
+                   // After placing all markers, fly to the specified center and zoom
+                if (map_obj.current && center) {
+                    map_obj.current.flyTo({
+                        center: center,
+                        zoom: zoom,
+                        essential: true
+                    });
+                }
+
+                for (let location of validLocations) {
+    
+                    // Encode the location to be used in the geocoding request
+                    const address = encodeURIComponent(location);
+                    console.log("encode: ", location)
+
+                    try {
+                        const response = await fetch('https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=mapboxgl.accessToken)')
+
+                        const data = await response.json();
+
+                        const coordinates = data.features[0]?.geometry?.coordinates;
+                        
+                        if(coordinates){
+                            console.log('coords exist')
+                            const lngLat = {lon: coordinates[0], lat: coordinates[1]}
+
+                            new mapboxgl.Marker({color : 'red'})
+                                .setLngLat(lngLat)
+                                .addTo(map_obj.current)
+                        } else{
+                            console.error("Error: coordinates do not exist.")
+                        }
+                    } catch {
+                        console.error("ERROR Fetching coordinates for ${location}! ")
+                    }
+                }
+    
+             
             }
-        }
-    }, [center, zoom]);
+        };
+    
+        fetchAndPlaceMarkers();
+    }, [center, zoom, location_names]);
 
     return (
         <div className="mapPage">

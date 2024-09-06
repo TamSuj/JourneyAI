@@ -12,11 +12,6 @@ import GenerateDestinationPage from './pages/GenerateDestinationPage.js';
 import GenerateMap from './pages/GenerateMap.js';
 import { useUser } from './UserContext.jsx';
 
-<<<<<<< HEAD
-function App() 
-{
-    
-=======
 function App() {
   const [user, setUser] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
@@ -42,7 +37,6 @@ function App() {
     return <LoadingPage />;
   }
 
->>>>>>> 09823c3e16baff64753126fd22ef96878def6f47
   return (
     <BrowserRouter>
       <Routes>
